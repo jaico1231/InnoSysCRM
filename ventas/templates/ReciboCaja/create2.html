@@ -1,0 +1,39 @@
+<form method="post">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="tercero">Cliente</label>
+        {{ form.tercero }}
+    </div>
+    
+    <div class="form-group">
+        <label for="ventas">Ventas con saldo pendiente</label>
+        {{ form.ventas }}
+    </div>
+
+    <div class="form-group">
+        <label for="fecha">Fecha de pago</label>
+        {{ form.fecha }}
+    </div>
+
+    <div class="form-group">
+        <label for="metodo_pago">Método de pago</label>
+        {{ form.metodo_pago }}
+    </div>
+
+    <div class="form-group">
+        <label for="tipo_transaccion">Tipo de transacción</label>
+        {{ form.tipo_transaccion }}
+    </div>
+
+    <div class="form-group">
+        <label for="total">Total a pagar</label>
+        {{ form.total }}
+    </div>
+
+    <div class="form-group">
+        <label for="observaciones">Observaciones</label>
+        {{ form.observaciones }}
+    </div>
+
+    <button type="submit" class="btn btn-primary">Registrar Pago</button>
+</form>

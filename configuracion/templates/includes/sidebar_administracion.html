@@ -1,0 +1,44 @@
+{% if user.is_superuser or user.groups.all.0.name == 'Administrador' or user.groups.all.0.name == 'Supervisor' or user.groups.all.0.name == 'Jefe_Area' %}
+<li class="nav-small-cap">
+    <span class="material-symbols-outlined">
+      admin_panel_settings
+      </span>
+    <span class="hide-menu" onclick="toggleMenu('menu-administracion')">ADMINISTRACION</span>
+</li>
+<div id="menu-administracion" style="display: none;">
+    <ul>
+        <li class="sidebar-item">
+            <a class="sidebar-link" href="{% url 'administrativo:servicioslist' %}" aria-expanded="false">
+              <span class="material-icons">
+                recent_actors
+              </span>
+              <span class="hide-menu">Servicios</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="{% url 'administrativo:paqueteslist' %}" aria-expanded="false">
+              <span class="material-icons">
+                recent_actors
+              </span>
+              <span class="hide-menu">Paquetes</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="{% url 'administrativo:medicoslist' %}" aria-expanded="false">
+              <span class="material-icons">
+                recent_actors
+              </span>
+              <span class="hide-menu">Medicos</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="{% url 'administrativo:dashboard' %}" aria-expanded="false">
+              <span class="material-symbols-outlined">
+                bar_chart
+                </span>
+              <span class="hide-menu">Resumen</span>
+            </a>
+          </li>
+    </ul>
+</div>
+{% endif %}

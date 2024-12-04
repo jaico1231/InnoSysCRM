@@ -1,0 +1,53 @@
+{% extends 'layout/base.html'%}
+
+{% block title %} {{ title }} {% endblock %}
+
+{% load static %}
+{% load custom_filters %}
+
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h5>{{ title }}</h5>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="nombre" class="form-label">Nombre del Paquete</label>
+                    {{ form.nombre|add_class:"form-control" }}
+                </div>
+                <div class="mb-3">
+                    <label for="codigo" class="form-label">Código del Paquete</label>
+                    {{ form.codigo|add_class:"form-control" }}
+                </div>
+                <div class="mb-3">
+                    <label for="precio" class="form-label">Precio del Paquete</label>
+                    {{ form.precio|add_class:"form-control" }}
+                </div>
+                <div class="mb-3">
+                    <label for="estado" class="form-label">Estado</label>
+                    {{ form.estado|add_class:"form-check-input" }}
+                    <label class="form-check-label">Activo</label>
+                </div>
+                <div class="mb-3">
+                    <label for="servicios" class="form-label">Servicios Disponibles</label>
+                    {{ form.servicios|add_class:"form-select" }}
+                </div>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                <a href="{{ list_url }}" class="btn btn-secondary">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+{% block javascripts %}
+<!-- Activar selectpicker -->
+<script>
+    $(document).ready(function() {
+        $('.selectpicker').selectpicker();
+    });
+</script>
+{% endblock javascripts}

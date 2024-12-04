@@ -1,0 +1,80 @@
+{% extends 'layout/base.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" />
+<style>
+    .select2-container {
+        width: 100% !important;
+    }
+</style>
+{% endblock stylesheets %}
+
+{% block content %}
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h4>{{ title }}</h4>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div class="form-group">
+                    {{ form.cuentas_por_cobrar.label_tag }}
+                    {{ form.cuentas_por_cobrar }}
+                </div>
+                <div class="form-group">
+                    {{ form.saldo_pendiente_total.label_tag }}
+                    {{ form.saldo_pendiente_total }}
+                </div>
+                <div class="form-group">
+                    {{ form.metodo_pago.label_tag }}
+                    {{ form.metodo_pago }}
+                </div>
+                <div class="form-group">
+                    {{ form.total.label_tag }}
+                    {{ form.total }}
+                </div>
+                <div class="form-group">
+                    {{ form.observaciones.label_tag }}
+                    {{ form.observaciones }}
+                </div>
+                <button type="submit" class="btn btn-primary">Registrar Recibo</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block javascripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.full.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Inicializar Select2 en el campo de múltiples cuentas por cobrar
+        $('#id_cuentas_por_cobrar').select2();
+
+        // Calcular el saldo pendiente total
+        $('#id_cuentas_por_cobrar').on('change', function() {
+            const selected = $(this).val();
+            let totalSaldoPendiente = 0;
+            if (selected.length > 0) {
+                selected.forEach(function(id) {
+                    fetch(`/api/cuentas-por-cobrar/${id}/saldo/`)
+                        .then(response => response.json())
+                        .then(data => {
+                            totalSaldoPendiente += parseFloat(data.saldo_pendiente);
+                            $('#saldo-pendiente-total').val(totalSaldoPendiente.toFixed(2));
+                        })
+                        .catch(error => {
+                            console.error('Error al obtener el saldo pendiente:', error);
+                        });
+                });
+            } else {
+                $('#saldo-pendiente-total').val('');
+            }
+        });
+    });
+</script>
+{% endblock javascripts %}

@@ -1,0 +1,131 @@
+{% extends 'layout/base.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+{% load moneda_filters %}
+{% block stylesheets %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" />
+<style>
+    .select2-container {
+        width: 100% !important;
+    }
+</style>
+{% endblock stylesheets %}
+
+{% block content %}
+<form method="post" id="form-venta">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-header-primary">
+                    <h4 class="card-title">{{ title }}</h4>
+                </div>
+                <div class="card-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-lg-12 d-flex align-items-stretch">                  
+                                <div class="card w-100">
+                                    <div class="card-body">
+                                        {{ form.as_p }} <!-- Renderiza el formulario -->
+                                        <button type="submit" class="btn btn-primary">
+                                            <span class="material-symbols-outlined">
+                                                search
+                                            </span></button>
+                                        <button type="button" class="btn btn-success btn_print" data-tercero="{{ form.tercero.value }}" >
+                                            <span class="material-symbols-outlined">
+                                                print
+                                            </span>
+                                        </button>
+                                        <button type="button" class="btn btn-success btn-email">
+                                            <span class="material-symbols-outlined">
+                                                email
+                                            </span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-body">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    {% if cuentas %}                                        
+                                        <table class="table table-striped">                                            
+                                            <thead>
+                                                <tr>{{ cuenta.venta.tercero }}</tr>
+                                                <tr>
+                                                    <th>indice</th>
+                                                    <th>Tercero</th>                                    
+                                                    <th>Número de Factura</th>
+                                                    <th>Fecha Vencimiento</th>
+                                                    <th>Saldo Pendiente</th>
+                                                    
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for cuenta in cuentas %}                                                      
+                                                        <tr>
+                                                            <td>{{forloop.counter}}</td>
+                                                            <td>{{ cuenta.venta.tercero.Nombre }} {{ cuenta.venta.tercero.Apellido }}</td>
+                                                            <td>FV - {{ cuenta.venta.numero_factura }}</td>
+                                                            <td>{{ cuenta.fecha_vencimiento }}</td>
+                                                            <td>{{ cuenta.saldo_pendiente|moneda }}</td>
+                                                            
+                                                        </tr> 
+                                                {% endfor %}
+                                                <tr>
+                                                    <td colspan="4" style="text-align: right;">TOTAL</td>
+                                                    <td colspan="2">{{ total_saldo_pendiente|moneda }}</td>
+                                                </tr> 
+                                            </tbody>
+                                        </table>
+                                </div>
+                            </div>
+                            {% else %}
+                                        <p>No hay cuentas por cobrar pendientes.</p>
+                                    {% endif %}
+                        </div>
+                    </div>
+                    <!-- ----------------------------------------- -->
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+{% endblock content %}
+
+{% block javascripts %}
+<script>
+    $('.btn_print').click(function() {
+        // Captura los valores del formulario
+        var tercero_id = $('#id_tercero').val(); // Captura el valor del campo Tercero
+        var fecha_inicio = $('#id_fecha_inicio').val(); // Captura el valor del campo Fecha Inicio
+        var fecha_fin = $('#id_fecha_fin').val(); // Captura el valor del campo Fecha Fin
+
+        // Verifica que se haya seleccionado un tercero
+        if (tercero_id) {
+            // Construye la URL con los parámetros del formulario
+            var url = "{% url 'ventas:imprimir_cartera' 0 %}"
+                      .replace('0', tercero_id) + 
+                      '?fecha_inicio=' + fecha_inicio + 
+                      '&fecha_fin=' + fecha_fin;
+
+            // Abre la URL en una nueva ventana para generar el PDF
+            window.open(url, '_blank');
+        } else {
+            alert("Por favor seleccione un tercero antes de imprimir.");
+        }
+    });
+
+    $('.btn-email').click(function() {
+
+        loadModalAndHandleForm(btn, url);
+    });
+
+    
+</script>
+
+{% endblock javascripts %}

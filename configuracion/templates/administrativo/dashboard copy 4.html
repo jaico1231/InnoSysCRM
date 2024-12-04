@@ -1,0 +1,142 @@
+{% extends 'layout/base.html' %}
+{% load static %}
+{% load moneda_filters %}
+{% block title %} {{ title }} {% endblock %}
+{% block stylesheets %}
+        
+   
+        
+        
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <style>
+    body {
+        background-color: #1e1e2f;
+        color: #ffffff;
+    }
+    .card {
+        background-color: #27293d;
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .card-header {
+        background-color: #2c2c44;
+        border-bottom: 1px solid #3a3a5c;
+    }
+    .btn-outline-light {
+        border-color: #3a3a5c;
+    }
+    .btn-outline-light:hover, .btn-outline-light:focus {
+        background-color: #3a3a5c;
+        border-color: #3a3a5c;
+    }
+    .stats-card {
+        background-color: #2c2c44;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+    .stats-value {
+        font-size: 24px;
+        font-weight: bold;
+    }
+    .stats-label {
+        font-size: 14px;
+        opacity: 0.7;
+        color: aliceblue;
+    }
+    .stats-value {
+        font-size: 24px; /* initial font size */
+        max-width: 100%; /* set max width to prevent text from overflowing */
+        }
+
+    .stats-value span {
+        display: inline-block; /* make the span an inline block */
+        overflow: hidden; /* hide excess text */
+        text-overflow: ellipsis; /* show ellipsis when text is too long */
+        white-space: nowrap; /* prevent text from wrapping */
+        }
+
+    .stats-value span.long-text {
+        font-size: 18px; /* reduce font size when text is too long */
+        }
+</style>
+{% endblock stylesheets %}
+{% block content %}
+<!-- dashboard.html -->
+
+<!-- Ventas del día actual -->
+<div class="stats-card">
+    <div class="stats-value">{{ venta_dia|moneda }}</div>
+    <div class="stats-label">Total Ventas Día</div>
+  </div>
+  
+  <!-- Ventas del mes actual -->
+  <div class="stats-card">
+    <div class="stats-value">{{ venta_mes|moneda }}</div>
+    <div class="stats-label">Total Ventas Mes</div>
+  </div>
+  
+  <!-- Recibos de caja del mes actual -->
+  <div class="stats-card">
+    <div class="stats-value">{{ recibo_mes|moneda }}</div>
+    <div class="stats-label">Total Recibos Mes</div>
+  </div>
+  
+  <!-- Cartera pendiente -->
+  <div class="stats-card">
+    <div class="stats-value">{{ cartera|moneda }}</div>
+    <div class="stats-label">Cartera Pendiente</div>
+  </div>
+  
+  <!-- Ventas por día -->
+  <div class="chart-card">
+    <h4>Ventas por Día</h4>
+    <canvas id="ventas-por-dia-chart"></canvas>
+    <script>
+      var ventas_por_dia = {{ ventas_por_dia|safe }};
+      var labels = Object.keys(ventas_por_dia);
+      var data = Object.values(ventas_por_dia);
+      // Create chart using Chart.js or other library
+    </script>
+  </div>
+  
+  <!-- Ventas por mes -->
+  <div class="chart-card">
+    <h4>Ventas por Mes</h4>
+    <canvas id="ventas-por-mes-chart"></canvas>
+    <script>
+      var ventas_por_mes = {};
+      {% for month in months %}
+        var fecha_inicio_mes = new Date({{ year }}, {{ month }}, 1);
+        var fecha_fin_mes = new Date({{ year }}, {{ month }} + 1, 0);
+        var ventas_mes = {{ Venta.objects.filter(fecha__gte=fecha_inicio_mes, fecha__lte=fecha_fin_mes).aggregate(total=Sum('total'))['total'] or 0 }};
+        ventas_por_mes['{{ month|month_name }}'] = ventas_mes;
+      {% endfor %}
+      var labels = Object.keys(ventas_por_mes);
+      var data = Object.values(ventas_por_mes);
+      // Create chart using Chart.js or other library
+    </script>
+  </div>
+  
+  <!-- Ventas por año -->
+  <div class="chart-card">
+    <h4>Ventas por Año</h4>
+    <canvas id="ventas-por-ano-chart"></canvas>
+    <script>
+      var ventas_por_ano = {};
+      {% for year in years %}
+        var fecha_inicio_ano = new Date({{ year }}, 1, 1);
+        var fecha_fin_ano = new Date({{ year }}, 12, 31);
+        var ventas_ano = {{ Venta.objects.filter(fecha__gte=fecha_inicio_ano, fecha__lte=fecha_fin_ano).aggregate(total=Sum('total'))['total'] or 0 }};
+        ventas_por_ano['{{ year }}'] = ventas_ano;
+      {% endfor %}
+      var labels = Object.keys(ventas_por_ano);
+      var data = Object.values(ventas_por_ano);
+      // Create chart using Chart.js or other library
+    </script>
+  </div>
+{% endblock content %}
+{% block javascripts %}
+
+{% endblock javascripts %}

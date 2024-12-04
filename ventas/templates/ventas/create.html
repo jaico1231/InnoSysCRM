@@ -1,0 +1,404 @@
+{% extends 'layout/base.html'%}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" />
+<style>
+    .select2-container {
+        width: 100% !important;
+    }
+</style>
+{% endblock stylesheets %}
+{% load moneda_filters %}
+{% block content %}
+<form method="post" enctype="multipart/form-data"id="form-venta" action="{% url 'ventas:guardar-venta' %}">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-header-primary">
+                    <div class="col-md-12" style="text-align: right;">
+                        <button type="button" class="btn-close BtnCancel col-md-2"></button>
+                    </div>
+                    <h4 class="card-title">{{ title }}</h4>
+                    <p class="card-category"></p>
+                </div>
+                {% if messages %}
+                <div class="alert alert-danger" role="alert">
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+                <div class="card-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-lg-12 d-flex align-items-strech">                  
+                                <div class="card w-100">
+                                    <div class="card-body">
+                                        <div class="d-sm-flex d-block align-items-center justify-content-between mb-9">                        
+                                            <div class="card-body">
+                                                <div class="profile-container">
+                                                    <table class="table table-striped" style="width:100%">
+                                                        <tr>
+                                                            <td colspan="7" style="text-align: center;"><h4>{{ title }}</h4></td>
+                                                        </tr>
+                                                      
+                                                            
+                                                        <tr>
+                                                            <td>{{ form.fecha.label }}</td>
+                                                            <td>{{ form.fecha }}</td>
+                                                            <div>{{ form.fecha.errors }}</div>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td>{{ form.numero_factura.label }}</td>
+                                                            <td>{{ form.numero_factura }}</td>
+                                                            <div>{{ form.numero_factura.errors }}</div>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>{{ form.tercero.label }}</td>
+                                                            <td colspan="3">{{ form.tercero }}</td>
+                                                            <td><button type="button" class="btn btn-success BtnCrearTercero" id="BtnCrearTercero"><b>+</b></button></td>
+                                                            {{ form.tercero.errors }}
+                                                            <td>{{ form.medico.label }}</td>
+                                                            <td>{{ form.medico }}</td>
+                                                            <div>{{ form.medico.errors }}</div>                                                            
+                                                        </tr>
+                                                        <tr>
+                                                            <td>{{ form.tipo_transaccion.label }}</td>
+                                                            <td colspan="2">{{ form.tipo_transaccion }}</td>
+                                                            <div>{{ form.tipo_transaccion.errors }}</div>
+                                                            <td></td>
+                                                            <td>{{ form.metodo_pago.label }}</td>
+                                                            <td colspan="2">{{ form.metodo_pago }}</td>
+                                                            <div>{{ form.metodo_pago.errors }}</div>
+                                                        </tr>
+
+                                                        <tr>                                                            
+                                                            <td>Servicios adicionales</td>                                                            
+                                                            <td colspan="3">{{ form.servicios_adicionales }}</td>
+                                                            <td>cantidad:</td>
+                                                            <td><input type="number" class="form-control" name="servicios_adicionales_cantidad" id="servicios_adicionales_cantidad" value="1"></td>
+                                                            <td><button class="btn btn-outline-primary addServiceButton" type="button" id="addServiceButton">Add</button></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="7">
+                                                                <table class="table table-striped serviciosTable" id="serviciosTable">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Codigo</th>
+                                                                            <th>Servicio</th>
+                                                                            <th>Cantidad</th>
+                                                                            <th>Precio</th>
+                                                                            <th>Descuento (%)</th>
+                                                                            <th>Total</th>                                                                        
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+
+                                                                    </tbody>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td>{{ form.subtotal.label }}</td>
+                                                            <td><input type="text" class="form-control" name="subtotal" id="subtotal" readonly></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td>{{ form.impuestos.label }}</td>
+                                                            <td><input type="text" class="form-control" name="impuestos" id="impuestos" readonly></td>
+                                                            
+                                                        </tr>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td>{{ form.total.label }}</td>
+                                                            <td><input type="text" class="form-control" name="total" id="total" readonly></td>
+                                                            
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="7" style="text-align: center;">{{ form.observaciones.label }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="7">{{ form.observaciones }}</td>
+                                                        </tr>
+                                                    </table>
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <!-- Campo oculto para los servicios en formato JSON -->
+                                                        <input type="hidden" name="servicios_json" id="servicios_json">
+                                                        <button type="submit" id="BtnVenta" class="btn btn-success BtnVenta">Generar Venta</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock content %}
+
+{% block javascripts %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.full.min.js"></script>
+<script>
+    $('.BtnCrearTercero').click(function() {
+        var url = "{% url 'shared:terceroscreate' %}";
+        var btn = $(this)[0];
+        loadModalAndHandleForm(btn, url);
+    });
+</script>
+<script>
+    let paqueteServicios = [];
+    let serviciosAdicionales = [];
+    let descuento = 0;
+
+    // Función para cargar servicios del paquete del médico seleccionado
+    function loadPaqueteServicios() {
+        const medicoId = $('#id_medico').val();
+        if (medicoId) {
+            $.ajax({
+                url: "{% url 'ventas:get-paquete-servicios' %}",
+                data: { 'medico_id': medicoId },
+                success: function(data) {
+                    paqueteServicios = data.servicios;
+                    descuento = data.medico_descuento;
+                    updateServiciosTable();
+                }
+            });
+        }
+    }
+
+    // Llamar la función cuando cambie el médico
+    $('#id_medico').change(loadPaqueteServicios);
+
+    // Función para actualizar la tabla de servicios
+    function updateServiciosTable() {
+        const tbody = $('#serviciosTable tbody');
+        tbody.empty();
+
+        paqueteServicios.forEach(servicio => {
+            let precioConDescuento = servicio.precio * (1 - descuento / 100);
+            agregarFilaServicio(tbody, servicio, descuento, precioConDescuento, 1);
+        });
+
+        // Agregar servicios adicionales
+        // serviciosAdicionales.forEach(servicio => {
+        //     agregarFilaServicio(tbody, servicio, 0, servicio.precio, servicio.cantidad || 1);
+        // });
+
+        calcularTotales();
+    }
+
+    // Función para agregar una fila de servicio a la tabla
+    function agregarFilaServicio(tbody, servicio, descuento, precioFinal, cantidad) {
+        const fila = $(`
+            <tr>
+                <td>${servicio.codigo}</td>
+                <td>${servicio.nombre}</td>
+                <td>
+                    <input type="number" class="form-control cantidad-servicio" value="${cantidad}" min="1">
+                </td>
+                <td >${formatearMoneda(servicio.precio)}</td>
+                <td>${descuento}%</td>
+                <td class="precio-final">${formatearMoneda(precioFinal)}</td>
+                
+                <td>
+                    <button type="button" class="btn btn-danger btn-sm eliminar-servicio">Eliminar</button>
+                </td>
+            </tr>
+        `);
+
+        // Evento para cambiar la cantidad
+        fila.find('.cantidad-servicio').on('change', function() {
+            let nuevaCantidad = parseFloat($(this).val());
+            if (isNaN(nuevaCantidad) || nuevaCantidad <= 0) {
+                nuevaCantidad = 1; // Asegurarse de que la cantidad sea al menos 1
+                $(this).val(nuevaCantidad);
+            }
+            const nuevoPrecioFinal = (servicio.precio * nuevaCantidad * (1 - descuento / 100)).toFixed(2);
+            fila.find('.precio-final').text(formatearMoneda(nuevoPrecioFinal));
+            calcularTotales();
+        });
+
+        // Evento para eliminar la fila
+        fila.find('.eliminar-servicio').on('click', function() {
+            fila.remove();
+            calcularTotales();
+        });
+
+        tbody.append(fila);
+    }
+
+    // Función para formatear números y colocarle símbolos
+    function formatearMoneda(valor) {
+        return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP' }).format(valor);
+    }
+
+
+
+    // Función para calcular los totales
+    function calcularTotales() {
+        let subtotal = 0;
+        let impuestos = 0;
+        let total = 0;
+
+        $('#serviciosTable tbody tr').each(function() {
+            
+            const precioFinal = parseFloat($(this).find('.precio-final').text()
+                .replace('$', '')                // Eliminar el símbolo de dólar
+                .replace(/\./g, '')              // Eliminar los puntos (separadores de miles)
+                .replace(',', '.')               // Reemplazar la coma por un punto (separador decimal)
+            );
+            subtotal += precioFinal;
+        });
+        
+        
+        impuestos = subtotal * 0.19; // Asumiendo un IVA del 19%
+        total = subtotal + impuestos;
+
+        // Actualizar los campos de subtotales, impuestos y total
+        $('#subtotal').val(formatearMoneda(subtotal)); 
+        $('#impuestos').val(formatearMoneda(impuestos));
+        $('#total').val(formatearMoneda(total));
+    }
+
+    $('#addServiceButton').click(function() {
+        const selectedService = $('#id_servicios_adicionales option:selected');
+        const servicioId = selectedService.val();
+        const tbody = $('#serviciosTable tbody');
+
+        if (!servicioId) {
+            alert("Por favor, selecciona un servicio.");
+            return;
+        }
+
+        $.ajax({
+            url: "{% url 'ventas:get-servicios-adicionales' %}",
+            data: { 'servicio_id': servicioId },
+            success: function(data) {
+                const servicio = data.servicio;
+                let cantidad = parseInt($('#servicios_adicionales_cantidad').val(), 10) || 1; // Default to 1 if NaN
+                
+                // Añadir el nuevo servicio al array de servicios adicionales con cantidad predeterminada
+                serviciosAdicionales.push({ ...servicio, cantidad });
+                
+                // Calcular el precio con descuento
+                let precioConDescuento = servicio.precio * cantidad * (1 - (servicio.descuento || 0) / 100);
+
+                // Actualiza la tabla con el nuevo servicio
+                agregarFilaServicio(tbody, servicio, servicio.descuento || 0, precioConDescuento.toFixed(2), cantidad);
+                calcularTotales();
+            }
+        });
+    });
+
+    // Recoge los datos de la tabla de servicios y los transforma en JSON
+    function generarServiciosJson() {
+        const servicios = [];
+        const totales = [];
+
+        // Obtener los totales de la funcion calcularTotales
+        totales.push(parseFloat($('#subtotal').val().replace('$', '').replace('.', '').replace(',', '.')));
+        totales.push(parseFloat($('#impuestos').val().replace('$', '').replace('.', '').replace(',', '.')));
+        totales.push(parseFloat($('#total').val().replace('$', '').replace('.', '').replace(',', '.')));
+
+        $('#serviciosTable tbody tr').each(function() {
+            const row = $(this);
+            const servicio = {
+                'codigo': row.find('td:first').text(),
+                'nombre': row.find('td:nth-child(2)').text(),
+                'cantidad': parseFloat(row.find('.cantidad-servicio').val()),  
+                'precio_unitario': parseFloat(
+                    row.find('td:nth-child(4)').text()
+                        .replace('$', '')          
+                        .replace(/\./g, '')        
+                        .replace(',', '.')         
+                ),
+                'descuento': parseFloat(
+                    row.find('td:nth-child(5)').text()
+                        .replace('%', '')          
+                        .replace(',', '.')         
+                ),
+                'precio_final': parseFloat(
+                    row.find('.precio-final').text()
+                        .replace('$', '')          
+                        .replace(/\./g, '')        
+                        .replace(',', '.')         
+                ),
+                
+            };
+            servicios.push(servicio);
+        });
+
+        return JSON.stringify(servicios);
+    }
+
+    $('#form-venta').on('submit', function(event) {
+    const serviciosJson = generarServiciosJson();
+    var medico = $('#id_medico').val();
+    var tipoTransaccion = $('#id_tipo_transaccion').val();
+    if (tipoTransaccion == '2' && medico == '') {
+        alert('Por favor, seleccione un médico para continuar con la venta a crédito.');
+        return false;
+    }
+    
+    $('#servicios_json').val(serviciosJson); // Asignar el JSON al campo oculto
+
+        // Limpiar los valores de subtotal, IVA y total antes de enviar
+        const subtotal = parseFloat($('#subtotal').val().replace('$', '').replace(/\./g, '').replace(',', '.'));
+        const impuestos = parseFloat($('#impuestos').val().replace('$', '').replace(/\./g, '').replace(',', '.'));
+        const total = parseFloat($('#total').val().replace('$', '').replace(/\./g, '').replace(',', '.'));
+        
+        
+        // Asegurarse de que los totales sean números válidos
+        if (isNaN(subtotal) || isNaN(impuestos) || isNaN(total)) {
+            alert("Error al procesar los totales. Por favor verifica los valores.");
+            event.preventDefault(); // Evitar que se envíe el formulario si hay un error
+            return;
+        }
+
+        // Mostrar un mensaje de confirmación
+        
+
+        // Limpiar los campos de subtotal, IVA y total
+        $('#subtotal').val(subtotal);
+        $('#impuestos').val(impuestos);
+        $('#total').val(total);
+
+        // Aquí puedes realizar otras validaciones antes de enviar el formulario.
+        if ($('#servicios_json').val() === "") {
+            alert("Por favor asegúrate de que haya servicios cargados.");
+            event.preventDefault(); // Evitar que se envíe el formulario si no hay datos.
+            return;
+        }
+
+    // Si todo está bien, puedes permitir que el formulario se envíe
+    location.reload(); // No es necesario recargar la página aquí.
+    });
+    
+</script>
+
+{% endblock javascripts %}

@@ -1,0 +1,368 @@
+{% extends 'layout/base.html' %}
+{% load static %}
+{% load moneda_filters %}
+{% block title %} {{ title }} {% endblock %}
+{% block stylesheets %}
+     
+        
+        <style>
+    body {
+        background-color: #ffffff;
+        color: #000000;
+    }
+    .card {
+        background-color: #27333d;
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .card-header {
+        background-color: #1717aa;
+        border-bottom: 1px solid #3a3a5c;
+        color: aliceblue;
+    }
+    .btn-outline-light {
+        border-color: #3a3a5c;
+    }
+    .btn-outline-light:hover, .btn-outline-light:focus {
+        background-color: #3a3a5c;
+        border-color: #3a3a5c;
+    }
+    .stats-card {
+        background-color: #3a3adf;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+    .stats-value {
+        font-size: 24px;
+        font-weight: bold;
+    }
+    .stats-label {
+        font-size: 14px;
+        opacity: 0.7;
+        color: aliceblue;
+    }
+    .stats-value {
+        font-size: 24px; /* initial font size */
+        max-width: 100%; /* set max width to prevent text from overflowing */
+        }
+
+    .stats-value span {
+        display: inline-block; /* make the span an inline block */
+        overflow: hidden; /* hide excess text */
+        text-overflow: ellipsis; /* show ellipsis when text is too long */
+        white-space: nowrap; /* prevent text from wrapping */
+        }
+
+    .stats-value span.long-text {
+        font-size: 18px; /* reduce font size when text is too long */
+        }
+</style>
+{% endblock stylesheets %}
+{% block content %}
+<body>
+    <div class="container-fluid py-4">
+      
+        <div class="row">
+            <div class="col-12">
+                <h1 class="mb-4">Dashboard de Rendimiento</h1>
+                </div>
+              </div>
+                <div class="row mb-4">
+                    <div class="col-md-3">
+                        <div class="stats-card">
+                            <div class="stats-value" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ venta_dia|moneda }}</div>
+                            <div class="stats-label">Venta del dia</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stats-card">
+                            <div class="stats-value" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ venta_mes|moneda }}</div>
+                            <div class="stats-label">Total Ventas Mes</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stats-card">
+                            <div class="stats-value" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ recibo_mes|moneda }}</div>
+                            <div class="stats-label">Ingresos Mes</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stats-card">
+                            <div class="stats-value" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ cartera|moneda}}</div>
+                            <div class="stats-label">Cartera Actual</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Los row son para la fila de las tarjetas -->
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h5 class="card-title mb-0">Rendimiento General</h5>
+                                <div class="btn-group" role="group">
+                                    <button type="button" class="btn btn-outline-light btn-sm" data-period="daily">Diario</button>
+                                    <button type="button" class="btn btn-outline-light btn-sm" data-period="monthly">Mensual</button>
+                                    <button type="button" class="btn btn-outline-light btn-sm" data-period="yearly">Anual</button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="performanceChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                      <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">Cartera por medico</h5>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="salesByCountryChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="row mt-4">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">Total de Envíos</h5>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="shipmentsChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">Tareas Completadas</h5>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="tasksChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+
+
+</body>
+{% endblock content %}
+{% block javascripts %}
+
+<script>
+  const colorPalette = ['#e83e8c', '#4e73df', '#1cc88a', '#f6c23e', '#36b9cc'];
+  var ventas_por_dia = {{ ventas_por_dia|safe }};
+  
+  const performanceCtx = document.getElementById('performanceChart').getContext('2d');
+  const performanceChart = new Chart(performanceCtx, {
+      type: 'line',
+      data: {
+          labels: Object.keys(ventas_por_dia),
+          datasets: [{
+              label: 'Rendimiento',
+              data: Object.values(ventas_por_dia),
+              borderColor: colorPalette[0],
+              backgroundColor: 'rgba(232, 62, 140, 0.1)',
+              tension: 0.4
+          }]
+      },
+      options: {
+          responsive: true,
+          plugins: {
+              legend: {
+                  display: false
+              }
+          },
+          scales: {
+              y: {
+                  beginAtZero: true,
+                  grid: {
+                      color: 'rgba(255, 255, 255, 0.1)'
+                  },
+                  ticks: {
+                      color: 'rgba(255, 255, 255, 0.7)'
+                  }
+              },
+              x: {
+                  grid: {
+                      color: 'rgba(255, 255, 255, 0.1)'
+                  },
+                  ticks: {
+                      color: 'rgba(255, 255, 255, 0.7)'
+                  }
+              }
+          }
+      }
+  });
+
+  // Sales by Country Chart
+  const salesByCountryCtx = document.getElementById('salesByCountryChart').getContext('2d');
+  const salesByCountryChart = new Chart(salesByCountryCtx, {
+      type: 'bar',
+      data: {
+          labels: ['USA', 'GER', 'AUS', 'UK', 'RO', 'BR'],
+          datasets: [{
+              label: 'Ventas',
+              data: [50, 25, 15, 80, 100, 45],
+              backgroundColor: colorPalette
+          }]
+      },
+      options: {
+          responsive: true,
+          plugins: {
+              legend: {
+                  display: false
+              }
+          },
+          scales: {
+              y: {
+                  beginAtZero: true,
+                  grid: {
+                      color: 'rgba(255, 255, 255, 0.1)'
+                  },
+                  ticks: {
+                      color: 'rgba(255, 255, 255, 0.7)'
+                  }
+              },
+              x: {
+                  grid: {
+                      display: false
+                  },
+                  ticks: {
+                      color: 'rgba(255, 255, 255, 0.7)'
+                  }
+              }
+          }
+      }
+  });
+
+  // Shipments Chart
+  const shipmentsCtx = document.getElementById('shipmentsChart').getContext('2d');
+  const shipmentsChart = new Chart(shipmentsCtx, {
+      type: 'line',
+      data: {
+          labels: ['Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+          datasets: [{
+              label: 'Envíos',
+              data: [80, 100, 70, 80, 120, 80],
+              borderColor: colorPalette[1],
+              backgroundColor: 'rgba(78, 115, 223, 0.1)',
+              tension: 0.4
+          }]
+      },
+      options: {
+          responsive: true,
+          plugins: {
+              legend: {
+                  display: false
+              }
+          },
+          scales: {
+              y: {
+                  beginAtZero: true,
+                  grid: {
+                      color: 'rgba(255, 255, 255, 0.1)'
+                  },
+                  ticks: {
+                      color: 'rgba(255, 255, 255, 0.7)'
+                  }
+              },
+              x: {
+                  grid: {
+                      color: 'rgba(255, 255, 255, 0.1)'
+                  },
+                  ticks: {
+                      color: 'rgba(255, 255, 255, 0.7)'
+                  }
+              }
+          }
+      }
+  });
+
+  // Tasks Chart
+  const tasksCtx = document.getElementById('tasksChart').getContext('2d');
+  const tasksChart = new Chart(tasksCtx, {
+      type: 'line',
+      data: {
+          labels: ['Jul', 'Ago', 'Sep', 'Oct', 'Nov'],
+          datasets: [{
+              label: 'Tareas',
+              data: [90, 30, 60, 70, 90],
+              borderColor: colorPalette[2],
+              backgroundColor: 'rgba(28, 200, 138, 0.1)',
+              tension: 0.4
+          }]
+      },
+      options: {
+          responsive: true,
+          plugins: {
+              legend: {
+                  display: false
+              }
+          },
+          scales: {
+              y: {
+                  beginAtZero: true,
+                  grid: {
+                      color: 'rgba(255, 255, 255, 0.1)'
+                  },
+                  ticks: {
+                      color: 'rgba(255, 255, 255, 0.7)'
+                  }
+              },
+              x: {
+                  grid: {
+                      color: 'rgba(255, 255, 255, 0.1)'
+                  },
+                  ticks: {
+                      color: 'rgba(255, 255, 255, 0.7)'
+                  }
+              }
+          }
+      }
+  });
+
+  // Time period selector functionality
+  document.querySelectorAll('[data-period]').forEach(button => {
+      button.addEventListener('click', function() {
+          const period = this.getAttribute('data-period');
+          updateChartData(period);
+      });
+  });
+
+  function updateChartData(period) {
+      let labels, data;
+      var ventas_por_dia = {{ ventas_por_dia|safe }};
+      var ventas_por_mes = {{ ventas_por_mes|safe }};
+      var ventas_por_ano = {{ ventas_por_ano|safe }};
+      
+      
+      var dias_semana =  "{{dias_semana}}" ;
+      var ventas_anuales = "{{venta_mes_mes_ano_actual}}";
+      
+      
+      switch(period) {
+          case 'daily':
+              labels = Object.keys(ventas_por_dia);
+              data = Object.values(ventas_por_dia);
+              break;
+          case 'monthly':
+              labels = Object.keys(ventas_por_mes);
+              data = Object.values(ventas_por_mes);
+              break;
+          case 'yearly':
+              labels = Object.keys(ventas_por_ano);
+              data = Object.values(ventas_por_ano);
+              break;
+      }
+
+      performanceChart.data.labels = labels;
+      performanceChart.data.datasets[0].data = data;
+      performanceChart.update();
+  }
+</script>
+{% endblock javascripts %}
+

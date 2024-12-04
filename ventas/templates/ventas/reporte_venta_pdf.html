@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load moneda_filters %}
+<head>
+    <meta charset="UTF-8">
+    <title>Reporte de Venta</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <tr>
+            <th colspan="4"></th>
+            <td colspan="4"> Factura N°: {{ venta.numero_factura }}</td>
+        </tr>
+        <tr><br></tr>
+        <tr>
+            <th>Cliente</th>
+            <td colspan="3">{{ venta.tercero.Nombre }} {{ venta.tercero.Apellido }}</td>            
+        </tr>
+        <tr>
+            <th>{{ venta.tercero.TipoDocumento.Sigla }}</th>
+            <td colspan="3">{{ venta.tercero.NumeroIdentificacion }}</td>
+        </tr>
+        <tr>
+            <th>Direccion</th>
+            <th>ciudad</th>
+            <th>Telefono</th>
+        </tr>
+        <tr>
+            <td>{{ venta.tercero.Direccion }}</td>
+            <td>{{ venta.tercero.Ciudad }}</td>
+            <td>{{ venta.tercero.TelefonoFijo }} {{ venta.tercero.TelefonoMovil }}</td>
+        </tr>
+        <tr>
+            <th>REMITIDO POR:</th>
+            <td colspan="3">{{ venta.medico.tercero.Nombre }} {{ venta.medico.tercero.Apellido }}</td>
+        </tr>
+        <tr>
+            <th colspan="8" style="text-align: center;">SERVICIOS</th>
+        </tr>
+        <table>
+        <thead>
+            <tr>
+                <th>ITEM</th>
+                <th>CODIGO</th>
+                <th>PAQUETE</th>
+                <th>SERVICIO</th>
+                <th>CANTIDAD</th>
+                <th>DESCUENTO</th>
+                <th>PRECIO</th>
+            <tr>
+        </thead>
+        <tbody>
+            {% for item in servicios %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ paquete.codigo }}</td>
+                <td>{{ paquete.nombre }}</td>
+                <td>{{ item.servicio.nombre }}</td>
+                <td>{{ item.cantidad }}</td>
+                <td>{{ item.descuento|floatformat:2 }}%</td>
+                <td>{{ item.precio|moneda  }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tr>
+            <td colspan="6" style="text-align: right;">TOTAL</td>
+            <td>{{ venta.total|moneda }}</td>
+        </tr>
+        </table>
+
+    </table>
+    <h1 style="text-align: center;">{{ title}}</h1>
+    <p>Tercero: {{ venta.tercero.Nombre }} {{ venta.tercero.Apellido }}</p>
+    <p>Fecha: {{ venta.fecha }}</p>
+
+    <h2>Servicios</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Servicio</th>
+                <th>Precio</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for servicio in servicios %}
+            <tr>
+                <td>{{ servicio.servicio.nombre }}</td>
+                <td>{{ servicio.precio }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

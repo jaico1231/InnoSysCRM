@@ -1,0 +1,56 @@
+<!-- que se muestreel contenido si el usuario logueado es administrador, Supervisor o Jefe_Area -->
+{% if user.is_superuser or user.groups.all.0.name == 'Administrador' or user.groups.all.0.name == 'Supervisor' or user.groups.all.0.name == 'Jefe_Area' %}
+<li class="nav-small-cap">
+  <span class="material-symbols-outlined">
+    admin_panel_settings
+    </span>
+  <span class="hide-menu" onclick="toggleMenu('menu-comercial')">Comercial</span>
+</li>
+<div id="menu-comercial" style="display: none;">
+  <ul>
+    {% if user.is_superuser  %}
+    <li class="sidebar-item">
+      <a class="sidebar-link" href="{% url 'ventas:listar-venta' %}" aria-expanded="false">
+        <span class="material-icons">
+          person_search
+          </span>
+        <span class="hide-menu">Venta</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a class="sidebar-link" href="{% url 'ventas:recibo_caja_list' %}" aria-expanded="false">
+        <span class="material-icons">
+          receipt_long
+          </span>
+        <span class="hide-menu">Recibos de Caja</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a class="sidebar-link" href="{% url 'ventas:cxc_list' %}" aria-expanded="false">
+        <span class="material-icons">
+          receipt_long
+        </span>
+        <span class="hide-menu">Cuentas por Cobrar</span>
+      </a>
+    </li>
+    {% endif %}
+    <li class="sidebar-item">
+      <a class="sidebar-link" href="{% url 'ventas:crear-venta' %}" aria-expanded="false">
+        <span class="material-icons">
+          person_search
+          </span>
+        <span class="hide-menu">Crear Venta</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a class="sidebar-link" href="{% url 'ventas:buscar_cartera' %}" aria-expanded="false">
+        <span class="material-icons">
+          person_search
+          </span>
+        <span class="hide-menu">Cartera</span>
+      </a>
+    </li>
+  </ul>
+</div>
+
+{% endif %}

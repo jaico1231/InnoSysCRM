@@ -1,0 +1,65 @@
+
+from django.db import models
+from administrativo.models.servicios import Medicos, Servicios
+from shared.models.baseModel import BaseModel
+from shared.models.terceros import Terceros
+from shared.models.tipo_pago import TipoPago, TipoTransaccion
+from django.db.models import Sum, F
+
+
+class Venta(BaseModel):
+    tercero = models.ForeignKey(Terceros, on_delete=models.CASCADE, related_name='ventas')
+    medico = models.ForeignKey(Medicos, on_delete=models.CASCADE, related_name='ventas_medico', null=True, blank=True)
+    fecha = models.DateField()
+    numero_factura = models.IntegerField(unique=True) 
+    metodo_pago = models.ForeignKey(TipoPago, on_delete=models.CASCADE,related_name='pago_venta')
+    tipo_transaccion = models.ForeignKey(TipoTransaccion, on_delete=models.CASCADE,related_name='transacciones_venta', null=True, blank=True)
+    subtotal = models.DecimalField(max_digits=50, decimal_places=2, default=0)  # Total sin impuestos
+    impuestos = models.DecimalField(max_digits=50, decimal_places=2, default=0)  # IVA
+    descuentos = models.DecimalField(max_digits=50, decimal_places=2, default=0)  # Descuentos generales
+    total = models.DecimalField(max_digits=50, decimal_places=2, default=0)  # Total final con impuestos
+    observaciones = models.TextField(null=True, blank=True)
+
+    def __str__(self):
+        return f'Venta a {self.id}'
+    
+    def pagos_recibidos(self):
+        """
+        Calcula el total de pagos recibidos por esta venta.
+        """
+        return self.recibos_caja_ventas.aggregate(total_pagado=Sum('total'))['total_pagado'] or 0
+
+    def saldo_pendiente(self):
+        """
+        Calcula el saldo pendiente en esta venta.
+        """
+        return self.total - self.pagos_recibidos()
+
+    def es_credito(self):
+        """
+        Verifica si esta venta fue a crédito o no.
+        """
+        return self.metodo_pago.nombre.lower() == 'credito'
+
+    @classmethod
+    def total_ventas_por_metodo(cls, metodo_pago_id):
+        """
+        Devuelve el total de ventas según un método de pago específico.
+        """
+        return cls.objects.filter(metodo_pago_id=metodo_pago_id).aggregate(total=Sum('total'))['total'] or 0
+
+class VentaServicios(BaseModel):
+    venta = models.ForeignKey(Venta, on_delete=models.CASCADE, related_name='venta_servicios')
+    servicio = models.ForeignKey(Servicios, on_delete=models.CASCADE)
+    cantidad = models.PositiveIntegerField(default=1)
+    precio = models.DecimalField(max_digits=50, decimal_places=2)
+    descuento = models.DecimalField(max_digits=4, decimal_places=2, default=0)
+    total = models.DecimalField(max_digits=50, decimal_places=2)
+    def __str__(self):
+        return f'{self.servicio} en la venta de {self.venta}'
+    
+class AnulacionVenta(BaseModel):
+    venta = models.ForeignKey(Venta, on_delete=models.CASCADE, related_name='anulaciones')
+    observaciones = models.TextField(null=True, blank=True)
+    def __str__(self):
+        return f'Anulacion de {self.venta}'

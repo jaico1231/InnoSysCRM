@@ -1,0 +1,18 @@
+{% load moneda_filters %}
+
+{% if servicios_con_descuento %}
+    {% for servicio_data in servicios_con_descuento %}
+        <tr>
+            <td>{{ servicio_data.servicio.codigo }}</td>  <!-- Asegúrate de que el campo sea correcto -->
+            <td>{{ servicio_data.servicio.nombre }}</td>  <!-- Asegúrate de que el campo sea correcto -->
+            <td>{{ servicio_data.cantidad }}</td>
+            <td>{% if servicio_data.precio_original %}{{ servicio_data.precio_original|moneda }}{% else %}--{% endif %}</td>
+            <td>{{ medico.descuento }}%</td>
+            <td>{% if servicio_data.precio_con_descuento %}{{ servicio_data.precio_con_descuento|moneda }}{% else %}0{% endif %}</td>
+        </tr>
+    {% endfor %}
+{% else %}
+    <tr>
+        <td colspan="6" class="text-center">No hay servicios disponibles para este médico.</td>  <!-- Cambié a 6 para que coincida con el número de columnas -->
+    </tr>
+{% endif %}

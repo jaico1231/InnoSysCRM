@@ -1,0 +1,73 @@
+import re
+from django.db import models
+from django.contrib.auth.models import User
+
+from shared.models.tipo_documento import Tipo_Documento
+
+def Cargar_imagenes_articulos_path(instance, filename):
+    # Obtener el número de documento del tercero
+    identificacion = instance.NumeroIdentificacion
+    # Reemplazar espacios en blanco por guiones bajos y eliminar caracteres especiales
+    identificacion = re.sub(r'\W+', '_', str(identificacion))
+    # Obtener la extensión del archivo
+    ext = filename.split('.')[-1]
+    # Devolver la ruta de subida del archivo
+    return f'img/users/{identificacion}/{filename}'
+
+class Profile(BaseModel):
+
+    IdPerfil = models.AutoField(primary_key=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile', verbose_name='Usuario')
+    direccion = models.CharField(max_length=150, blank=True, null=True, verbose_name='Dirección')
+    biografia = models.TextField(max_length=500, blank=True, verbose_name='Biografía')
+    ubicacion = models.CharField(max_length=30, blank=True, verbose_name='Ubicación')
+    
+
+    class Meta:
+        verbose_name = 'Perfil'
+        verbose_name_plural = 'perfiles'
+        ordering = ['-IdPerfil']
+
+    def __str__(self):
+        return f'Perfil de {self.user.username}'
+
+# import re
+# from django.db import models
+# from django.contrib.auth.models import User
+# from shared.models.tipodocumento import TipoDocumento
+
+
+
+
+# #Perfil de usuario
+# class Profile(models.Model):
+#     @staticmethod
+#     def Cargar_imagenes_articulos_path(instance, filename):
+#         # Obtener el número de documento del tercero
+#         identificacion = instance.NumeroIdentificacion
+#         # Reemplazar espacios en blanco por guiones bajos y eliminar caracteres especiales
+#         identificacion = re.sub(r'\W+', '_', str(identificacion))
+#         # Obtener la extensión del archivo
+#         ext = filename.split('.')[-1]
+#         # Devolver la ruta de subida del archivo
+#         # return os.path.join('archivos_terceros', IdArticulo, f'{instance.IdArticuloFK.IdArticulo}/{filename}')
+#         return f'img/users/{identificacion}/{filename}'
+
+#     IdPerfil = models.AutoField(primary_key=True)
+#     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile', verbose_name='Usuario')
+#     image = models.ImageField(default='users/usuario_default.jpg', upload_to=Cargar_imagenes_articulos_path, verbose_name='Imagen de perfil')
+#     direccion = models.CharField(max_length=150, blank=True, null=True, verbose_name='Dirección')
+#     biografia = models.TextField(max_length=500, blank=True, verbose_name='Biografía')
+#     ubicacion = models.CharField(max_length=30, blank=True, verbose_name='Ubicación')
+#     TipoDocumento_FK = models.ForeignKey(TipoDocumento, on_delete=models.CASCADE, blank=True, null=True)
+#     NumeroIdentificacion = models.IntegerField("Número Identificación", blank=True, null=True)
+#     class Meta:
+#         verbose_name = 'Perfil'
+#         verbose_name_plural = 'perfiles'
+#         ordering = ['-IdPerfil']
+#     def __str__(self):
+#         return self.user.username
+    
+    
+    
+    

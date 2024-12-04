@@ -1,0 +1,81 @@
+{% extends 'layout/base.html'%}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" />
+<style>
+    .select2-container {
+        width: 100% !important;
+    }
+</style>
+{% endblock stylesheets %}
+{% load moneda_filters %}
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header card-header-primary">
+                <h4 class="card-title">{{ title }}</h4>
+            </div>
+            <div class="card-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12 d-flex align-items-stretch">
+                            <div class="card w-100">
+                                <div class="card-body">
+                                    <div class="d-sm-flex d-block align-items-center justify-content-between mb-9">
+                                        
+                                        <div class="card-body">
+                                            
+                                            {% if msg %}
+                                                <span class="text-danger">{{ msg | safe }}</span>
+                                            {% else %}
+                                                
+                                            {% endif %}  
+                                            <div class="profile-container">
+                                                <form method="post">
+                                                    {% csrf_token %}
+                                                    
+                                                    {{ form.as_p }}
+                                                
+                                                    <button type="submit" class="btn btn-primary">Registrar Recibo</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+{% block javascripts %}
+
+<script>
+    $('.select2').change(function() {
+            alert('Cambio detectado en Select2.');
+        });
+</script>
+
+<!-- <script>
+    $(document).ready(function() {
+        $('#cuenta_por_cobrar').change(function() {
+            alert('Se ha detectado un cambio en el campo "Cuenta por cobrar".');
+        });
+    });
+</script> -->
+<!-- <script>
+    $('#cuenta_por_cobrar').change(function() {
+          alert('hay un cambio en el campo cuenta por cobrar');          
+        });
+</script> -->
+
+{% endblock javascripts %}
