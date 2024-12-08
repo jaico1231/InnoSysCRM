@@ -1,0 +1,295 @@
+{% extends 'layout/base.html'%}
+
+{%block title%}{{ title }}{%endblock%}
+{% block stylesheets %}
+{% load static %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYL/HkXjOoSh8an/6JWnvmzkhS4HRzYRwZvnmhPxYBXAb1hcqXdvigEFbEfjf1n+ZUyVTRFVSNRQcf2tPzxQw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r9uboCVPPLMTiCT8Y8XdHHBHhVxX3Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link href='https://fonts.googleapis.com/css?family=Roboto:400,500,400italic,300italic,300,500italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="{% static 'assets/css/HV.style.css' %}" />
+{% endblock stylesheets %}
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+    <div class="card">
+        <div class="card-header card-header-primary">
+        <div class="col-md-12" style="text-align: right;">
+            <button type="button" class="btn-close BtnCancel col-md-2"></button>
+        </div>
+        <h4 class="card-title col-md-8" >{{ title }}</h4>            
+        <p class="card-category"></p>
+        </div>
+        <div class="card-body">            
+            <div class="container-fluid">
+                <div class="row">                    
+                <div class="col-lg-12 d-flex align-items-strech">
+                    <div class="card w-100">
+                        <nav class="navbar navbar-expand-lg navbar-red bg-red">
+                            <div class="container-fluid">
+                              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                              </button>
+                              <div class="collapse navbar-collapse" id="navbarNav">
+                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                      <button class="nav-link hv " data-id="{{id_hv}}" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Hoja de Vida </button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                      <button class="nav-link history active" data-id="{{id_hv}}" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Llamados de atencion</button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                      <button class="nav-link permisos" id="contact-tab" data-id="{{id_hv}}" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Historial de permisos</button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                      <button class="nav-link" id="about-tab" data-bs-toggle="tab" data-bs-target="#about" type="button" role="tab" aria-controls="about" aria-selected="false">Acerca de</button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                      <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Contacto</button>
+                                    </li>
+                                  </ul>                                  
+                            </div>
+                        </nav>
+                        {% if cantidad_LL_AT > 0 %}
+                        <div class="col-md-12">
+                            <div class="card">
+                              <div class="card-body">
+                                <p>El colaborador tiene {{ cantidad_LL_AT }} llamados de atención</p> 
+                              </div>
+                            </div>
+                        </div>                                    
+                        {% endif %}
+                        {% if Llamados_Atencion %} 
+                            <div class="col-md-12">
+                            <div class="card">
+                               <!-- Contenido agrupado  -->
+                                {% for x in Llamados_Atencion%}
+                                <div class="card-body">
+                                <div class="container-fluid">
+                                  <div class="row">
+                                    
+                                    <div class="col-lg-12 d-flex align-items-strech"> 
+                                      <div class="card w-100">
+                                        <div class="card-body"><p><b>Llamado de Atencion N°: {{x.idllamado_atencion}}</b></p>
+                                          <div class="d-sm-flex d-block align-items-center justify-content-between mb-9">                        
+                                            <div class="card-body">
+                                              <div class="profile-container">
+                                                <table class="table table-striped" style="width:100%" >
+                                                    <tr>
+                                                        <td colspan="7" style="text-align: center;"><b>LLAMADO DE ATENCION</b></td>                                        
+                                                    </tr>
+                                                    <tr>
+                                                        <td><b>Fecha de la infracción:</b></td>
+                                                        <td style="text-align: center;">{{ x.fecha_infraccion }}</td>
+                                                        <td><b>Realizado por:</b></td>
+                                                        <td style="text-align: center;">{{ x.Autorizado_por }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><b>Acciones:</b></td>
+                                                        <td colspan="6" style="text-align: center;">{{ x.acciones }}</td>
+                                                    </tr>
+                                                    {% if Descargos %}
+                                                    <tr>
+                                                        <td colspan="7" style="text-align: center;"><b>DESCARGOS</b></td>                                        
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="7" style="text-align: center;"><b></b></td>
+                                                    </tr>
+                                                    <tr>
+                                                      <td colspan="7" style="text-align: center;"><b></b></td>
+                                                  </tr>
+                                                    <tr>
+                                                      {% for y in Descargos %}
+                                                        <td>Descargo N°:</td>
+                                                        <td>{{y.iddescargos}}</td>
+                                                        <td>Fecha de descargo:</td>
+                                                        <td>{{y.fecha_descargo}}</td>
+                                                        <td>Entrevistador:</td>
+                                                        <td>{{y.autorizado_por}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Acciones:</td>
+                                                        <td colspan="6" style="text-align: center;">{{ y.acciones }}</td>
+                                                    </tr>
+                                                    
+                                                            <tr>
+                                                                <td colspan="7" style="text-align: center;"><b></b></td>
+                                                            </tr>
+                                                            <tr>
+                                                              <td colspan="7" style="text-align: center;"><b></b></td>
+                                                          </tr>
+                                                            <tr>
+                                                                <td colspan="7" style="text-align: center;"><b>CUESTIONARIO</b></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="3" style="text-align: center;"><b>PREGUNTAS:</b></td>
+                                                                <td colspan="3" style="text-align: center;"><b>RESPUSTAS:</b></td>
+                                                            </tr>
+                                                            {% for q in Listado %}
+                                                            <tr>
+                                                                <td colspan="3">{{q.preguntas}}</td>
+                                                                <td colspan="3">{{q.respuestas}}</td>
+                                                            </tr>
+                                                        {% endfor %}
+                                                      {% endfor %}
+            
+                                                    {% else %}
+                                                    <tr>
+                                                      <td colspan="7"> </td>
+                                                  </tr>
+                                                    <tr>
+                                                        <td colspan="7" style="text-align: center;"> No hay descargos </td>
+                                                    </tr> 
+                                                    {% endif %}
+                                                </table>                                                
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                {% endfor %} 
+                              </div>
+                            </div>
+                        {% else %}
+                            <div class="col-md-12">
+                            <div class="card">                              
+                              <div class="card-body">
+                                <div class="container-fluid">
+                                  <div class="row">
+                                    <div class="col-lg-12 d-flex align-items-strech">                  
+                                      <div class="card w-100">
+                                        <div class="card-body">
+                                          <div class="d-sm-flex d-block align-items-center justify-content-between mb-9">                        
+                                            <div class="card-body">
+                                              <div class="profile-container">
+                                                <p>No hay llamados de atención</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                            </div>
+                            </div>
+                        {% endif %}
+                        <!-- <div class="card-body"> 
+                            {% if Llamados_Atencion %}                            
+                                <div class="card">
+                                    {% for x in Llamados_Atencion%}
+                                    <table class="table table-striped" style="width:100%" >
+                                        <tr>
+                                            <td><b>Llamado de atencion N°:</b></td>
+                                            <td style="text-align: left;" colspan="6"><b>{{ x.idllamado_atencion }}</b></td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <td>Fecha de la infracción:</td>
+                                            <td style="text-align: center;">{{ x.fecha_infraccion }}</td>
+                                            <td>Realizado por:</td>
+                                            <td style="text-align: center;">{{ x.Autorizado_por }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Acciones:</td>
+                                            <td colspan="6" style="text-align: center;">{{ x.acciones }}</td>
+                                        </tr>
+                                        {% if Descargos %}
+                                        <tr>
+                                            <td colspan="7" style="text-align: center;">Descargos</td>                                        
+                                        </tr>
+                                        <tr>
+                                            <td>Descargo N°:</td>
+                                            <td>{{Descargos.iddescargos}}</td>
+                                            <td>Fecha de descargo:</td>
+                                            <td>{{Descargos.fecha_descargo}}</td>
+                                            <td>Entrevistador:</td>
+                                            <td>{{Descargos.autorizado_por}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Acciones:</td>
+                                            <td colspan="6" style="text-align: center;">{{ descargos.acciones }}</td>
+                                        </tr>
+                                        {% for q in listado %}
+                                            <tr>
+                                                <td colspan="7" style="text-align: center;">Cuestionario</td>
+                                            </tr>
+                                            <tr>
+                                                <td>PREGUNTAS:</td>
+                                                <td>RESPUSTAS:</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{q.preguntas}}</td>
+                                                <td>{{q.respuestas}}</td>
+                                            </tr>
+                                        {% endfor %}
+
+                                        {% else %}
+                                        <tr>
+                                            <p> No hay descargos </p>
+                                        </tr>    
+                                        
+                                        {% endif %}
+                                    </table>
+                                    {% endfor %}                          
+                            
+                            </div>
+                            {% else %}                            
+                                <p>No hay llamados de atención</p>                          
+                            {% endif %}
+                        </div> -->
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+        </div>
+    </div>
+    </div>
+</div>  
+
+{% endblock content %}
+{% block javascripts %}
+
+<script type="text/javascript">
+
+    
+
+$('.BtnCancel').click(function () {
+//crear alerta con la variable title y el url de redireccionamiento))
+    // url = '{{ cancel_url }}';
+    location.href = '{{ list_url }}';  
+});
+
+$('.history').click(function () {
+  var id = $(this).attr('data-id');
+  var url = "{% url 'RrHh:Historial_HV' 0 %}".replace('0', id);
+  location.href = url;
+});
+
+$('.permisos').click(function () {
+  var id = $(this).attr('data-id');
+  var url = "{% url 'RrHh:Historial_SP' 0 %}".replace('0', id);
+  location.href = url;
+
+});
+
+$('.hv').click(function () {
+  var id = $(this).attr('data-id');
+      var url = "{% url 'RrHh:Detalle_HV' 0 %}".replace('0', id); 
+      location = url;
+      // location.href = url;
+  // var id = $(this).attr('data-id');
+  // alert ('{{hv}}' + id);
+
+  // // var url = "{% url 'RrHh:Detalle_HV' 0 %}".replace('0', id);
+  // // location.href = url;
+  // alert(id)
+});
+</script>
+{% endblock javascripts %}

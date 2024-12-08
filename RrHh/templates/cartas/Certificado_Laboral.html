@@ -1,0 +1,55 @@
+{% extends 'layout/base.html'%}
+
+{%block title%}{{ title }}{%endblock%}
+{% block stylesheets %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYL/HkXjOoSh8an/6JWnvmzkhS4HRzYRwZvnmhPxYBXAb1hcqXdvigEFbEfjf1n+ZUyVTRFVSNRQcf2tPzxQw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r9uboCVPPLMTiCT8Y8XdHHBHhVxX3Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+{% endblock stylesheets %}
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header card-header-primary">
+                <h4 class="card-title ">{{title}} </h4>
+            </div>
+            <div class="card-body">
+                <div style="padding-left: 20px; padding-top: 10px; padding-right: 20px; padding-bottom: 20px; height: 100%;">
+                    <div style="text-align: right;">
+                        <p style="margin-top: 50px; ">
+                            Acopi Yumbo, Valle del Cauca CO, ${fecha}
+                        </p>
+                        <br><br><br>
+                    </div>
+                    
+                    <h3 style="text-align: center;"><b>INDUSTRIAS ROMIL S.A.S.<br>
+                    NIT 805.001.883-1<br><br>
+                CERTIFICA</b></h3>
+
+                    <p>Señor(a).<br>
+                        <b>NOMBRE</b><br>
+                        CC. XXXXXXXXXXX</p>
+                        
+                        <p style="text-align: left;"><b><u>ASUNTO: TERMINACION DE CONTRATO DE TRABAJO.</u></b></p>
+                        <p>Apreciado Sr(a). ${nombre}</p><br>
+						<p style="text-align: justify;">Que el señor (NOMBRE DE LA PERSONA en letra MAYUSCULA) identificado con Cédula de Ciudadanía No. XXXXXX, laboró en nuestra empresa desde el día Trece (13) del mes de Julio del año dos mil veintiuno (2021) hasta el día Once (11) del mes de Abril del año dos mil veinticuatro (2024), desempeñando el cargo de (CARGO DE LA PERSONA en letra MAYUSCULA) con un contrato laboral a término fijo, devengando un salario de (monto en letras minúscula) pesos M/CTE ($XXXX), la terminación de contrato es efectuada bajo retiro voluntario.</p><br><br><br>
+						<p>La presente se expide en Yumbo a los (Cantidad de días en letras) (#) días del mes de XXX del año dos mil veintixxx (202x). <br><br>
+                            En solicitud: a quien pueda interesar,</p><br><br>
+
+                        <p><b>Cordialmente,</b></p><br><br><br>
+
+                        <p><b>INDUSTRIAS ROMIL S.A.S</b><br>
+                        Jhon Steven Milques Vargas<br>
+                        Gerente Administrativo y Operativo</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    {% endblock content %}
+    {% block javascripts %}
+    
+    
+    {% endblock javascripts %}

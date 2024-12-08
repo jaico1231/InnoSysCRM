@@ -1,0 +1,55 @@
+{% extends 'layout/base.html'%}
+
+{%block title%}{{ title }}{%endblock%}
+{% block stylesheets %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYL/HkXjOoSh8an/6JWnvmzkhS4HRzYRwZvnmhPxYBXAb1hcqXdvigEFbEfjf1n+ZUyVTRFVSNRQcf2tPzxQw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r9uboCVPPLMTiCT8Y8XdHHBHhVxX3Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+{% endblock stylesheets %}
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header card-header-primary">
+                <h4 class="card-title ">{{title}} </h4>
+            </div>
+            <div class="card-body">
+                <div style="padding-left: 20px; padding-top: 10px; padding-right: 20px; padding-bottom: 20px; height: 100%;">
+                    <div style="text-align: right;">
+                        <p style="margin-top: 50px; ">
+                            Acopi Yumbo, Valle del Cauca CO, ${fecha}
+                        </p>
+                    </div>
+                    
+                        <p>Señores.<br>
+                        <b>INDUSTRIAS ROMIL S.A.S.</b><br>
+                        NIT. 805.001.883<br>
+                        Señor<br>
+                        Jhon Steven Milques Vargas.<br>
+                        Gerente Administrativo y Operativo.<br>
+                        </p>
+                        
+                        <p style="text-align: left;"><b><u>ASUNTO: (ACCION IRREGULAR COMETIDA).</u></b></p>
+                        <p>Respetados señores</p><br>
+						<p>Reciba un cordial saludo,</p><br><br><br>
+						<p>La presente es emitida a fin de notificar formalmente, en virtud concedida como analista HSEQ - jefe de personal, los siguientes hechos (Descripción Acción Irregular Cometida).<br><br>
+                            Teniendo en cuenta lo anterior, se brinda a su conocimiento, a fin de tomar las respectivas acciones sobre el caso debido a su incurrencia actualmente.<br>
+                            En asunto adjunto soportes de (Mencionar que Tipos de Reporte se Anexan).</p><br><br>
+
+                        <p><b>Cordialmente,</b></p><br><br><br>
+
+                        <p><b>INDUSTRIAS ROMIL S.A.S</b><br>
+                        Jhon Steven Milques Vargas<br>
+                        Gerente Administrativo y Operativo</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    {% endblock content %}
+    {% block javascripts %}
+    
+    
+    {% endblock javascripts %}

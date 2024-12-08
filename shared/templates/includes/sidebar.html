@@ -1,0 +1,40 @@
+{% load get_group %}
+<div class="sidebar">
+    <ul id="sidebarnav">
+        {% for menu in menus %}
+            {% if menu.estado %}
+                {% for group in menu.group.all %}
+                    {% if request.user|has_group:group.name %}
+                        <li class="nav-small-cap">
+                            {% if menu.icon %}
+                                <span class="material-symbols-outlined">{{ menu.icon }}</span>
+                            {% endif %}
+                            <span class="hide-menu" onclick="toggleMenu('{{ menu.name }}Menu')">{{ menu.name }}</span>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+
+                <div id="{{ menu.name }}Menu" class="menu-container" style="display:none;">
+                    <ul>
+                        {% for item in menu.items.all %}
+                            {% if item.estado %}
+                                {% for group in item.groups.all %}
+                                    {% if request.user|has_group:group.name %}
+                                        <li class="sidebar-item">
+                                            <a class="sidebar-link" href="{% url item.url_name %}" aria-expanded="false">
+                                                {% if item.icon %}
+                                                    <span class="material-symbols-outlined">{{ item.icon }}</span>
+                                                {% endif %}
+                                                <span class="hide-menu">{{ item.name }}</span>
+                                            </a>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </ul>
+</div>

@@ -1,0 +1,50 @@
+{% extends 'layout/base.html'%}
+
+{%block title%}{{ title }}{%endblock%}
+{% block stylesheets %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYL/HkXjOoSh8an/6JWnvmzkhS4HRzYRwZvnmhPxYBXAb1hcqXdvigEFbEfjf1n+ZUyVTRFVSNRQcf2tPzxQw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r9uboCVPPLMTiCT8Y8XdHHBHhVxX3Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+{% endblock stylesheets %}
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header card-header-primary">
+                <h4 class="card-title ">{{title}} </h4>
+            </div>
+            <div class="card-body">
+                <div style="padding-left: 20px; padding-top: 10px; padding-right: 20px; padding-bottom: 20px; height: 100%;">
+                    <div style="text-align: right;">
+                        <p style="margin-top: 50px; ">
+                            Acopi Yumbo, Valle del Cauca CO, ${fecha}
+                        </p>
+                    </div>
+                    
+                    <p>Señor(a).<br>
+                        <b>NOMBRE</b><br>
+                        CC. XXXXXXXXXXX</p>
+                        
+                        <p style="text-align: left;"><b><u>ASUNTO: Reconvención Administrativa.</u></b></p>
+                        <p>Apreciado Sr(a). ${nombre}</p><br>
+						<p>Con gran sorpresa observamos que usted no cumplió con la obligación especial de los trabajadores, la cual consiste en acatar las órdenes e instrucciones que de manera particular le imparta el empleador y/o sus representantes; lo anterior, al (Descripción Acción Irregular Cometida), aclaración realizada previamente a su conocimiento, esto para garantizar el debido cumplimiento de sus deberes.</p><br><br><br>
+						<p>Por lo anterior le hacemos la presente reconvención administrativa, para que en lo sucesivo no se repitan sus comportamientos y cumpla cabalmente con las obligaciones que tiene con la compañía. <br><br>
+                            Por último, le manifestamos que, de no corregirse los comportamientos, nos veremos en la obligación de iniciar un proceso disciplinario.</p><br><br>
+
+                        <p>Cordialmente,</p><br><br><br>
+
+                        <p><b>INDUSTRIAS ROMIL S.A.S</b><br>
+                        Jhon Steven Milques Vargas<br>
+                        Gerente Administrativo y Operativo</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    {% endblock content %}
+    {% block javascripts %}
+    
+    
+    {% endblock javascripts %}

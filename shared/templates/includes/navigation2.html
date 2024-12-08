@@ -1,0 +1,82 @@
+{% load static %}
+<style>
+  .app-header {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: auto;
+    z-index: 1030;
+  }
+</style>
+<header class="app-header">
+  <nav class="navbar navbar-expand-lg navbar-light">
+      <!-- ... -->
+      {% if request.user.is_authenticated %}
+                <li class="nav-item">
+                    <a style="margin-right: 15px;" href="{% url 'shared:index' %}" class="btn btn-primary">
+                        <i class="bx bx-user"></i>
+                        Bienvenido {{ request.user.first_name }} {{ request.user.last_name }}
+                    </a>
+                </li>
+                  <li class="nav-item dropdown">
+                      <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="notificationDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                          <i class="ti ti-bell-ringing"></i>
+                          <div class="notification bg-primary rounded-circle"></div>
+                      </a>
+                      <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="notificationDropdown" id="notifications">
+                          <!-- Las notificaciones se cargarán aquí -->
+                      </div>  
+                  </li>
+                  <li class="nav-item dropdown">
+                    <a style="margin-right: 15px;" class="nav-link nav-icon-hover" href="javascript:void(0)" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                      {% if request.user.profile_image %}
+                          <!-- <img src="{{ request.user.profile_image.url }}" alt="Profile Image" width="35" height="35" class="rounded-circle"> -->
+                          <img src="{% static '/media/img/profile/default-ussder.jpg' %}" alt="Profile Image" width="35" height="35" class="rounded-circle">
+                      {% else %}
+                          <img src="{% static '/media/img/profile/default-ussder.jpg' %}" alt="Profile Image" width="35" height="35" class="rounded-circle">
+                      {% endif %}
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="userDropdown">
+                        <a style="margin-right: 15px;" href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                            <i class="ti ti-user fs-6"></i>
+                            <p class="mb-0 fs-3">Mi Perfil</p>
+                        </a>
+                        <a style="margin-right: 15px;" href="{% url 'shared:userlist' %}" class="d-flex align-items-center gap-2 dropdown-item">
+                            <i class="ti ti-mail fs-6"></i>
+                            <p class="mb-0 fs-3">Cambiar Contraseña</p>
+                        </a>
+                        <a href="{% url 'shared:logout' %}" class="d-flex align-items-center gap-2 dropdown-item">
+                            <span class="material-symbols-outlined">logout</span>
+                            <p class="mb-0 fs-3">Salir</p>
+                        </a>
+                    </div>
+                </li>
+      {% endif %}
+      <!-- ... -->
+  </nav>
+</header>
+{% block javascripts %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+    $("#notificationDropdown").click(function(){
+        $.ajax({
+            url: "{% url 'shared:get_notifications' %}",
+            type: 'get',
+            dataType: 'json',
+            success: function(data) {
+                $("#notifications").empty();  // Limpia las notificaciones antiguas
+                data.notifications.forEach(function(notification) {
+                    $("#notifications").append(`
+                        <a href="javascript:void(0)" class="dropdown-item">
+                            <i class="ti ti-alert fs-6"></i>
+                            <p class="mb-0 fs-3">${notification}</p>
+                        </a>
+                    `);
+                });
+            }
+        });
+    });
+});
+</script>
+{% endblock javascripts %}

@@ -1,0 +1,163 @@
+{% extends 'layout/base.html'%}
+
+{%block title%}{{ title }}{%endblock%}
+{% block stylesheets %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYL/HkXjOoSh8an/6JWnvmzkhS4HRzYRwZvnmhPxYBXAb1hcqXdvigEFbEfjf1n+ZUyVTRFVSNRQcf2tPzxQw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r9uboCVPPLMTiCT8Y8XdHHBHhVxX3Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+{% endblock stylesheets %}
+{% block content %}
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-primary">
+            <div class="col-md-12" style="text-align: right;">
+              <button type="button" class="btn-close BtnCancel col-md-2"></button>
+          </div>
+            <h4 class="card-title">{{ title }}</h4>
+            <p class="card-category"></p>
+          </div>
+          <div class="card-body">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-lg-12 d-flex align-items-strech">                  
+                  <div class="card w-100">
+                    <div class="card-body">
+                        <table class="table">
+                            <tr>
+                                <td>{{ form.propietario_doc.label }}</td>
+                                <td>{{ form.propietario_doc }}</td>
+                            </tr>
+                            <tr>
+                                <td>{{ form.Tipo_Formato_CartaFK.label }}</td>
+                                <td>{{ form.Tipo_Formato_CartaFK }}</td>
+                            </tr>
+                            <div id="observaciones_field" style="display: none;">
+                                
+                            </div>
+                            
+                          
+                        </table>
+                        
+                        
+                      <div class="d-sm-flex d-block align-items-center justify-content-between mb-9">
+                        
+                        <div class="card-body">
+                            
+                          <div class="profile-container">
+                            <!-- {{ form.as_table }} -->
+                          </div>
+                          <!-- aqui mostraremos la carta de solicitud -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <button type="submit" class="btn btn-primary btn-xs">
+              <i class="material-icons ">save</i>Agregar 
+            </button>
+            <button type="button" class="btn btn-secundary BtnCancel">
+              <i class="material-icons ">cancel</i>Cancelar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  </form>
+{% endblock content %}
+{% block javascripts %}
+
+<script type="text/javascript">
+  let tipo_formato_id = null;
+document.addEventListener('DOMContentLoaded', function() {
+  let tipo_formato = document.getElementById('id_Tipo_Formato_CartaFK');
+  tipo_formato_id = tipo_formato.value;
+  tipo_formato.onchange = function() {
+    tipo_formato_id = tipo_formato.value;
+    if (tipo_formato_id === '1') {
+     
+      alert("Seleccionaste la opción 1");
+    } else if (tipo_formato_id === '2') {
+      
+      alert("Seleccionaste la opción 2");
+    }else if(tipo_formato_id === '3'){
+        alert("Selecconaste la opcion 3")
+      }else if(tipo_formato_id === '4'){
+
+        alert("Selecconaste la opcion 4")
+      }else if(tipo_formato_id === '5'){
+        alert("Selecconaste la opcion 5")
+      }else if(tipo_formato_id === '6'){
+        alert("Selecconaste la opcion 6")
+      }else if(tipo_formato_id === '7'){
+        alert("Selecconaste la opcion 7")
+      }else if(tipo_formato_id === '8'){
+        alert("Selecconaste la opcion 8")
+      }else if(tipo_formato_id === '9'){
+        alert("Selecconaste la opcion 9")
+      }else if(tipo_formato_id === '10'){
+        alert("Selecconaste la opcion 10")
+      }else if(tipo_formato_id === '11'){
+        alert("Selecconaste la opcion 11")
+      }else if(tipo_formato_id === '12'){
+        alert("Selecconaste la opcion 12")
+      }else if(tipo_formato_id === '13'){
+        alert("Selecconaste la opcion 13")
+      }else if(tipo_formato_id === '14'){
+        alert("Selecconaste la opcion 14")
+      }else if(tipo_formato_id === '15'){
+        alert("Selecconaste la opcion 15")
+      }else if(tipo_formato_id === '16'){
+        alert("Selecconaste la opcion 16")
+      }else if(tipo_formato_id === '17'){
+        alert("Selecconaste la opcion 17")
+      }else if(tipo_formato_id === '18'){
+        alert("Selecconaste la opcion 18")
+      }else if(tipo_formato_id === '19'){
+        alert("Selecconaste la opcion 19")
+      }else if(tipo_formato_id === '20'){
+        alert("Selecconaste la opcion 20")
+      }else if(tipo_formato_id === '21'){
+        alert("Selecconaste la opcion 21")
+      }else if(tipo_formato_id === '22'){
+        alert("Selecconaste la opcion 22")
+      }else if(tipo_formato_id === '23'){
+        alert("Selecconaste la opcion 23")
+      }else if(tipo_formato_id === '24'){
+        alert("Selecconaste la opcion 24")
+      }else if(tipo_formato_id === '25'){
+        alert("Selecconaste la opcion 25")
+      }else if(tipo_formato_id === '26'){
+        alert("Selecconaste la opcion 26")
+      }
+      
+    }
+  
+});
+</script>
+
+<script type="text/javascript">
+
+  
+
+
+
+$('.BtnCancel').click(function () {
+    location.href = "{{ list_url }}";  
+});
+    
+</script>
+{% endblock javascripts %}
+  
+  
+  

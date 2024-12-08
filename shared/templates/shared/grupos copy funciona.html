@@ -1,0 +1,65 @@
+{% extends 'layout/base.html' %}
+{% load static %}
+
+{% block title %}Modificar Grupo{% endblock title %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+    <h1 class="h3 mb-4 text-gray-800">Modificar Grupo</h1>
+
+    <form method="post" action="">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label for="group-name" class="form-label">Nombre del Grupo:</label>
+            <input type="text" class="form-control" id="group-name" name="name" value="{{ form.instance.name }}" required>
+        </div>
+
+        <div class="form-row field-permissions">
+            <label for="id_permissions" class="form-label">Permisos:</label>
+
+            <div class="d-flex">
+                <select multiple="multiple" id="id_permissions_from" class="form-control col-5 mr-2">
+                    {% for permission in form.permissions.field.queryset %}
+                        {% if permission not in form.instance.permissions.all %}
+                            <option value="{{ permission.pk }}">{{ permission }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+                <div class="btn-group-vertical" role="group">
+                    <button type="button" id="id_permissions_add_link" class="btn btn-sm btn-success mb-2">➔</button>
+                    <button type="button" id="id_permissions_remove_link" class="btn btn-sm btn-danger">←</button>
+                </div>
+                <select multiple="multiple" id="id_permissions_to" name="permissions" class="form-control col-5 ml-2">
+                    {% for permission in form.instance.permissions.all %}
+                        <option value="{{ permission.pk }}">{{ permission }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <p class="mt-2">Mantenga presionado "Control" o "Comando" en una Mac, para seleccionar más de uno.</p>
+        </div>
+
+        <div class="d-flex justify-content-between mt-3">
+            <a href="{% url 'shared:groupslist' %}" class="btn btn-secondary">Cancelar</a>
+            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+        </div>
+    </form>
+</div>
+{% endblock content %}
+
+{% block javascripts %}
+<script>
+$(document).ready(function() {
+    // Botones de selección y eliminación
+    $('#id_permissions_add_link').click(function(e) {
+        e.preventDefault();
+        $('#id_permissions_from option:selected').appendTo('#id_permissions_to');
+    });
+
+    $('#id_permissions_remove_link').click(function(e) {
+        e.preventDefault();
+        $('#id_permissions_to option:selected').appendTo('#id_permissions_from');
+    });
+});
+</script>
+{% endblock javascripts %}

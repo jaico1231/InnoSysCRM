@@ -1,0 +1,71 @@
+{% extends 'layout/base.html'%}
+
+{%block title%}{{ title }}{%endblock%}
+{% block stylesheets %}
+
+{% endblock stylesheets %}
+{% block content %}
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-header-primary">
+                  <div class="col-md-12" style="text-align: right;">
+                    <button type="button" class="btn-close BtnCancel col-md-2"></button>
+                </div>
+                    <h4 class="card-title">{{ title }}</h4>
+                    <p class="card-category"></p>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <tr>
+                            <td style="padding: 5px; background-color: gray;">Solicitado por:</td>
+                            <td style="padding: 5px; background-color: gray;">{{ form.solicitante_FK }}</td>
+                            <td style="padding: 5px; background-color: gray;">Tipo de Solicitud:</td>
+                            <td style="padding: 5px; background-color: gray;">{{ form.tipo_permisoFK }}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px; background-color: gray;">Fecha de Solicitud:</td>
+                            <td style="padding: 5px; background-color: gray;">{{ form.fecha_solicitada }}</td>
+                            <td style="padding: 5px; background-color: gray;">Tiempo Solicitado (Horas):</td>
+                            <td style="padding: 5px; background-color: gray;">{{ form.tiempo_solicitado_horas }}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px; background-color: gray;">Fundamentacion:</td>
+                            <td style="padding: 5px; background-color: gray;" colspan="3">{{ form.fundamentacion }}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px;">Estado:</td>
+                            <td style="padding: 5px;" colspan="3">{{ form.estado_FK }}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px;">Observaciones:</td>
+                            <td style="padding: 5px;" colspan="3">{{ form.observaciones }}</td>
+                        </tr>
+
+                    </table>
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary btn-xs">
+                        <i class="material-icons">save</i>Agregar
+                    </button>
+                    <button type="button" class="btn btn-secundary BtnCancel">
+                        <i class="material-icons">cancel</i>Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock content %}
+{% block javascripts %}
+
+<script type="text/javascript">
+    $('.BtnCancel').click(function () {
+        url = '{{ cancel_url }}';
+        location.href = url;
+    });
+</script>
+{% endblock javascripts %}

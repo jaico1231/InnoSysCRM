@@ -1,0 +1,199 @@
+{% extends 'layout/base.html'%}
+
+{% block title %} {{ title }} {% endblock %} 
+
+{%load static%}
+
+{% block stylesheets %}
+<link href="https://cdn.datatables.net/v/bs5/dt-1.13.8/datatables.min.css" rel="stylesheet">
+<!-- importamos JQuery para datatable -->
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+{% endblock stylesheets %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header card-header-primary">
+          <div class="col-md-12" style="text-align: right;">
+              <button type="button" class="btn-close BtnCancel col-md-2"></button>
+          </div>
+          <h4 class="card-title ">{{title}} </h4>
+          
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+              </div>
+            </div>
+          </div>
+          <div class="table-responsive" >
+            <table class="table table-striped" style="width:100%" id="data" >
+              <thead class=" text-primary">
+                  <th>
+                    SOLICITUD #
+                  </th>
+                  <th>
+                    COLABORADOR
+                  </th>
+                  <th>
+                    INICIO DE VACACIONES
+                  </th>
+                  <th>
+                    DIAS SOLICITADOS
+                  </th>
+                  <th>
+                    DIA RETORNO LABORAL
+                  </th>
+                  <th>
+                    ESTADO
+                  </th>
+                  <th>
+                    AUTORIZADO POR
+                  </th>
+                  <th>
+                    ACCIONES
+                  </th>                  
+              </thead>
+              <tbody>
+                {% for x in object_list%}
+                  <tr>
+                    <td>
+                      {{x.IdSolicitud}}
+                    </td>
+                    <td>
+                      {{x.colaborador_FK}}
+                    </td>
+                    <td>
+                      {{x.fecha_inicial}}
+                    </td>
+                    <td>
+                      {{x.dias}}
+                    </td>
+                    <td>
+                      {{x.fecha_inicio_laboral}}
+                    </td>
+                    <td>
+                        {{x.estado}}
+                    </td>
+                    <td>
+                      {% if x.user_updated == None %}
+                      {% else %}
+                      {{x.user_updated}}
+                      {% endif %}                        
+                    </td>
+                    <td>
+                      {% if x.estado.id == 5 %}
+                        <button type="button" data-id="{{ x.IdSolicitud }}" id="BtnDel" class="btn btn-danger btn-xs BtnDel">
+                          <i class="material-icons">delete</i>
+                        </button>
+                      {% elif x.estado.id == 1 %}
+                        <button type="button" data-id="{{ x.IdSolicitud }}" id="BtnDel" class="btn btn-danger btn-xs BtnDel" disabled>
+                          <i class="material-icons">delete</i>
+                        </button>
+                      {% else %}
+                        <button type="button" data-file="{{ x.file.url }}" class="btn btn-success btn-xs BtnPrint">
+                          <i class="material-icons">print</i>
+                        </button>
+                      {% endif %}
+                    
+                    </td>  
+                  </tr>
+
+                  
+                  <div class="modal fade" id="eliminarModal{{ x.id }}" tabindex="-1" aria-labelledby="eliminarModalLabel{{ x.id }}" aria-hidden="true">
+                    <!-- Contenido de la modal se cargará aquí -->
+                  </div>
+                {% endfor %}
+              </tbody>
+              <tfoot class=" text-primary">
+                <th>
+                    PERMISO #
+                </th>
+                <th>
+                    EMPLEADO
+                </th>
+                <th>
+                    TIPO PERMISO
+                </th>
+                <th>
+                    FECHA SOLICITADA
+                </th>
+                <th>
+                    ESTADO
+                </th>
+                <th>
+                    AUTORIZADO POR
+                </th>
+                <th>
+                    FECHA AUTORIZACION
+                </th>
+                <th>
+                    ACCIONES
+                </th>
+              </tfoot>
+            </table>
+            
+            <button type="button" id="BtnAdd" class="btn btn-info btn-xs BtnAdd"><i class="material-icons btn-xs" >add</i>Nuevo registro</button>
+          </div>  
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="addModal" role="dialog" aria-haspopup="true"></div>
+  
+  
+  {% endblock content %}
+  
+  {% block javascripts %}
+  
+  <!-- creamos script para datatable -->
+  <script type="text/javascript">
+  
+    // DataTable_Script();
+    var table = new DataTable('#data', {
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/es-CO.json',
+            },
+        });
+        
+    $('.BtnAdd').click(function () {
+      var url = "{% url 'RrHh:Crear_Solicitud_Vacaciones' %}"; 
+      location.href = url;
+      // var myModal = new bootstrap.Modal(document.getElementById('addModal'), {
+      //   keyboard: false      
+      // });
+      // myModal.show();
+      // // $('#addModal').attr('href', url);
+      // $('#addModal').Modal('show',url);
+      // });
+      addModal.addEventListener('shown.bs.modal', () => {
+      addModal.focus()
+    })
+
+      
+    });
+
+    $('.BtnEdit').click(function () {   
+      var id = $(this).attr('data-id');
+      var url = "{% url 'RrHh:Editar_Solicitud_Vacaciones' 0 %}".replace('0', id); 
+      location.href = url; 
+      });
+    $('.BtnPrint').click(function () {
+      var fileUrl = this.getAttribute('data-file');
+            if (fileUrl) {
+                // Abre el archivo en una nueva ventana o pestaña
+                window.open(fileUrl, '_blank');
+            } else {
+                alert('No file available.');
+            }
+    });
+
+    </Script>
+  
+  
+  {% endblock javascripts %}

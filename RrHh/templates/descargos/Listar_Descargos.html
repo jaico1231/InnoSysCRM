@@ -1,0 +1,150 @@
+{% extends 'layout/base.html'%}
+
+{% block title %} {{ title }} {% endblock %} 
+
+{%load static%}
+
+{% block stylesheets %}
+<link href="https://cdn.datatables.net/v/bs5/dt-1.13.8/datatables.min.css" rel="stylesheet">
+<!-- importamos JQuery para datatable -->
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+{% endblock stylesheets %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header card-header-primary">
+            <div class="col-md-12" style="text-align: right;">
+              <button type="button" class="btn-close BtnCancel col-md-2"></button>
+          </div>
+          <h4 class="card-title ">{{title}} </h4>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+              </div>
+            </div>
+          </div>
+          <div class="table-responsive" >
+            <table class="table table-striped" style="width:100%" id="data" >
+              <thead class=" text-primary">
+                  <th>
+                    SOLICITUD #
+                  </th>
+                  <th>
+                    COLABORADOR
+                  </th>
+                  <th>
+                    FECHA DEL DEPOSITO
+                  </th>
+                  <th>
+                    ENTREVISTADOR
+                  </th>
+                  <th>
+                    ACCIONES
+                  </th>                  
+              </thead>
+              <tbody>
+                {% for x in object_list%}
+                  <tr>
+                    <td>
+                      {{x.iddescargos}}
+                    </td>
+                    <td>
+                      {{x.colaborador}}
+                    </td>
+                    <td>
+                      {{x.fecha_descargo}}
+                    </td>
+                    <td>
+                      {{x.autorizado_por}}
+                    </td>
+                    <td>
+                      {% if x.user_updated == None %}
+                      <button  type="button" data-id="{{x.idllamado_atencion}}" id="BtnEdit"  class="btn btn-success btn-xs BtnEdit"><i class="material-icons">check</i></button>
+                      {% else %}
+                      <button  type="button" data-id="{{x.idllamado_atencion}}" id="BtnEdit"  class="btn btn-success btn-xs BtnEdit"><i class="material-icons">print</i></button>
+                      {% endif %}
+                    </td>  
+                  </tr>                  
+                  <div class="modal fade" id="eliminarModal{{ x.id }}" tabindex="-1" aria-labelledby="eliminarModalLabel{{ x.id }}" aria-hidden="true">
+                    <!-- Contenido de la modal se cargará aquí -->
+                  </div>
+                {% endfor %}
+              </tbody>
+              <tfoot class=" text-primary">
+                <th>
+                    SOLICITUD #
+                  </th>
+                  <th>
+                    COLABORADOR
+                  </th>
+                  <th>
+                    FECHA DEL DEPOSITO
+                  </th>
+                  <th>
+                    ENTREVISTADOR
+                  </th>
+                  <th>
+                    ACCIONES
+                  </th>                  
+              </tfoot>
+            </table>
+            <button type="button" class="btn btn-info btn-xs BtnAdd"><i class="material-icons btn-xs" >add</i></button>
+          </div>  
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="crearGrupoFamiliarModal" tabindex="-1" aria-labelledby="crearGrupoFamiliarModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="crearGrupoFamiliarModalLabel">Crear Llamado de Atención</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!-- Form content will be loaded here via AJAX -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary" id="saveChanges">Save changes</button>
+        </div>
+      </div>
+    </div>
+</div>
+  
+  {% endblock content %}
+  
+  {% block javascripts %}
+  
+  <!-- creamos script para datatable -->
+  <script type="text/javascript">
+      // DataTable_Script();
+    var table = new DataTable('#data', {
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/es-CO.json',
+            },
+        });
+    
+        $('.BtnAdd').click(function () {
+        var url = "{% url 'RrHh:Crear_Descargos' %}";
+        location.href = url;
+    });
+
+       
+
+    $('.BtnEdit').click(function () {   
+      var id = $(this).attr('data-id');
+      var url = "{% url 'RrHh:Editar_Descargos' 0 %}".replace('0', id); 
+      location.href = url; 
+      });
+
+    </Script>
+  
+  
+  {% endblock javascripts %}

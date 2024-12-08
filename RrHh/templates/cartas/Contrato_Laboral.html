@@ -1,0 +1,241 @@
+{% extends 'layout/base.html'%}
+
+{%block title%}{{ title }}{%endblock%}
+{% block stylesheets %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYL/HkXjOoSh8an/6JWnvmzkhS4HRzYRwZvnmhPxYBXAb1hcqXdvigEFbEfjf1n+ZUyVTRFVSNRQcf2tPzxQw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r9uboCVPPLMTiCT8Y8XdHHBHhVxX3Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+{% endblock stylesheets %}
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header card-header-primary">
+                <div style="float: left;">
+                    <h4 class="card-title ">{{title}} {{id_contrato}}</h4>
+                </div>
+                <div style="float: right;">
+                    <button  type="button" id="BtnPrint" data-id="{{id_contrato}}" class="btn btn-success btn-xs BtnPrint"><i class="material-icons">print</i></button>
+                </div>  
+               
+            </div>
+            
+            <div class="card-body arial-narrow pdf" id="pdf">
+                <div style="padding-left: 20px; padding-top: 10px; padding-right: 20px; padding-bottom: 20px; height: 100%;">
+                    <h3 style="text-align: center;"><b>CONTRATO INDIVIDUAL DE TRABAJO A TERMINO FIJO</b></h3><br><br>
+                    <table style="margin: 10px;" >
+                        
+                        
+                        <tr >
+                            <td style="padding: 5px;">NOMBRE DEL EMPLEADOR:</td>
+                            <td style="padding: 5px;" id="mayus_negrita">{{iniciales.nombre}}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px;">NUMERO DE IDENTIFICACION:</td>
+                            <td style="padding: 5px;" id="mayus_negrita">{{iniciales.nit}}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px;">DIRECCION DEL EMPLEADOR:</td>
+                            <td style="padding: 5px;" id="mayus_negrita">{{iniciales.direccion}}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px;">NOMBRE DEL TRABAJADOR</td>
+                            <td style="padding: 5px;" id="mayus_negrita">{{object.hoja_vida_FK.nombre}} {{object.hoja_vida_FK.apellido}}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px;">NUMERO DE IDENTIFICACION:</td>
+                            <td style="padding: 5px;" id="mayus_negrita">{{object.hoja_vida_FK.numero_identificacion}}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px;">DIRECCION DEL TRABAJADOR :</td>
+                            <td style="padding: 5px;" id="mayus_negrita">{{object.hoja_vida_FK.direccion}}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px;">LUGAR, FECHA DE NACIMIENTO:</td>
+                            <td style="padding: 5px;" id="mayus_negrita">{{object.hoja_vida_FK.lugar_expedicion}} {{object.hoja_vida_FK.fecha_expedicion}}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px;">CARGO U OFICIO A DESEMPEÑAR:</td>
+                            <td style="padding: 5px;" id="mayus_negrita">{{object.cargo}}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px;">SALARIO:</td>
+                            <td style="padding: 5px; text-transform: uppercase; font-weight: bold;">{{object.salario}}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px;">PERIODOS DE PAGO:</td>
+                            <td style="padding: 5px;" id="mayus_negrita">{{iniciales.periocidad_pago}}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px;">FECHA DE INICIACION DE LABORES:</td>
+                            <td style="padding: 5px; "id="mayus_negrita">{{object.fecha_inicio_laboral}}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px;">CIUDAD DONDE SE CONTRATA:</td>
+                            <td style="padding: 5px;" id="mayus_negrita">{{iniciales.municipio}}</td>
+                        </tr>
+
+                        <tr><td style="padding: 5px;"><br></td></tr>
+                        <tr><td style="padding: 5px;"><br></td></tr>
+                        <tr>
+                            <td colspan="2" style="text-align: justify;">
+                                Entre <b>EL EMPLEADOR</b> y <b>EL TRABAJADOR</b> de las condiciones antes indicadas, se ha celebrado el presente contrato 
+                                individual de trabajo regido por las siguientes cláusulas: <b>PRIMERA. Objeto del Contrato.</b> - <b>EL EMPLEADOR</b> contrata 
+                                los servicios personales del empleador y éste se obliga: <b>a)</b> A poner al servicio del empleador toda su experiencia 
+                                y capacidad normal de trabajo en forma exclusiva en el desempeño de sus funciones propias del cargo para el cual es 
+                                contratado y en las labores anexas y complementarias del mismo de conformidad con las órdenes e instrucciones que en
+                                forma directa o indirecta le imparta su empleador o sus representantes. <b>b)</b> A no prestar directa ni indirectamente 
+                                servicios laborales a otros empleadores naturales o jurídicos, ni a trabajar por cuenta propia en labores que le 
+                                demanden tiempo y esfuerzos durante la vigencia del contrato. <b>c)</b> A mantener en reserva toda la información obtenida
+                                y que pueda ser utilizada por la competencia o terceras personas. Este acuerdo de confidencialidad se regirá y será 
+                                interpretado de acuerdo con las leyes de la República de Colombia. Cualquier violación a las obligaciones antes 
+                                mencionadas se considera falta grave y será causal de terminación del contrato de trabajo. Además, <b>EL TRABAJADOR</b>
+                                deberá: <b>1.</b> Mantener limpio y organizado su sitio de trabajo. <b>2.</b> Informar a su jefe inmediato de todas las anomalías 
+                                encontradas. <b>3.</b> Realizar el control de calidad del producto. <b>4.</b> Realizar inventarios cuando le sean requeridos. <b>5.</b> 
+                                Realizar las demás funciones que le sean asignadas por su jefe inmediato de acuerdo con su cargo. <b>SEGUNDA. Remuneración. 
+                                - EL EMPLEADOR</b> pagará <b>AL TRABAJADOR</b> por la prestación de sus servicios el salario indicado, es decir, la suma de 
+                                <b>{{salario_texto}} PESOS COP M/CTE ${{object.salario}}</b> más prestaciones de ley, pagadero en quincenas vencidas. Este pago incluye la remuneración 
+                                de los descansos por dominicales y festivos de que tratan los Capítulos I, II y III del Título VII del C.S.T. Para el presente 
+                                contrato las partes pactan expresamente que no hay lugar a devengar comisiones o cualquiera otra modalidad de salario variable 
+                                del que trata los capítulos I II del Título VII del Código Sustantivo del Trabajo. <b>PARAGRAFO PRIMERO</b>: Por los servicios que <b>EL 
+                                TRABAJADOR</b> preste a <b>EL EMPLEADOR</b> en el fiel cumplimiento de este contrato, se le reconocerá el salario arriba mencionado, 
+                                siempre y cuando cumpla la jornada ordinaria laboral establecida por la ley, también la empresa podrá pagar el salario bajo 
+                                la modalidad de DESTAJO o por UNIDADES PRODUCIDAS según la labor o actividad a realizar por parte d<b>EL TRABAJADOR</b>, pagaderos 
+                                en la forma, tiempo, lugar y período que determine la empresa. Dentro de este pago se encuentra incluida la remuneración de 
+                                los descansos dominicales y festivos de que tratan los capítulos I y II del título VII del Código Sustantivo del Trabajo. 
+                                <b>PARAGRAFO SEGUNDO.</b> - Las partes hacen constar que en esta remuneración queda incluido el pago de los servicios que el trabajador
+                                se obliga a realizar. <b>PARAGRAFO TERCERO</b>.- Ambas partes acuerdan de conformidad con lo preceptuado en el artículo 128 del C.S.T.
+                                subrogado por la Ley 50 de 1990 en su artículo 15 que todos los beneficios o auxilios  extralegales, que reciba el trabajador
+                                en dinero o en especie, en forma permanente o eventual, tales como medios de transporte, habitación, alimentación, estudios, 
+                                vestuarios, gastos de representación y todo los demás conceptos consagrados en el mencionado artículo, no se tendrán en cuenta
+                                para efectos de establecer la base de liquidación de prestaciones sociales, vacaciones, ni para los pagos o aportes de que trata 
+                                el artículo 17 de la Ley 344 de 1996. <b>TERCERA</b>. Duración del Contrato y Período de prueba. - el presente contrato tendrá una duración 
+                                definida de <b>Tres (03) meses</b>, de los cuales una quinta parte o el 20% se considera como PERIODO DE PRUEBA con una duración máxima por
+                                dos (2) meses, por consiguiente, cualquiera de las partes podrá terminar el contrato unilateralmente, en cualquier momento durante 
+                                dicho periodo, sin lugar a indemnización o penalidad alguna. <b>CUARTA. Trabajo, Suplementario, Dominical y/o Festivo. - EL EMPLEADOR</b> 
+                                solo reconocerá el valor de las horas extras y del trabajo en dominicales y festivos cuando su realización haya sido expresamente 
+                                autorizada por él. <b>QUINTA. Jornada de trabajo. - EL TRABAJADOR</b> se obliga a laborar la jornada máxima legal y horas extras cuando 
+                                este lo requiera, en los turnos y dentro de las horas señaladas por <b>EL EMPLEADOR</b>, pudiendo hacer estos ajustes o cambios de horario
+                                cuando lo estipule necesario. Por acuerdo expreso o tácito de las partes, podrán repartirse las horas de la jornada ordinaria en
+                                la forma prevista en el artículo 164 de Código Sustantivo del Trabajo, modificado por el artículo 23 de la Ley 50 de 1990, teniendo 
+                                en cuenta que los tiempos de descanso entre las secciones de la jornada no computan dentro de la misma, o de la forma establecida en
+                                el artículo 51 de la Ley 789 de 2002. SEXTA. Obligaciones del trabajador. - Además de las obligaciones consagradas en las normas que
+                                regulan el presente contrato, reglamento interno de trabajo, circulares e instructivos de la empresa, <b>EL TRABAJADOR</b> se compromete 
+                                a: <b>1.-</b> Prestar el servicio antes mencionado en el municipio de Yumbo o en el lugar del territorio de la república de Colombia que 
+                                el empleador indicare, siempre que el cambio no implique desmejora de la remuneración ni de la categoría del trabajador. <b>2.-</b> Asistir 
+                                a todos las capacitaciones requeridas por la empresa. <b>3.-</b> Asistir a las reuniones programadas por la empresa. <b>4.-</b> Reintegrar al almacén 
+                                aquellos materiales que sobrantes de la ejecución de algunas de sus funciones. <b>5.-</b> cumplir con los programas, planes, procedimientos, y 
+                                actividades relacionadas con la ejecución de los proyectos que se implementen en la empresa como aseguramiento de la calidad, administración 
+                                del recurso humano, salud ocupacional, seguridad industrial y demás actividades de tipo organizacional. <b>6.-</b> Las demás que le sean asignadas de 
+                                conformidad con los reglamentos órdenes e instrucciones que imparta la empresa. <b>SEPTIMA. Restricciones. -</b> Además de las prohibiciones de orden 
+                                legal consagradas en las normas que regulan el presente contrato, el reglamento interno de trabajo, circulares e instructivos de la empresa 
+                                <b>EL TRABAJADOR</b> no podrá: <b>a).</b> Tomar decisiones que comprometan a la empresa en altos riesgos, sin que ello haya sido consultado y aprobado 
+                                previamente -y por escrito- por la gerencia; <b>b).</b> Divulgar cualquier información obtenida y que pueda ser utilizada por la competencia o 
+                                terceras personas; <b>c).</b> Hacer uso indebido de la información que obtenga directamente en el desempeño de las labores al servicio de la empresa; 
+                                <b>d).</b> Sacar de la empresa, originales ni fotocopias de documentos internos de la misma como pedidos diligenciados, facturas, referencias de clientes, 
+                                fichas técnicas, balances, estados de resultados ni papelería que pertenecen exclusivamente a la empresa; <b>e).</b> Solicitar préstamos, favores o ayuda 
+                                económica a los clientes aprovechando su cargo u oficio; <b>f).</b> Ejercer actos que comprometan la reputación o perjudiquen la imagen comercial de <b>INDUSTRIAS 
+                                ROMIL S.A.S.; g).</b> Retirar de las instalaciones de la empresa, vehículos, herramientas, equipos, piezas, repuestos, insumos, elementos, maquinas, útiles, 
+                                documentos de propiedad de <b>INDUSTRIAS ROMIL S.A.S.</b>, sin autorización previa y escrita; <b>h)</b>. Dejar de reportar a la gerencia general en forma inmediata, 
+                                cualquier hecho grave que ponga en peligro la seguridad de las personas, los bienes o finanzas de la empresa; <b>i).</b> Utilizar las horas laborales para 
+                                realizar actividades de carácter personal; <b>j).</b> Ejercer actos de discriminación contra sus compañeros de trabajo por razón de su sexo, raza, religión, 
+                                inclinación política etc. <b>OCTAVA. Compromiso. - EL EMPLEADOR</b> se compromete a cancelar oportunamente todas las partidas que, por salarios, prestaciones 
+                                sociales, aportes parafiscales y demás señaladas por la ley se deriven del presente contrato. De igual manera, <b>EL TRABAJADOR</b> se compromete a cumplir con 
+                                todo lo especificado en el presente contrato.<b> NOVENA. Terminación Unilateral del Contrato.- </b>Son justas causas para dar por terminado unilateralmente 
+                                este contrato por cualquiera de las partes, las enumeradas en los Artículos 62 y 63 del Código Sustantivo del Trabajo modificados por el Art. 7º del 
+                                Decreto 2351 de 1965 y además por parte del empleador: las faltas que para el efecto se califican como graves en el presente contrato y demás documentos 
+                                internos que contengan reglamentaciones, órdenes, instrucciones, prohibiciones de carácter general o particular, pactos, convenciones colectivas, laudos 
+                                arbitrales y las que expresamente convengan calificar así en escritos que formarán parte integrante del presente contrato. Expresamente se califican en 
+                                este acto como faltas graves: <b>1.-</b> La violación por la primera vez de las obligaciones y prohibiciones contenidas en la cláusula primera del presente 
+                                contrato u aquellos actos de deslealtad o deshonestidad en que incurra <b>EL TRABAJADOR</b>. <b>2.-</b> La pérdida de dinero o mercancías por culpa o negligencia por 
+                                parte del trabajador. <b>3.-</b> Tratar o presentar cualquier documento que sea ficticio, falso, tachado o enmendado. <b>4.-</b> Ocultar o no informar de manera 
+                                inmediata a la gerencia general sobre hechos graves que pongan en peligro la seguridad de las personas, bienes o finanzas de la empresa. <b>5.-</b> Actuar 
+                                de forma desleal o deshonesta con la empresa o compañeros de trabajo. <b>6.- </b>Entregar información confidencial a cualquier persona, tal como lista de 
+                                precios, información sobre clientes, productos en desarrollo, políticas de la empresa etc. <b>7-</b>. Realizar cualquier tipo de transacción, a cualquier 
+                                título, a nombre de <b>INDUSTRIAS ROMIL S.A.S.</b>, utilizando para ello, los permisos o certificaciones de la empresa. <b>8.-</b> Utilizar las instalaciones, 
+                                equipos, herramientas, teléfonos, computadores, internet, etc., en actividades personales o distintas a las del objeto del presente contrato. 
+                                <b>9.-</b> Dar u ofrecer cualquier tipo de dádiva a cualquier trabajador de la empresa a fin de lograr su silencio, trato preferencial, no llenar la 
+                                totalidad de información según el caso o no seguir el conducto regular en el cumplimiento de sus funciones. <b>10.-</b> El mal trato, irrespeto, 
+                                discriminación o actos que atenten contra la dignidad del cliente o sus compañeros. <b>11.-</b> No realizar oportunamente los informes requeridos en 
+                                virtud de sus obligaciones. <b>DECIMA. Invenciones. -</b> Por tratarse de labores operativas no da lugar a invenciones, ya que los sistemas de trabajo, 
+                                técnicas y conocimientos, ideas de mejoramiento, seguimiento a proyectos y en general la disposición total de las capacidades físicas e 
+                                intelectuales del trabajador para con la empresa (empleador) son obligación del presente contrato y no serán tenidas en cuenta como "invenciones" 
+                                del trabajador. <b>DECIMA PRIMERA. Modificación de las Condiciones Laborales.- EL TRABAJADOR</b> acepta desde ahora, expresamente todas las modificaciones 
+                                determinadas por el empleador en ejercicio de su poder subordinante, de sus condiciones laborales tales como: el lugar de prestación de sus servicios, 
+                                el cargo u oficio y/o funciones y la forma de remuneración siempre y cuando que tales modificaciones no afecten su honor, su dignidad o sus derechos 
+                                mínimos, ni impliquen desmejoras que sean sustanciales o impliquen graves perjuicios para él, de conformidad con lo dispuesto por el Art. 23 del 
+                                Código Sustantivo del Trabajo modificado por el Art. 1º de la Ley 50 de 1990.  <b>PARAGRAFO PRIMERO. -</b> Los gastos que se originen con el traslado 
+                                del lugar de prestación del servicio del trabajador, serán cubiertos por el empleador de conformidad con el numeral 8° del Artículo 57 del Código 
+                                Sustantivo del Trabajo. <b>PARAGRAFO SEGUNDO: PRUEBA DE ALCOHOLIMETRIA: EL TRABAJADOR</b> autoriza a la empresa para que realice la prueba de alcoholimetría 
+                                en las condiciones establecidas en el reglamento de trabajo y acepta que se le aplique la escala de sanciones establecida en el reglamento relacionadas 
+                                con el estado de embriaguez, aliento alcohólico o la presentación bajo el efecto de sustancias enervantes o psicoactivas. <b>DECIMA SEGUNDA. - Dirección 
+                                de Residencia del trabajador. EL TRABAJADOR</b> se compromete desde ahora, a mantener informado al empleador de su dirección de residencia. Cualquier 
+                                cambio de domicilio deberá informarlo oportunamente y por escrito al empleador, teniéndose como su dirección para todos los efectos, la última 
+                                dirección registrada ante la empresa. <b>DECIMA TERCERA: DATOS PERSONALES. EL TRABAJADOR</b> autoriza de manera expresa, libre,  voluntaria e irrevocable 
+                                al <b>EMPLEADOR</b> recopilar, utilizar, transferir, almacenar, consultar, y procesar (en adelante Procesar), la información personal que éste ha suministrado 
+                                a <b>EL EMPLEADOR</b>, la cual se encuentra contenida en las bases de datos y archivo de propiedad de <b>EL EMPLEADOR</b>, para los fines internos que sean necesarios, 
+                                tales como asuntos relacionados con su documento de identificación, número de identificación, nacionalidad, país de residencia, dirección, teléfono, 
+                                estado civil, correo electrónico corporativo y personal, salario, y cuenta bancaria. <b>DECIMA CUARTA: DERECHOS.</b> En atención a la cláusula precedente, 
+                                <b>EL TRABAJADOR</b> declara de manera libre y voluntaria conocer los derechos que la normativa y la jurisprudencia le conceden como titular de datos 
+                                personales y que se enuncian a continuación. En ese sentido, <b>EL TRABAJADOR</b> tiene derecho a: (i) Conocer, actualizar y rectificar sus datos personales 
+                                frente a los responsables o encargados del tratamiento. este derecho se podrá ejercer, entre otros frente a datos parciales, inexactos, incompletos, 
+                                fraccionados, que induzcan a error, o aquellos cuyo tratamiento esté expresamente prohibido o no haya sido autorizado; (ii) solicitar prueba de la 
+                                autorización otorgada al responsable del tratamiento salvo cuando expresamente se exceptúe como requisito para el tratamiento; (iii) ser informado 
+                                por el responsable del tratamiento o el encargado del tratamiento, previa solicitud, respecto del uso que le ha dado a mis datos personales; (iv) 
+                                presentar ante la superintendencia de industria y comercio quejas por infracciones al régimen de protección de datos personales; (v) revocar la 
+                                autorización y/o solicitar la supresión del dato personal cuando en el tratamiento no se respeten los principios, derechos y garantías constitucionales 
+                                y legales. (Vi) acceder en forma gratuita a mis datos personales que hayan sido objeto de Tratamiento. <b>PARÁGRAFO.</b> La revocatoria y/o supresión sólo 
+                                procederá cuando la superintendencia de industria y comercio haya determinado que en el tratamiento el responsable o encargado han incurrido en 
+                                conductas contrarias a la ley y a la constitución. <b>DÉCIMA QUINTA. Efectos. - </b>El presente contrato reemplaza en su integridad y deja sin efecto 
+                                cualquiera otro contrato verbal o escrito, celebrado entre las partes con anterioridad, pudiendo las partes convenir por escrito modificaciones 
+                                al mismo, las que formarán parte integrante de este contrato. <b>DECIMA SEXTA. -</b> Este contrato ha sido redactado estrictamente de acuerdo con la Ley 
+                                y la Jurisprudencia y será interpretado de buena fe y en consonancia con el Código Sustantivo del Trabajo, cuyo objeto definido en su cláusula 
+                                primera es lograr la justicia en las relaciones entre el empleador y el trabajador, dentro de un espíritu de coordinación económica y de equilibrio 
+                                social. 
+                                
+                            </td>
+                        </tr>
+                        <tr><td style="padding: 5px;"><br></td></tr>
+                        <tr><td colspan="2" style="text-align: justify;">Para constancia se firma en dos (2) ejemplares del mismo tenor, ante dos (2) testigos en el municipio de Yumbo (Valle), 
+                            a los ({{dia_en_letras}}) ({{object.fecha_inicio.day}}) días del mes de {{mes_en_letras}} del año {{anio_en_letras}} ({{object.fecha_inicio.year}}).</td></tr>
+                        <tr><td style="padding: 5px;"><br></td></tr>
+                        <tr><td style="padding: 5px;"><br></td></tr>
+                        <tr><td style="padding: 5px;"><br></td></tr>
+                        <tr>
+                            <td style="padding: 5px;">FIRMA DEL EMPLEADOR</td>
+                            <td style="padding: 5px;">FIRMA DEL TRABAJADOR</td>
+                        </tr>
+                        <tr><td style="padding: 5px;"><br></td></tr>
+                        <tr><td style="padding: 5px;"><br></td></tr>
+                        <tr><td style="padding: 5px;"><br></td></tr>
+                        <tr><td style="padding: 5px;"><br></td></tr>
+                        <tr><td style="padding: 5px;"><br></td></tr>
+                        <tr>
+                            <td >TESTIGO</td>
+                            <td >TESTIGO</td>
+                        </tr>
+                        
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    {% endblock content %}
+    {% block javascripts %}
+    <script>
+        // Valor entero
+        const valorEntero = parseFloat('{{object.salario}}');
+        // Formatear el valor en moneda con puntos como separadores
+        const valorFormateado = valorEntero.toLocaleString('es-CO', { style: 'currency', currency: 'COP' });
+
+        // Mostrar el valor formateado en el HTML
+        document.getElementById('salario').textContent = valorFormateado;
+        
+        //Valor en letras
+    </script>
+ 
+    {% endblock javascripts %}

@@ -1,0 +1,127 @@
+{% extends 'layout/base.html'%}
+
+{%block title%}{{ title }}{%endblock%}
+{% block stylesheets %}
+{% load static %}
+
+<!-- estilos -->
+<script>
+
+    document.addEventListener('DOMContentLoaded', function() {
+      var calendarEl = document.getElementById('calendar');
+      
+     
+      var calendar = new FullCalendar.Calendar(calendarEl, {
+        timeZone: 'local',
+        
+        height: 'auto', // enough to active sticky headers
+        dayMinWidth: 200,
+        // initialView: 'dayGridMonth'
+        slotDuration: '00:05:00',
+        initialDate: new Date(),
+        initialView: 'dayGridMonth',
+        nowIndicator: true,
+        headerToolbar: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+        },
+        navLinks: true, // can click day/week names to navigate views
+        editable: false,
+        selectable: true,
+        selectMirror: true,
+        dayMaxEvents: true, // allow "more" link when too many events
+        events: [
+          {% for eventos in object_list %}
+          {
+            title: "{{eventos.title}}",
+            start: "{{eventos.start_time | date:'Y-m-d' }}",
+            end: "{{eventos.end_time | date:'Y-m-d' }}",
+          },
+    
+          {% endfor %}
+          
+          {
+            title: 'Click for Google',
+            url: 'http://google.com/',
+            start: '2023-10-28'
+          }
+        ]
+      });
+    
+      calendar.render();
+    });
+    
+    </script>
+    <style>
+    
+   
+    
+    #calendar {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    
+    </style>
+
+<!--  -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYL/HkXjOoSh8an/6JWnvmzkhS4HRzYRwZvnmhPxYBXAb1hcqXdvigEFbEfjf1n+ZUyVTRFVSNRQcf2tPzxQw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r9uboCVPPLMTiCT8Y8XdHHBHhVxX3Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link href='https://fonts.googleapis.com/css?family=Roboto:400,500,400italic,300italic,300,500italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="{% static 'assets/css/HV.style.css' %}" />
+{% endblock stylesheets %}
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+    <div class="card">
+        <div class="card-header card-header-primary">
+        <div class="col-md-12" style="text-align: right;">
+            <button type="button" class="btn-close BtnCancel col-md-2"></button>
+        </div>
+        <h4 class="card-title col-md-8" >{{ title }}</h4>            
+        <p class="card-category"></p>
+        </div>
+        <div class="card-body">            
+            <div class="container-fluid">
+                <div class="row">                    
+                <div class="col-lg-12 d-flex align-items-strech">
+                    <div class="card w-100">
+                        <div id="calendar"></div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+        </div>
+    </div>
+    </div>
+</div>  
+
+{% endblock content %}
+{% block javascripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+    
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth', // Vista inicial, puede ser 'dayGridDay', 'timeGridWeek', 'dayGridMonth'
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridDay,timeGridWeek,dayGridMonth'
+            },
+            events: '/eventos-mantenimiento/', // URL que devuelve los eventos en JSON
+            eventClick: function(info) {
+                info.jsEvent.preventDefault(); // evita que la página se recargue al hacer clic en un evento
+                if (info.event.url) {
+                    window.open(info.event.url); // abre la URL del evento en una nueva pestaña
+                }
+            }
+        });
+    
+        calendar.render();
+    });
+    </script>
+
+{% endblock javascripts %}

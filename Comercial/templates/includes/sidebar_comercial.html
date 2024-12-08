@@ -1,0 +1,19 @@
+
+<li class="nav-small-cap">
+    <span class="material-symbols-outlined">
+        sell
+        </span>
+    <span class="hide-menu" onclick="toggleMenu('menu-comercial')">COMERCIAL</span>
+</li>
+<div id="menu-comercial" style="display: none;">
+    <ul>
+        <li class="sidebar-item">
+            <a class="sidebar-link" href="{% url 'comercial:cot_create' %}" aria-expanded="false">
+                <span class="material-icons">
+                    list
+                    </span>
+            <span class="hide-menu">Cotizacion</span>
+            </a>
+        </li>
+    </ul>
+</div>

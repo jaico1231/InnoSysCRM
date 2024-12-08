@@ -1,0 +1,187 @@
+{% extends 'layout/base.html'%}
+
+{%block title%}{{ title }}{%endblock%}
+{% block stylesheets %}
+{% load static %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYL/HkXjOoSh8an/6JWnvmzkhS4HRzYRwZvnmhPxYBXAb1hcqXdvigEFbEfjf1n+ZUyVTRFVSNRQcf2tPzxQw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r9uboCVPPLMTiCT8Y8XdHHBHhVxX3Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link href='https://fonts.googleapis.com/css?family=Roboto:400,500,400italic,300italic,300,500italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="{% static 'assets/css/HV.style.css' %}" />
+{% endblock stylesheets %}
+{% block content %}
+<div class="row">
+  <div class="col-md-12">
+      <div class="card">
+          <div class="card-header card-header-primary">
+              <div class="col-md-12" style="text-align: right;">
+                  <button type="button" class="btn-close BtnCancel col-md-2"></button>
+              </div>
+              <h4 class="card-title col-md-8">{{ title }}</h4>            
+              <p class="card-category"></p>
+          </div>
+          <div class="card-body">            
+              <div class="container-fluid">
+                  <div class="row">                    
+                      <div class="col-lg-12 d-flex align-items-strech">
+                          <div class="card w-100">
+                              <nav class="navbar navbar-expand-lg navbar-red bg-red">
+                                  <div class="container-fluid">
+                                      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                                          <span class="navbar-toggler-icon"></span>
+                                      </button>
+                                      <div class="collapse navbar-collapse" id="navbarNav">
+                                          <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                              <li class="nav-item" role="presentation">
+                                                  <button class="nav-link hv" data-id="{{id_hv}}" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Hoja de Vida</button>
+                                              </li>
+                                              <li class="nav-item" role="presentation">
+                                                  <button class="nav-link history active" data-id="{{id_hv}}" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Llamados de atencion</button>
+                                              </li>
+                                              <li class="nav-item" role="presentation">
+                                                  <button class="nav-link permisos" data-id="{{id_hv}}" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Historial de permisos</button>
+                                              </li>
+                                              <li class="nav-item" role="presentation">
+                                                  <button class="nav-link vacaiones" data-id="{{id_hv}}" data-bs-toggle="tab" data-bs-target="#about" type="button" role="tab" aria-controls="about" aria-selected="false">Historial Vacaciones</button>
+                                              </li>
+                                              <li class="nav-item" role="presentation">
+                                                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Contacto</button>
+                                              </li>
+                                          </ul>                                  
+                                      </div>
+                                  </div>
+                              </nav>
+                              {% if cantidad_llamados > 0 %}
+                                  <div class="col-md-12">
+                                      <div class="card">
+                                          <div class="card-body">
+                                              <p>El colaborador tiene {{ cantidad_llamados }} llamados de atención</p> 
+                                          </div>
+                                      </div>
+                                  </div>
+                              {% endif %}
+                              {% if llamados_atencion %}
+                                  <div class="col-md-12">
+                                      <div class="card">
+                                          {% for entry in llamados_atencion %}
+                                              <div class="card-body">
+                                                  <div class="container-fluid">
+                                                      <div class="row">
+                                                          <div class="col-lg-12 d-flex align-items-strech"> 
+                                                              <div class="card w-100">
+                                                                  <div class="card-body">
+                                                                      <p><b>Llamado de Atencion N°: {{ entry.llamado.idllamado_atencion }}</b></p>
+                                                                      <div class="d-sm-flex d-block align-items-center justify-content-between mb-9">                        
+                                                                          <div class="card-body">
+                                                                              <div class="profile-container">
+                                                                                  <table class="table table-striped" style="width:100%">
+                                                                                      <tr>
+                                                                                          <td colspan="7" style="text-align: center;"><b>LLAMADO DE ATENCION</b></td>                                        
+                                                                                      </tr>
+                                                                                      <tr>
+                                                                                          <td><b>Fecha de la infracción:</b></td>
+                                                                                          <td style="text-align: center;">{{ entry.llamado.fecha_infraccion }}</td>
+                                                                                          <td><b>Realizado por:</b></td>
+                                                                                          <td style="text-align: center;">{{ entry.llamado.Autorizado_por }}</td>
+                                                                                      </tr>
+                                                                                      <tr>
+                                                                                          <td><b>Acciones:</b></td>
+                                                                                          <td colspan="6" style="text-align: center;">{{ entry.llamado.acciones }}</td>
+                                                                                      </tr>
+                                                                                      {% for descargo in entry.descargos %}
+                                                                                          <tr>
+                                                                                              <td colspan="7" style="text-align: center;"><b>DESCARGOS</b></td>                                        
+                                                                                          </tr>
+                                                                                          <tr>
+                                                                                              <td><b>Fecha del descargo:</b></td>
+                                                                                              <td style="text-align: center;">{{ descargo.fecha_descargo }}</td>
+                                                                                              <td><b>Autorizado por:</b></td>
+                                                                                              <td style="text-align: center;">{{ descargo.autorizado_por }}</td>
+                                                                                          </tr>
+                                                                                          <tr>
+                                                                                              <td><b>Acciones:</b></td>
+                                                                                              <td colspan="6" style="text-align: center;">{{ descargo.acciones }}</td>
+                                                                                          </tr>                                                                                          
+                                                                                          <tr>
+                                                                                              <td colspan="7" style="text-align: center;"><b>CUESTIONARIO DE DESCARGOS</b></td>                                        
+                                                                                          </tr>
+                                                                                              
+                                                                                          <tr>
+                                                                                              <td style="text-align: center;"><b>ID</b></td>
+                                                                                              <td colspan="2" style="text-align: center;"><b>Preguntas</b></td>
+                                                                                              <td colspan="3" style="text-align: center;"><b>Respuestas</b></td>
+                                                                                          </tr>
+                                                                                          {% for cuestionario in descargo.Cuestionario_del_Descargos.all %}
+                                                                                            
+                                                                                              <tr>
+                                                                                                  <td style="text-align: center;">{{ forloop.counter }}</td>
+                                                                                                  <td colspan="2">{{ cuestionario.preguntas }}</td>
+                                                                                                  <td colspan="3">{{ cuestionario.respuestas }}</td>
+                                                                                              </tr>
+                                                                                          {% endfor %}
+                                                                                      {% endfor %}
+                                                                                  </table>
+                                                                              </div>
+                                                                          </div>  
+                                                                      </div>
+                                                                  </div>
+                                                              </div>    
+                                                          </div>
+                                                      </div>                                                
+                                                  </div>
+                                              </div>
+                                          {% endfor %}
+                                      </div>
+                                  </div>
+                              {% endif %}
+                          </div>
+                      </div>
+                  </div>                        
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+{% endblock content %}
+{% block javascripts %}
+
+<script type="text/javascript">
+
+    
+
+$('.BtnCancel').click(function () {
+//crear alerta con la variable title y el url de redireccionamiento))
+    // url = '{{ cancel_url }}';
+    location.href = '{{ list_url }}';  
+});
+
+$('.history').click(function () {
+  var id = $(this).attr('data-id');
+  var url = "{% url 'RrHh:Historial_HV' 0 %}".replace('0', id);
+  location.href = url;
+});
+
+$('.permisos').click(function () {
+  var id = $(this).attr('data-id');
+  var url = "{% url 'RrHh:Historial_SP' 0 %}".replace('0', id);
+  location.href = url;
+});
+$('.vacaciones').click(function () {
+  var id = $(this).attr('data-id');
+  var url = "{% url 'RrHh:Historial_Vacaciones' 0 %}".replace('0', id);
+  location.href = url;
+});
+
+$('.hv').click(function () {
+  var id = $(this).attr('data-id');
+      var url = "{% url 'RrHh:Detalle_HV' 0 %}".replace('0', id); 
+      location = url;
+      // location.href = url;
+  // var id = $(this).attr('data-id');
+  // alert ('{{hv}}' + id);
+
+  // // var url = "{% url 'RrHh:Detalle_HV' 0 %}".replace('0', id);
+  // // location.href = url;
+  // alert(id)
+});
+</script>
+{% endblock javascripts %}

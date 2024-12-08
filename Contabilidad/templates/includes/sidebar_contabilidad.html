@@ -1,0 +1,22 @@
+<li class="nav-small-cap">
+    <span class="material-symbols-outlined">
+        calculate
+        </span>
+    <span class="hide-menu" onclick="toggleMenu('menu-contabilidad')">CONTABILIDAD</span>
+</li>
+<div id="menu-contabilidad" style="display: none;">
+    <ul>
+        <li class="sidebar-item">
+            <a class="sidebar-link" href="{% url 'contabilidad:P_R_List' %}" aria-expanded="false">
+                <span class="material-symbols-outlined">moving</span>
+                <span class="hide-menu">Precios de Rutas</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link" href="{% url 'contabilidad:H_E_List' %}" aria-expanded="false">
+                <span class="material-symbols-outlined">update</span>
+                <span class="hide-menu">Horas Extras</span>
+            </a>
+        </li>                
+    </ul>
+</div>

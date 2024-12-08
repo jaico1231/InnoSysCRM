@@ -1,0 +1,199 @@
+{% extends 'layout/base.html'%}
+
+{% block title %} {{ title }} {% endblock %} 
+
+{%load static%}
+
+{% block stylesheets %}
+<link href="https://cdn.datatables.net/v/bs5/dt-1.13.8/datatables.min.css" rel="stylesheet">
+<!-- importamos JQuery para datatable -->
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+{% endblock stylesheets %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header card-header-primary">
+          <h4 class="card-title ">{{title}} </h4>
+        </div>
+
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <form action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{form.as_p}}                    
+                    <button type="submit" class="btn btn-primary"><span class="material-symbols-outlined">
+                        playlist_add
+                        </span></button>
+                    </form>
+                </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+              </div>
+            </div>
+          </div>
+          <div class="table-responsive" >
+            <table class="table table-striped" style="width:100%" id="data" >
+              <thead class=" text-primary">
+                  <th>
+                    NOMBRE DOCUMENTO
+                  </th>
+                  <th>
+                    ARCHIVO
+                  </th>
+                  <th>
+                    FECHA DE CREACIÓN
+                  </th>
+                  <th>
+                    ACCIONES
+                  </th>
+                  
+              </thead>
+              <tbody>
+                {% for x in lista%}
+                  <tr>                    
+                    <td>
+                      {{x.nombre_soporte}}
+                    </td>
+                    <td>
+                        {{ x.nombre_archivo }}
+                    </td>
+                    <td>
+                      {{x.created_at}}
+                    </td>
+                    <td>                        
+                      <button type="button" hr class="btn btn-primary btn-xs BtnDetails" data-url="{{ x.soporte.url }}" data-nombre="{{ x.nombre_soporte }}"><i class="material-icons">visibility</i></button>
+                    </td>
+                  </tr>                  
+                {% endfor %}
+              </tbody>
+              <tfoot class=" text-primary">
+                <th>
+                    NOMBRE DOCUMENTO
+                  </th>
+                  <th>
+                    ARCHIVO
+                  </th>
+                  <th>
+                    FECHA DE CREACIÓN
+                  </th>
+                  <th>
+                    ACCIONES
+                  </th>
+              </tfoot>
+            </table>            
+          </div>  
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel"> </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Contenido del modal se cargará dinámicamente -->
+            </div>
+        </div>        
+    </div>
+  </div>
+<div id="contractListContainer">
+  
+</div>
+ 
+  {% endblock content %}
+  
+  {% block javascripts %}
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+      function showForm(formId) {
+        var forms = document.querySelectorAll('.form-container');
+        forms.forEach(function(form) {
+          form.style.display = 'none';
+        });
+        document.getElementById(formId).style.display = 'block';
+      }
+    </script>
+
+
+  <!-- creamos script para datatable -->
+  <script type="text/javascript">
+    
+    // DataTable_Script();
+    var table = new DataTable('#data', {
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/es-CO.json',
+            },
+        });
+
+    $('.BtnDetails').click(function () {
+      var url = $(this).attr('data-url');
+      var btn = $(this)[0];
+        window.open(url, '_blank');
+    });
+
+    $('.BtnRenuncia').click(function () {
+      var id = $(this).attr('data-id');
+      var url = "{% url 'RrHh:Renuncia_Contrato' 0 %}".replace('0', id);
+      var btn = $(this)[0];
+      loadModalAndHandleForm(btn, url);
+    });
+    $('.BtnDespido').click(function () {
+      var id = $(this).attr('data-id');
+      var url = "{% url 'RrHh:Despido_Contrato' 0 %}".replace('0', id);
+      var btn = $(this)[0];
+      loadModalAndHandleForm(btn, url);
+    });
+        
+    $('.BtnAdd').click(function() {
+    var url = "{% url 'RrHh:Crear_Contratos' %}";
+    var btn = $(this)[0]; // Obtener el elemento DOM del botón usando [0]
+    loadModalAndHandleForm(btn, url);
+    });
+
+    
+    $('.BtnPrint').click(function () {
+      var id = $(this).attr('data-id');
+      var url = "{% url 'RrHh:detalle_contrato' 0 %}".replace('0', id);
+      location.href = url;
+    });      
+    $('.BtnEdit').click(function () {   
+      var id = $(this).attr('data-id');
+      var url = '{% url "RrHh:Editar_Contratos" 0 %}'.replace('0', id);
+      var btn = $(this)[0];
+      loadModalAndHandleForm(btn, url);
+      
+      });
+      $('.BtnDel').click(function(){
+        var id = $(this).attr('data-id');
+        var url = "{% url 'RrHh:Borrar_Contratos' 0 %}".replace('0', id); 
+        var btn = $(this)[0]; // Obtener el elemento DOM del botón usando [0]
+        loadModalAndHandleForm(btn, url);
+    });
+
+    $('.BtnDoc').click(function(){
+      var id = $(this).attr('data-id');
+      var url = "{% url 'RrHh:Anexo_Contrato' 0 %}".replace('0', id); 
+      location.href = url
+    });
+
+
+    </Script>
+  
+  
+  {% endblock javascripts %}

@@ -1,0 +1,186 @@
+{% extends 'layout/base.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+{% block stylesheets %}
+{% load static %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYL/HkXjOoSh8an/6JWnvmzkhS4HRzYRwZvnmhPxYBXAb1hcqXdvigEFbEfjf1n+ZUyVTRFVSNRQcf2tPzxQw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r9uboCVPPLMTiCT8Y8XdHHBHhVxX3Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link href='https://fonts.googleapis.com/css?family=Roboto:400,500,400italic,300italic,300,500italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="{% static 'assets/css/HV.style.css' %}" />
+{% endblock stylesheets %}
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header card-header-primary">
+                <div class="col-md-12" style="text-align: right;">
+                    <button type="button" class="btn-close BtnCancel col-md-2"></button>
+                </div>
+                <h4 class="card-title col-md-8">{{ title }}</h4>
+                <p class="card-category"></p>
+            </div>
+            <div class="card-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12 d-flex align-items-stretch">
+                            <div class="card w-100">
+                                <nav class="navbar navbar-expand-lg navbar-red bg-red">
+                                    <div class="container-fluid">
+                                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                                            <span class="navbar-toggler-icon"></span>
+                                        </button>
+                                        <div class="collapse navbar-collapse" id="navbarNav">
+                                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link hv" data-id="{{ id_hv }}" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Hoja de Vida </button>
+                                                </li>
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link history" data-id="{{ id_hv }}" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Llamados de atención</button>
+                                                </li>
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link permisos active" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Historial de permisos</button>
+                                                </li>
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link vacaciones" data-id="{{id_hv}}" id="about-tab" data-bs-toggle="tab" data-bs-target="#about" type="button" role="tab" aria-controls="about" aria-selected="false">Historial Vacaciones</button>
+                                                </li>
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Contacto</button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </nav>
+                                
+                                <div class="col-md-12 mt-3">
+                                    <form method="get" action="">
+                                        <div class="form-group">
+                                            <label for="periodo">Seleccionar período:</label>
+                                            <select class="form-control select2" id="periodo" name="periodo" onchange="this.form.submit()">
+                                                <option value="anual" {% if request.GET.periodo == 'anual' %}selected{% endif %}>Anual</option>
+                                                <option value="semestral" {% if request.GET.periodo == 'semestral' %}selected{% endif %}>Semestral</option>
+                                                <option value="trimestral" {% if request.GET.periodo == 'trimestral' %}selected{% endif %}>Trimestral</option>
+                                                <option value="total" {% if request.GET.periodo == 'total' %}selected{% endif %}>Total</option>
+                                            </select>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                {% if permiso_por_ano %}
+                                    <div class="col-md-12">
+                                        <div class="card">
+                                            <!-- Contenido agrupado -->
+                                            <div class="card-body">
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-lg-12 d-flex align-items-stretch">
+                                                            <div class="card w-100">
+                                                                <div class="card-body">
+                                                                    <div class="d-sm-flex d-block align-items-center justify-content-between mb-9">
+                                                                        <div class="card-body">
+                                                                            <div class="profile-container">
+                                                                                <table class="table table-striped" style="width:100%">
+                                                                                    <thead class="text-primary">
+                                                                                        <tr>
+                                                                                            <th>ID PERMISO</th>
+                                                                                            <th>FECHA DE SOLICITUD</th>
+                                                                                            <th>TIPO DE PERMISO</th>
+                                                                                            <th>TIEMPO SOLICITADO EN HORAS</th>
+                                                                                            <th>ESTADO</th>
+                                                                                            <th>AUTORIZADO POR</th>
+                                                                                            <th>FECHA DE AUTORIZACIÓN</th>
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                        {% for x in permiso_por_ano %}
+                                                                                            <tr>
+                                                                                                <td>{{ x.IdPermiso }}</td>
+                                                                                                <td>{{ x.fecha_solicitada }}</td>
+                                                                                                <td>{{ x.tipo_permisoFK }}</td>
+                                                                                                <td>{{ x.tiempo_solicitado_horas }}</td>
+                                                                                                <td>{{ x.estado_FK }}</td>
+                                                                                                <td>{{ x.autorizador }}</td>
+                                                                                                <td>{{ x.fecha_autorizacion }}</td>
+                                                                                            </tr>
+                                                                                        {% endfor %}
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% else %}
+                                    <div class="col-md-12">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-lg-12 d-flex align-items-stretch">
+                                                            <div class="card w-100">
+                                                                <div class="card-body">
+                                                                    <div class="d-sm-flex d-block align-items-center justify-content-between mb-9">
+                                                                        <div class="card-body">
+                                                                            <div class="profile-container">
+                                                                                <p>El colaborador no ha solicitado permisos en el año</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+{% block javascripts %}
+
+<script type="text/javascript">
+$('.BtnCancel').click(function () {
+    location.href = '{{ list_url }}';  
+});
+
+$('.history').click(function () {
+  var id = $(this).attr('data-id');
+  var url = "{% url 'RrHh:Historial_HV' 0 %}".replace('0', id);
+  location.href = url;
+});
+$('.vacaciones').click(function () {
+  var id = $(this).attr('data-id');
+  var url = "{% url 'RrHh:Historial_Vacaciones' 0 %}".replace('0', id);
+  location.href = url;
+});
+
+$('.hv').click(function () {
+  var id = $(this).attr('data-id');
+  var url = "{% url 'RrHh:Detalle_HV' 0 %}".replace('0', id); 
+  location = url;
+  // location.href = url;
+  // var id = $(this).attr('data-id');
+  // alert ('{{hv}}' + id);
+
+  // // var url = "{% url 'RrHh:Detalle_HV' 0 %}".replace('0', id);
+  // // location.href = url;
+  // alert(id)
+});
+</script>
+{% endblock javascripts %}

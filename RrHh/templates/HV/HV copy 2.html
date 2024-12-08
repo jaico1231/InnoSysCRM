@@ -1,0 +1,283 @@
+{% extends 'layout/base.html'%}
+
+{%block title%}{{ title }}{%endblock%}
+{% block stylesheets %}
+{% load static %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYL/HkXjOoSh8an/6JWnvmzkhS4HRzYRwZvnmhPxYBXAb1hcqXdvigEFbEfjf1n+ZUyVTRFVSNRQcf2tPzxQw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r9uboCVPPLMTiCT8Y8XdHHBHhVxX3Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link href='https://fonts.googleapis.com/css?family=Roboto:400,500,400italic,300italic,300,500italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="{% static 'assets/css/HV.style.css' %}" />
+{% endblock stylesheets %}
+{% block content %}
+
+<div class="row">
+    <div class="col-md-12">
+    <div class="card">
+        <div class="card-header card-header-primary">
+        <div class="col-md-12" style="text-align: right;">
+            <button type="button" class="btn-close BtnCancel col-md-2"></button>
+        </div>
+        <h4 class="card-title col-md-8" >{{ title }}</h4>            
+        <p class="card-category"></p>
+        </div>
+        <div class="card-body">            
+            <div class="container-fluid">
+                <div class="row">                    
+                <div class="col-lg-12 d-flex align-items-strech">
+                    <div class="card w-100">
+                        <nav class="navbar navbar-expand-lg navbar-red bg-red">
+                            <div class="container-fluid">
+                              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                              </button>
+                              <div class="collapse navbar-collapse" id="navbarNav">
+                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                      <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Hoja de Vida</button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                      <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Llamados de atencion</button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                      <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Solicitud de permisos</button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                      <button class="nav-link" id="about-tab" data-bs-toggle="tab" data-bs-target="#about" type="button" role="tab" aria-controls="about" aria-selected="false">Acerca de</button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                      <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Contacto</button>
+                                    </li>
+                                  </ul>
+                                  <div class="tab-content" id="myTabContent">
+                                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">Contenido de Inicio</div>
+                                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">Contenido de Productos</div>
+                                    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">Contenido de Servicios</div>
+                                    <div class="tab-pane fade" id="about" role="tabpanel" aria-labelledby="about-tab">Contenido de Acerca de</div>
+                                    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">Contenido de Contacto</div>
+                              </div>
+                            </div>
+                        </nav>
+                    <div class="card-body">                      
+                        <div class="d-sm-flex d-block align-items-center justify-content-between mb-9">
+                        <div class="mb-3 mb-sm-0">
+                            <h5 class="card-title bm-9 fw-semibold"></h5>
+                        </div>
+                        <div class="card-body">
+                            {% for x in hojas_de_vida %}
+                            <div class="wrapper">
+                            <div class="sidebar-wrapper">
+                                <div class="profile-container">
+                                    {% if x.imagen %}
+                                    
+                                    <img class="profile" src="{{x.imagen.url}}" alt="100%" width="100%" />
+                                    {% endif %}
+                                    <h1 class="name">{{x.nombre}} {{x.apellido}}</h1>
+                                    <hr>
+                                    
+                                    <div class="text-center  spanish hidden"><a class="btn btn-primary" 
+                                        href="./assets/pdf/OscarResume.pdf">Descargar PDF</a></div>                                  
+                    
+                                </div><!--// Perfil-->
+                    
+                                <div class="contact-container container-block">
+                                    <ul class="list-unstyled contact-list">
+                                        <li ><i class="fa fa-envelope"></i><a href="#" >Talla de Camisa: {{x.talla_camisa}}</a></li>
+                                        <li ><i class="fa fa-envelope"></i><a href="#" >Talla de Pantalon: {{x.talla_pantalon}}</a></li>                      
+                                        <li ><i class="fa fa-envelope"></i><a href="#" >Talla de Calzado: {{x.talla_zapatos}}</a></li>
+                                    </ul>
+                                </div><!--//Contacto-->
+
+                                <div class="education-container container-block">
+                                    <h2 class="container-block-title english"> Education </h2>
+                                    <h2 class="container-block-title spanish hidden"> Educación </h2>
+                                    <div class="item">
+                                        <h4 class="degree english">Systems Engineer</h4>
+                                        <h4 class="degree spanish hidden">Ingeniero de Sistemas</h4>
+                                        <h5 class="meta">UNEFA</h5>
+                                        <div class="time">2010 - 2015</div>
+                                    </div><!--//item-->
+                                </div><!--//Educación y estudios-->                    
+                                
+                                <div class="languages-container container-block">
+                                    <h2 class="container-block-title english">Languages</h2>
+                                    <h2 class="container-block-title spanish hidden">Idiomas</h2>
+                                    <ul class="list-unstyled interests-list english">
+                                        <li>Spanish <span class="lang-desc">(Native)</span></li>
+                                        <li>English <span class="lang-desc">(Professional)</span></li>
+                                    </ul>
+                                    <ul class="list-unstyled interests-list spanish hidden">
+                                        <li>Español <span class="lang-desc">(Nativo)</span></li>
+                                        <li>Ingles <span class="lang-desc">(Profesional)</span></li>
+                                    </ul>
+                                </div><!--//Idiomas-->                    
+                    
+                    
+                                <div class="interests-container container-block english">
+                                    <h2 class="container-block-title">Interests</h2>
+                                    <ul class="list-unstyled interests-list">
+                                        <li>Software and Open Source Hardware</li>
+                                        <li>Philosophy</li>
+                                        <li>Music (Playing Violin)</li>
+                                        <li>Science</li>
+                                    </ul>
+                                </div><!--//interests-->
+
+                                <div class="interests-container container-block spanish hidden">
+                                    <h2 class="container-block-title">Intereses</h2>
+                                    <ul class="list-unstyled interests-list">
+                                        <li>Software, Hardware y Cultura de Código Abierto</li>
+                                        <li>Filosofía</li>
+                                        <li>Música (Tocar Violin)</li>
+                                        <li>Ciencia</li>
+                                    </ul>
+                                </div><!--//interests-->
+                    
+                            </div><!--//sidebar-->                    
+                                <div class="main-wrapper">
+                                    <section class="section summary-section">                                            
+                                        <h2 class="section-title english"><i class="fa fa-user"></i>DATOS PERSONALES</h2>
+                                        <div class="summary">
+                                            <div class="self-desc english">
+                                                <table class="table">
+                                                    <tr>
+                                                        <td><b>Nombres: </b></td>
+                                                        <td >{{x.nombre}}</td>
+                                                        <td><b>Apellidos: </b></td>
+                                                        <td >{{x.apellido}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><b>Nacionalidad: </b></td>
+                                                        <td colspan="3">{{x.nacionalidad_FK.gentilicio}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><b>Grupo Sanguineo: </b></td>
+                                                        <td>{{x.grupo_sanguineoFK}}</td>
+                                                        <td><b>Profesion: </b></td>
+                                                        <td>{{x.profesion}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><b>Tipo de Documento: </b></td>
+                                                        <td>{{x.tipo_documentoFK.Sigla}}</td>
+                                                        <td><b>Numero: </b></td>
+                                                        <td>{{x.numero_identificacion}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><b>Ciudad: </b></td>
+                                                        <td>{{x.Municipio}}</td>
+                                                        <td><b>Barrio: </b></td>
+                                                        <td>{{x.Barrio}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><b>Dirección: </b></td>
+                                                        <td colspan="3">{{x.direccion}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><b>Fecha de Nacimiento: </b></td>
+                                                        <td colspan="3">{{x.fecha_nacimiento}}</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td><b>Fondo de Cesantias: </b></td>
+                                                        <td>{{x.fondo_cesantiasFK}}</td>
+                                                        <td><b>Fondo de Pension: </b></td>
+                                                        <td>{{x.fondo_pensionFK}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><b>Caja de Compensacion: </b></td>
+                                                        <td>{{x.CajaCompensacionFK}}</td>
+                                                        <td><b>EPS: </b></td>
+                                                        <td>{{x.eps}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><b>Email: </b></td>
+                                                        <td>{{x.email}}</td>
+                                                        <td><b>Telefono: </b></td>
+                                                        <td>{{x.telefono}}</td>
+                                                    </tr>
+                                                </table>
+                                                <h2 class="section-title english"><i class="fa fa-user"></i>GRUPO FAMILIAR</h2>
+                                                            <div class="summary">
+                                                <table class="table">
+                                                    {% for GF in Lista_GF %}
+                                                        <tr>
+                                                            <td><b>Nombres:</b></td>
+                                                            <td colspan="2">{{ GF.nombre_GF }}</td>
+                                                            <td><b>Apellidos:</b></td>
+                                                            <td colspan="2">{{ GF.apellido_GF }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><b>Genero:</b></td>
+                                                            <td >{{ GF.sexo_FK_GF }}</td>
+                                                            <td><b>Parentesco:</b></td>
+                                                            <td>{{ GF.parentesco_GF }}</td>
+                                                            <td><b>Fecha:</b></td>
+                                                            <td>{{ GF.fecha_nacimiento_GF }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><b>Tipo de Documento:</b></td>
+                                                            <td>{{ GF.tipo_documento_GF.Sigla }}</td>
+                                                            <td><b>Numero de Identificacion:</b></td>
+                                                            <td>{{ GF.numero_identificacion_GF }}</td>
+                                                        </tr>   
+                                                    {% endfor %}
+                                                </table>
+                                                
+                                                <table>
+                                                    <thead class=" text-primary">
+                                                        <th><b>Llamado de atencion No</b></th>
+                                                        <th><b>Fecha Infraccion</b></th>
+                                                        <th><b>Generado por</b></th>
+                                                        <th><b>Opciones</b></th>
+                                                    </thead>
+                                                    <tbody>
+                                                        {% for Llamado in Lista_Llamado %}
+                                                        <tr>
+                                                            <td>{{Llamado.idllamado_atencion}}</td>
+                                                            <td>{{Llamado.fecha_infraccion}}</td>
+                                                            <td>{{Llamado.Autorizado_por}}</td>
+                                                            <td> 
+                                                                <a href="{% url 'Editar_Llamado_Atencion' Llamado.id %}"><i class="fa fa-edit"></i></a>
+                                                            </td>
+                                                        </tr>
+                                                        {% endfor %}
+                                                </table>
+                                            </div>
+                                            </div><!--//resumen-->
+                                        </div>
+                                    </section><!--//section-->
+                                </div><!--//main-body-->
+                            </div>
+                            {% endfor %}
+                            <footer class="footer">
+                                <div class="text-center">                    
+                                </div>
+                            </footer><!--//footer-->
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+        </div>
+    </div>
+    </div>
+</div>  
+
+{% endblock content %}
+{% block javascripts %}
+
+<script type="text/javascript">
+
+    
+
+$('.BtnCancel').click(function () {
+//crear alerta con la variable title y el url de redireccionamiento))
+    // url = '{{ cancel_url }}';
+    location.href = '{{ list_url }}';  
+});
+    
+</script>
+{% endblock javascripts %}

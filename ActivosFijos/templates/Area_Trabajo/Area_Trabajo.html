@@ -1,0 +1,48 @@
+{% extends 'layout/base.html'%}
+
+{%block title%}{{ title }}{%endblock%}
+{% block stylesheets %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYL/HkXjOoSh8an/6JWnvmzkhS4HRzYRwZvnmhPxYBXAb1hcqXdvigEFbEfjf1n+ZUyVTRFVSNRQcf2tPzxQw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r9uboCVPPLMTiCT8Y8XdHHBHhVxX3Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+{% endblock stylesheets %}
+{% block content %}
+
+<form method="post" >
+    {% csrf_token %}
+    
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-primary">
+            <h4 class="card-title">{{ title }} </h4>
+            <input type="text" hidden value ="prueba" name="url" id="url">
+            <p class="card-category"></p>
+          </div>
+          <div class="card-body">
+            {{ form.as_p }}
+          </div>
+          <div class="card-footer">
+            <button type="submit" class="btn btn-primary btn-xs">
+              <i class="material-icons ">save</i>Agregar 
+            </button>
+            <!-- <button type="button" class="btn btn-secundary BtnCancel"> -->
+              <button type="button" id=BtnCancel class="btn btn-info btn-xs BtnCancel"><i class="material-icons btn-xs" >add</i>Cancelar</button>
+      
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  </form>
+{% endblock content %}
+{% block javascripts %}
+<!-- crear redirecccion con la variable list_url -->
+<script>
+  $("#BtnCancel").click(function(){
+  location.href = "{{cancel_url}}";  
+    });
+</script>
+
+{% endblock javascripts %}

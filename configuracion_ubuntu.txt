@@ -1,0 +1,26 @@
+sudo apt update
+sudo apt install python3
+sudo apt install python3-pip python3-venv python3-wheel python3-dev -y
+sudo apt install python3-venv -y
+sudo apt install python3-wheel python3-dev -y
+sudo apt install libz-dev libssl-dev libcurl4-gnutls-dev libexpat1-dev gettext cmake gcc
+sudo apt install curl apt-transport-https
+sudo apt install mariadb-server mariadb-client3
+sudo mysql_secure_installation
+
+sudo mysql -u root -p
+
+CREATE USER 'adminromil'@'localhost' IDENTIFIED BY 'IndR0m1l-10';
+
+GRANT ALL PRIVILEGES ON *.* TO 'adminromil'@'localhost' WITH GRANT OPTION;
+
+FLUSH PRIVILEGES;
+
+CREATE USER 'innovations'@'%' IDENTIFIED BY 'innovations2024';
+
+GRANT ALL PRIVILEGES ON *.* TO 'innovations'@'%' WITH GRANT OPTION;
+
+FLUSH PRIVILEGES;
+create database APP_ROMIL_DB;
+
+

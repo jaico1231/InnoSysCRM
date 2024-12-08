@@ -1,0 +1,37 @@
+{% if user.is_superuser or user.groups.all.0.name == 'Administrador'   %}
+   
+<li class="nav-small-cap">
+    <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+    <span class="hide-menu" onclick="toggleMenu('adminMacroprocesos')">MACROPROCESOS</span>
+</li>
+<div id="adminMacroprocesos" style="display: none;">
+    <ul>
+        
+        <li class="sidebar-item">
+            <a class="sidebar-link" href="{% url 'macroprocesos:Listar_MacroProcesos' %}" aria-expanded="false">
+                <span class="material-symbols-outlined">manufacturing</span>
+                <span class="hide-menu">Macro Procesos</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link" href="{% url 'macroprocesos:Listar_Procesos' %}" aria-expanded="false">
+                <span class="material-symbols-outlined">manufacturing</span>
+                <span class="hide-menu">Procesos</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link" href="{% url 'macroprocesos:Listar_Seccion' %}" aria-expanded="false">
+                <span class="material-symbols-outlined">manufacturing</span>
+                <span class="hide-menu">Seccion</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link" href="{% url 'macroprocesos:Listar_Cargo' %}" aria-expanded="false">
+                <span class="material-symbols-outlined">manufacturing</span>
+                <span class="hide-menu">Cargos</span>
+            </a>
+        </li>
+        
+    </ul>
+</div>
+{% endif %}

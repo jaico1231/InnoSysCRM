@@ -1,0 +1,27 @@
+<div class="card-body">
+    <div style="padding-left: 20px; padding-top: 10px; padding-right: 20px; padding-bottom: 20px; height: 100%;">
+        <div style="text-align: right;">
+            <p style="margin-top: 50px; ">
+                Acopi Yumbo, Valle del Cauca CO, {{ object.updated_at|date }}
+            </p>
+        </div>
+        
+        <p>Señor(a).<br>
+            <b>{{object.hoja_vida_FK.nombre}} {{object.hoja_vida_FK.apellido}}</b><br>
+            {{object.hoja_vida_FK.tipo_doc}}. {{object.hoja_vida_FK.numero_identificacion}} </p>
+            <p style="text-align: left;"><b>ASUNTO: Aceptación de Renuncia Voluntaria.</b></p>
+            <p>Apreciado Sr(a). {{object.hoja_vida_FK.nombre}}</p><br>
+            <p>Reciba un cordial saludo,</p><br><br>
+            <p>En respuesta a la notificación de su renuncia el día {{dia_en_letras}} ({{object.fecha_notificacion_renuncia|date:'d'}}) de {{mes_en_letras}} de {{object.fecha_notificacion_renuncia.year}}, nos permitimos manifestarle que nuestra empresa acepta la renuncia por usted presentada del cargo que ha venido desempeñando, aceptando la terminación del vínculo laboral existente.<br> 
+                Esta aceptación es efectiva durante la jornada de trabajo cursada el día {{dia_en_letras_efectiva}} ({{object.fecha_renuncia|date:'d'}}) {{dia_efectiva}} de {{mes_en_letras_efectiva}} de {{object.fecha_renuncia.year}}, tal como usted nos lo ha comunicado en su carta de renuncia.<br>
+                Le agradecemos por el tiempo que laboró con nosotros, y solo nos queda aplaudir su desempeño, con la satisfacción de que la experiencia y conocimiento compartido con nuestra empresa, se traducirá en resultados fructíferos, finalmente le deseamos éxito en sus nuevas actividades.<br>
+                En nuestro departamento de tesorería le será pagada su liquidación correspondiente de acuerdo como lo estipula la ley.<br></p>
+
+            <p>Cordialmente,</p><br><br><br>
+
+            <p><b>{{iniciales.nombre}}</b><br>
+                {{iniciales.representante_legal}}<br>
+                {{iniciales.cargo}}</p>
+    </div>
+</div>
+        

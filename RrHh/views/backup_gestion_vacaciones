@@ -1,0 +1,153 @@
+from datetime import timedelta, datetime
+import re, os
+from django.views.generic import CreateView, ListView, UpdateView
+from django.urls import reverse_lazy
+from weasyprint import HTML
+from django.template.loader import get_template
+from shared.models.datos_empresa import Empresa
+from RrHh.forms.gestion_vacaciones_form import *
+from RrHh.models.hoja_vida import Hoja_Vida
+from RrHh.models.vacaciones import Vacaciones
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.utils import timezone
+from workdays import networkdays
+
+
+class Listar_Solicitudes_Vacaciones(LoginRequiredMixin,ListView):
+    model = Vacaciones
+    template_name = 'vacaciones/listar_solicitudes_vacaciones.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['title'] = 'Solicitudes de Vacaciones'
+        context['entity'] = 'Solicitudes'
+        return context
+    
+class Vacaciones_Create(LoginRequiredMixin,CreateView):
+    template_name = 'vacaciones/crear_solicitud_vacaciones.html'
+    form_class = Solicitud_VacacionesForm
+    success_url = reverse_lazy('RrHh:Lista_Solicitudes_Vacaciones')
+
+    def form_valid(self, form):
+
+        user = self.request.user
+        colaborador = Hoja_Vida.objects.filter(numero_identificacion=user).first()
+        form.instance.colaborador_FK = colaborador
+
+        
+        form.instance.fecha_solicitud = timezone.now()
+        form.instance.user_created = user
+        dias_solicitados = networkdays(form.instance.fecha_inicio_alternativa, form.instance.fecha_fin_alternativa)
+        form.instance.dias = dias_solicitados
+        fecha_final = form.instance.fecha_fin_alternativa 
+        dia_laboral = fecha_final + timedelta(days=1)
+        if dia_laboral.weekday() == 5 or dia_laboral.weekday() == 6:
+            dia_laboral = dia_laboral + timedelta(days=1)
+        form.instance.fecha_inicio_laboral = dia_laboral
+        
+        # form.instance.fecha_inicio_laboral = inicio_laboral
+        form.save()
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # context.colaborador_FK_id = colaborador
+        context['title'] = 'Solicitar vacaciones'
+        context['entity'] = 'Solicitudes'
+        context['list_url'] = reverse_lazy('RrHh:Lista_Solicitudes_Vacaciones')
+        context['cancel_url'] = reverse_lazy('RrHh:Lista_Solicitudes_Vacaciones')
+        return context
+
+class Vacaciones_Edit(LoginRequiredMixin,UpdateView):
+    model = Vacaciones
+    template_name = 'vacaciones/editar_vacaciones.html'
+    form_class = Gestion_VacacionesForm
+    success_url = reverse_lazy('RrHh:Lista_Solicitudes_Vacaciones')
+
+    def form_valid(self, form):
+        numero_identificacion = form.instance.colaborador_FK.numero_identificacion
+        numero_identificacion = re.sub(r'\W+', '_', str(numero_identificacion))
+        doc = f'SOLICITUD_VACACIONES_{form.instance.IdSolicitud}.pdf'
+        ruta = f'DOCUMENTOS/{numero_identificacion}/VACACIONES/{doc}'  # Asegúrate de definir correctamente la variable 'doc'
+        ruta_completa = f"/ROMIL_BETA1/ROMIL_BETA1/static/assets/{ruta}"
+        os.makedirs(os.path.dirname(ruta_completa), exist_ok=True)
+        user_update = self.request.user
+        form.instance.user_updated = user_update
+        form.instance.file = ruta
+        form.save()
+        iniciales = Empresa.objects.first()
+        
+        def get_dias_semana(fecha):
+            dias_semana = {
+                        0: "lunes",
+                        1: "martes",
+                        2: "miércoles",
+                        3: "jueves",
+                        4: "viernes",
+                        5: "sábado",
+                        6: "domingo"
+                    }
+            return dias_semana[fecha.weekday()]
+        context = {
+                 "razon_social" : iniciales.nombre,
+                 "representante" : iniciales.representante_legal,
+                 "cargo" : iniciales.cargo,
+                 "fecha" : form.instance.updated_at,
+                 "nombres" : form.instance.colaborador_FK.nombre,
+                 "apellidos" : form.instance.colaborador_FK.apellido,
+                 "tipo_doc": form.instance.colaborador_FK.tipo_documentoFK.Sigla,
+                 "cedula": form.instance.colaborador_FK.numero_identificacion,
+                 "fecha_inicio" : form.instance.fecha_inicial,
+                 "fecha_final" : form.instance.fecha_final,
+                 "year" : form.instance.created_at.year,
+                 "fecha_final" : form.instance.fecha_final,
+                 "dias" : form.instance.dias,
+                 "fecha_solicitud" : form.instance.created_at,
+                 "dia_letras" : get_dias_semana(form.instance.created_at),
+                 "mes_solicitud" : form.instance.created_at.month,
+                 "fecha_inicio_alternativa" : form.instance.fecha_inicio_alternativa,
+                 "fecha_fin_alternativa" : form.instance.fecha_fin_alternativa,
+                 "dias_alternativo" : form.instance.dias_alternativo,
+                 "observaciones" : form.instance.observaciones,
+                 "fecha_inicio_laboral" : form.instance.fecha_inicio_laboral,
+                 "estado" : form.instance.estado_id
+            }
+        
+        if form.instance.estado_id == 2:
+            #aceptacion de solicitud de vacaciones
+            template = get_template('cartas/Carta_Aceptacion_Vacaciones_Solicitud.html')
+        elif form.instance.estado_id == 3:
+            fecha_final = form.instance.fecha_fin_alternativa 
+            dia_laboral = fecha_final + timedelta(days=1)
+            if dia_laboral.weekday() == 5 or dia_laboral.weekday() == 6:
+                dia_laboral = dia_laboral + timedelta(days=1)
+                form.instance.fecha_inicio_laboral = dia_laboral
+            #rechazo de solicitud de vacaciones
+            template = get_template('cartas/Carta_Rechazo_Vacaciones_Solicitud.html')
+            
+    #         send_mail(
+    #         'Asunto del correo',
+    #         'Cuerpo del correo.',
+    #         'from@example.com',
+    #         ['to@example.com'],
+    #         fail_silently=False,
+    #     )
+        html_template = template.render(context)
+        if form.save():
+            HTML(string=html_template).write_pdf(target=ruta_completa)
+            return super().form_valid(form)
+            
+        
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Editar solicitud'
+        context['entity'] = 'Solicitudes'
+        context['list_url'] = reverse_lazy('RrHh:Lista_Solicitudes_Vacaciones')
+        context['cancel_url'] = reverse_lazy('RrHh:Lista_Solicitudes_Vacaciones')
+        return context
+    
+    
+
+  

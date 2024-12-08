@@ -1,0 +1,95 @@
+{% extends 'layout/base.html'%}
+
+{%block title%}{{ title }}{%endblock%}
+{% block stylesheets %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYL/HkXjOoSh8an/6JWnvmzkhS4HRzYRwZvnmhPxYBXAb1hcqXdvigEFbEfjf1n+ZUyVTRFVSNRQcf2tPzxQw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r9uboCVPPLMTiCT8Y8XdHHBHhVxX3Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+{% endblock stylesheets %}
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header card-header-primary">
+                <h4 class="card-title ">{{title}} </h4>
+            </div>
+            <div class="card-body">
+                <div style="padding-left: 20px; padding-top: 10px; padding-right: 20px; padding-bottom: 20px; height: 100%;">
+                    <div style="text-align: right;">
+                        <p style="margin-top: 50px; ">
+                            Acopi Yumbo, Valle del Cauca CO, ${fecha}
+                        </p>
+                    </div>
+                    
+                    <p>Señores.<br>
+                        <b>BANCO AV VILLAS S.A.</b><br>
+                        NIT. 860.035.827-5.</p>
+                        
+                        <p style="text-align: center;"><b>ASUNTO: CERTIFICACIÓN DE APERTURA CUENTA DE NOMINA AV VILLAS.</b></p>
+                        
+                        <p style="text-align: justify;">Por medio de la presente se solicita realizar la apertura de cuenta de nómina al señor(a) relacionado(a) a continuación, adicionalmente su asociación a la cuenta matriz de la empresa,</p>
+                        
+                        <p style="text-align: center;">
+                        <b>Datos de Empresa:</b><br>
+                        </p>
+                        <table style="margin: 10px;">
+                            <tr>
+                                <td style="padding: 5px;" ><b>Tipo y Número de Identificación</b></td>
+                                <td style="padding: 5px;">NIT. 805.001.883-1</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px;"><b>Razón Social</b></td>
+                                <td style="padding: 5px;">INDUSTRIAS ROMIL S.A.S.</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px;"><b>No. Cuenta Matriz</b></td>
+                                <td style="padding: 5px;">131-23391-8</td>
+                            </tr>
+                        </table><br>
+                    
+                        
+                        <p style="text-align: center;"><b>Datos de Empleado:</b><br></p>
+                        <table style="margin: 10px;">
+                            <tr>
+                                <td style="padding: 5px;"><b>Tipo y Número de Identificación</b></td>
+                                <td style="padding: 5px;">${datos.fields?.tipo_standardFK} DE ${datos.fields?.lugar_expedicion}, (DEPARTAMENTO) CO</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px;"><b>Nombres y Apellidos</b></td>
+                                <td style="padding: 5px;">${datos.fields?.nombre} ${datos.fields?.apellido}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px;"><b>Fecha Ingreso a Empresa</b></td>
+                                <td style="padding: 5px;">XX DE (MES EN LETRA. EJ.: ENERO) DE 2.02X</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px;"><b>Salario Base</b></td>
+                                <td style="padding: 5px;">$XXXXX</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px;"><b>Tipo Contrato, Cargo</b></td>
+                                <td style="padding: 5px;">FIJO INFERIOR A UN AÑO, (CARGO DE LA PERSONA)</td>
+                            </tr>
+                        </table><br>       
+                        <p>La actual debe constar de firmas reconocidas por el banco y sellos correspondientes (maquina proyectora 1,2,3,4,5,6,7,8,9,00 y el sello húmedo en la parte inferior).<br><br>
+                        Se certifica veracidad y confiabilidad de la información suscrita en la presente a los (Cantidad de días en letras) (#) días del mes de XXX del año dos mil veintixxx (202x).</p>
+                        
+                        <p>Cordialmente,</p><br><br><br>
+
+                        <p><b>INDUSTRIAS ROMIL S.A.S</b><br>
+                        Jhon Steven Milques Vargas<br>
+                        CC. 1.151.960.992</p>
+
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    {% endblock content %}
+    {% block javascripts %}
+    
+    
+    {% endblock javascripts %}

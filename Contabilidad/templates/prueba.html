@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Procesar Novedades de Nómina</title>
+</head>
+<body>
+    <h1>Procesar Novedades de Nómina Mensual</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Procesar</button>
+    </form>
+
+    {% if status %}
+        <p>Status: {{ status }}</p>
+    {% endif %}
+</body>
+</html>

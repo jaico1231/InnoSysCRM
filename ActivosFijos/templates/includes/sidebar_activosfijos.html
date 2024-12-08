@@ -1,0 +1,53 @@
+
+<li class="nav-small-cap">
+    <span class="material-symbols-outlined">
+        computer
+        </span>
+    <span class="hide-menu" onclick="toggleMenu('menu-activos-fijos')">ACTIVOS FIJOS</span>
+</li>
+<div id="menu-activos-fijos" style="display: none;">
+    <ul>
+        <li class="sidebar-item">
+            <a class="sidebar-link" href="{% url 'ACTIVOS:Listar_GRUPO_ART' %}" aria-expanded="false">
+                <span class="material-icons">list</span>
+                <span class="hide-menu">Grupo Articulos</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link" href="{% url 'ACTIVOS:Listar_ART' %}" aria-expanded="false">
+                <span class="material-icons">list</span>
+                <span class="hide-menu">Articulos</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link" href="{% url 'ACTIVOS:Listar_Bit' %}" aria-expanded="false">
+                <span class="material-icons">list</span>
+                <span class="hide-menu">Mantenimientos</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link" href="{% url 'ACTIVOS:Indicadores' %}" aria-expanded="false">
+                <span class="material-symbols-outlined">bar_chart</span>
+                <span class="hide-menu">Indicadores</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link" href="{% url 'ACTIVOS:Cr_Ma' %}" aria-expanded="false">
+                <span class="material-icons">calendar_month</span>
+                <span class="hide-menu">Calendario</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link" href="{% url 'ACTIVOS:Listar_Cronograma' %}" aria-expanded="false">
+                <span class="material-icons">list</span>
+                <span class="hide-menu">Cronograma</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link" href="{% url 'ACTIVOS:Listar_PRESUPUESTO' %}" aria-expanded="false">
+                <span class="material-icons">content_cut</span>
+                <span class="hide-menu">Presupuesto</span>
+            </a>
+        </li>
+    </ul>
+</div>

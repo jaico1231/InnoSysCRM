@@ -1,0 +1,102 @@
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header card-header-primary">
+          <h4 class="card-title ">SOLICITUDES</h4>    
+        </div>
+        <div class="card-body">
+            <div class="card">
+                <div class="card-header card-header-primary">                  
+                    <button type="button" data-url="{% url 'RrHh:Listar_Contratos' %}" style="text-align: right;" class="btn btn-secundary btn-xs col-md-2">PERMISOS            <i class="material-icons">visibility</i></button>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="table-responsive" >
+                    <table class="table table-striped" style="width:100%" id="data" >
+                      <thead class=" text-primary">
+                        <tr>
+                            <th>SOLICITANTE</th>
+                            <th>TIPO DE PERMISO </th>
+                            <th>ESTADO</th>
+                            <th>FECHA DE CREACION</th>                            
+                          </tr>
+                      </thead>
+                      <tbody>
+                        {% for permiso in solicitud_permisos %}
+                  <tr>
+                    <td>{{ permiso.solicitante_FK.nombre }} {{ permiso.solicitante_FK.apellido }}</td>
+                    <td>{{ permiso.tipo_permisoFK }}</td>
+                    <td>{{ permiso.estado_FK }}</td>
+                    <td>{{ permiso.created_at }}</td>
+                  </tr>
+                {% empty %}
+                  <tr>
+                    <td colspan="7">No hay solicitudes en progreso.</td>
+                  </tr>
+                {% endfor %}
+                      </tbody>              
+                    </table>
+                  </div>  
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header card-header-primary">
+                  
+                    <button type="button" data-url="{% url 'RrHh:Listar_Contratos' %}" style="text-align: right;" class="btn btn-secundary btn-xs col-md-2">VACACIONES            <i class="material-icons">visibility</i></button>
+                     
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="table-responsive" >
+                    <table class="table table-striped" style="width:100%" id="data" >
+                      <thead class=" text-primary">
+                        <tr>
+                            <th>COLABORADOR</th>
+                            <th>INICIO DE VACACIONES </th>
+                            <th>DIAS SOLICITADOS</th>
+                            <th>FECHA DE CREACION</th>                            
+                          </tr>
+                      </thead>
+                      <tbody>
+                        {% for permiso in solicitud_vacaciones %}
+                  <tr>
+                    <td>{{ permiso.colaborador_FK.nombre }} {{ permiso.colaborador_FK.apellido }}</td>
+                    <td>{{ permiso.fecha_inicial }}</td>
+                    <td>{{ permiso.dias }}</td>
+                    <td>{{ permiso.fecha_final }}</td>
+                  </tr>
+                {% empty %}
+                  <tr>
+                    <td colspan="7">No hay solicitud de vacaciones en progreso.</td>
+                  </tr>
+                {% endfor %}
+                      </tbody>              
+                    </table>
+                  </div>  
+                </div>
+            </div>        
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  {% endblock content %}
+  
+  {% block auxiliar_javascripts  %}
+  
+<!-- los scripts para los botones se deben crear directamente en el dashboard principal-->
+  
+  
+  {% endblock auxiliar_javascripts %}

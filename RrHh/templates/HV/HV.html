@@ -1,0 +1,272 @@
+{% extends 'layout/base.html'%}
+
+{%block title%}{{ title }}{%endblock%}
+{% block stylesheets %}
+{% load static %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYL/HkXjOoSh8an/6JWnvmzkhS4HRzYRwZvnmhPxYBXAb1hcqXdvigEFbEfjf1n+ZUyVTRFVSNRQcf2tPzxQw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r9uboCVPPLMTiCT8Y8XdHHBHhVxX3Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link href='https://fonts.googleapis.com/css?family=Roboto:400,500,400italic,300italic,300,500italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="{% static 'assets/css/HV.style.css' %}" />
+{% endblock stylesheets %}
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+    <div class="card">
+        <div class="card-header card-header-primary">
+        <div class="col-md-12" style="text-align: right;">
+            <button type="button" class="btn-close BtnCancel col-md-2"></button>
+        </div>
+        <h4 class="card-title col-md-8" >{{ title }}</h4>            
+        <p class="card-category"></p>
+        </div>
+        <div class="card-body">            
+            <div class="container-fluid">
+                <div class="row">                    
+                <div class="col-lg-12 d-flex align-items-strech">
+                    <div class="card w-100">
+                        <nav class="navbar navbar-expand-lg navbar-red bg-red">
+                            <div class="container-fluid">
+                              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                              </button>
+                              <div class="collapse navbar-collapse" id="navbarNav">
+                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                      <button class="nav-link hv active" data-id="{{hojas_de_vida.IdHojaVida}}" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Hoja de Vida </button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                      <button class="nav-link history" data-id="{{hojas_de_vida.IdHojaVida}}" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Llamados de atencion</button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        
+                                      <button class="nav-link permisos" data-id="{{hojas_de_vida.IdHojaVida}}" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Historial de permisos</button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                      <button class="nav-link vacaciones" data-id="{{hojas_de_vida.IdHojaVida}}" id="about-tab" data-bs-toggle="tab" data-bs-target="#about" type="button" role="tab" aria-controls="about" aria-selected="false">Historial Vacaciones</button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                      <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Contacto</button>
+                                    </li>
+                                  </ul>
+                                  
+                            </div>
+                        </nav>
+                        <div class="card-body">
+    
+                          <div class="wrapper">
+                              <div class="sidebar-wrapper">
+                                  <div class="profile-container">
+                                      {% if hojas_de_vida.imagen %}
+                                      <img class="profile" src="{{hojas_de_vida.imagen.url}}" alt="100%" width="100%" />
+                                      {% endif %}
+                                      <h1 class="name">{{hojas_de_vida.nombre}} {{hojas_de_vida.apellido}}</h1>
+                                      <hr>
+                                      <form method="post">
+                                        {% csrf_token %}
+                                        <!-- Otros campos del formulario -->
+                                        <button class="btn btn-primary" name="print" id="print" type="submit">
+                                            <i class="material-icons">download</i>
+                                        </button>
+                                    </form>
+                                  </div><!--//Perfil-->    
+                              </div><!--//sidebar-->
+                              <div class="main-wrapper">
+                                  <section class="section summary-section">
+                                      <h2 class="section-title english"><i class="fa fa-user"></i>DATOS PERSONALES</h2>
+                                      <div class="summary">
+                                          <div class="self-desc english">
+                                              <table class="table">
+                                                  <tr>
+                                                      <td><b>Nombres: </b></td>
+                                                      <td>{{hojas_de_vida.nombre}}</td>
+                                                      <td><b>Apellidos: </b></td>
+                                                      <td>{{hojas_de_vida.apellido}}</td>
+                                                  </tr>
+                                                  <tr>
+                                                      <td><b>Nacionalidad: </b></td>
+                                                      <td colspan="3">{{hojas_de_vida.nacionalidad_FK.gentilicio}}</td>
+                                                  </tr>
+                                                  <tr>
+                                                      <td><b>Grupo Sanguineo: </b></td>
+                                                      <td>{{hojas_de_vida.grupo_sanguineoFK}}</td>
+                                                      <td><b>Profesion: </b></td>
+                                                      <td>{{hojas_de_vida.profesion}}</td>
+                                                  </tr>
+                                                  <tr>
+                                                      <td><b>Tipo de Documento: </b></td>
+                                                      <td>{{hojas_de_vida.tipo_documentoFK.Sigla}}</td>
+                                                      <td><b>Numero: </b></td>
+                                                      <td>{{hojas_de_vida.numero_identificacion}}</td>
+                                                  </tr>
+                                                  <tr>
+                                                      <td><b>Ciudad: </b></td>
+                                                      <td>{{hojas_de_vida.Municipio}}</td>
+                                                      <td><b>Barrio: </b></td>
+                                                      <td>{{hojas_de_vida.Barrio}}</td>
+                                                  </tr>
+                                                  <tr>
+                                                      <td><b>Dirección: </b></td>
+                                                      <td colspan="3">{{hojas_de_vida.direccion}}</td>
+                                                  </tr>
+                                                  <tr>
+                                                      <td><b>Fecha de Nacimiento: </b></td>
+                                                      <td colspan="3">{{hojas_de_vida.fecha_nacimiento}}</td>
+                                                  </tr>
+                                                  <tr>
+                                                      <td><b>Fondo de Cesantias: </b></td>
+                                                      <td>{{hojas_de_vida.fondo_cesantiasFK}}</td>
+                                                      <td><b>Fondo de Pension: </b></td>
+                                                      <td>{{hojas_de_vida.fondo_pensionFK}}</td>
+                                                  </tr>
+                                                  <tr>
+                                                      <td><b>Caja de Compensacion: </b></td>
+                                                      <td>{{hojas_de_vida.CajaCompensacionFK}}</td>
+                                                      <td><b>EPS: </b></td>
+                                                      <td>{{hojas_de_vida.eps}}</td>
+                                                  </tr>
+                                                  <tr>
+                                                      <td><b>Email: </b></td>
+                                                      <td>{{hojas_de_vida.email}}</td>
+                                                      <td><b>Telefono: </b></td>
+                                                      <td>{{hojas_de_vida.telefono}}</td>
+                                                  </tr>
+                                              </table>
+                                          </div>
+                                      </div>
+                                  </section><!--//Datos personales-->
+                                  <section class="section summary-section">
+                                      <h2 class="section-title english"><i class="fa fa-user"></i>GRUPO FAMILAR</h2>
+                                      <div class="summary">
+                                          <table class="table">
+                                              
+                                              <tr>
+                                                {% for GF in Lista_GF %}
+                                                  <td><b>Nombres:</b></td>
+                                                  <td >{{ GF.nombre_GF }}</td>
+                                                  <td><b>Apellidos:</b></td>
+                                                  <td >{{ GF.apellido_GF }}</td>
+                                                  <td><b>Parentesco:</b></td>
+                                                  <td>{{ GF.parentesco_GF }}</td>                                                                                                  </tr>
+                                              </tr>
+                                              <tr>
+                                                <td><b>Tipo de Documento:</b></td>
+                                                <td>{{ GF.tipo_documento_GF.Sigla }}</td>
+                                                <td><b>Numero de Identificacion:</b></td>
+                                                <td colspan="3">{{ GF.numero_identificacion_GF }}</td>
+                                            </tr>
+                                              <tr>
+                                                <td><b>Genero:</b></td>
+                                                <td>{{ GF.sexo_FK_GF }}</td>
+                                                <td><b>Fecha de Nacimiento:</b></td>
+                                                <td colspan="3">{{ GF.fecha_nacimiento_GF }}</td>
+                                              </tr>
+                                              <tr>
+                                                <td colspan="6"></td>
+                                              </tr>
+                                              {% endfor %}
+                                              
+                                              
+                                          </table>
+                                      </div>
+                                  </section><!--//Grupo familiar-->
+                                  <section class="section summary-section">
+                                      <h2 class="section-title english"><i class="fa fa-briefcase"></i>EXPERIENCIA LABORAL</h2>
+                                      <div class="summary">
+                                          <table class="table">
+                                              {% for exp in Lista_EXP %}
+                                              <tr>
+                                                  <td><b>Empresa:</b></td>
+                                                  <td>{{ exp.empresa_EXP }}</td>
+                                                  <td><b>Cargo:</b></td>
+                                                  <td>{{ exp.cargo_EXP }}</td>
+                                              </tr>
+                                              <tr>
+                                                <td><b>Periodo:</b></td>
+                                                <td colspan="3">{{ exp.fecha_inicio_EXP }} - {{ exp.fecha_fin_EXP }}</td>
+                                              </tr>
+                                              {% endfor %}
+                                          </table>
+                                      </div>
+                                  </section><!--//Experiencia laboral-->     
+                                  <section class="section summary-section">
+                                    <h2 class="section-title english"><i class="fa fa-briefcase"></i>EDUCACION</h2>
+                                    <div class="summary">
+                                        <table class="table">
+                                            {% for edu in Lista_EDUC %}
+                                            <tr>
+                                                <td><b>Institucion Educativa:</b></td>
+                                                <td colspan="2">{{ edu.institucion_EDU }}</td>
+                                                <td><b>Titulo:</b></td>
+                                                <td colspan="2">{{ edu.titulo_EDU }}</td>
+                                            </tr>
+                                            <tr>
+                                              <td><b>Pais de preparacion:</b></td>
+                                              <td >{{ edu.pais_EDU }}</td>
+                                              <td><b>Fecha de Inicio:</b></td>
+                                              <td >{{ edu.fecha_inicio_EDU }}</td>
+                                              <td><b>Fecha de Fin:</b></td>
+                                              <td >{{ edu.fecha_fin_EDU }}</td>
+                                              <td></td>
+                                            </tr>
+                                            {% endfor %}
+                                        </table>
+                                    </div>
+                                </section><!--//Experiencia laboral-->           
+                              </div><!--//main-->
+                          </div><!--//wrapper-->    
+                      </div><!--//card-body--> 
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+        </div>
+    </div>
+    </div>
+</div>  
+
+{% endblock content %}
+{% block javascripts %}
+
+<script type="text/javascript">
+
+    
+
+$('.BtnCancel').click(function () {
+//crear alerta con la variable title y el url de redireccionamiento))
+    // url = '{{ cancel_url }}';
+    location.href = '{{ list_url }}';  
+});
+
+$('.history').click(function () {
+  var id = $(this).attr('data-id');
+  var url = "{% url 'RrHh:Historial_HV' 0 %}".replace('0', id);
+  location.href = url;
+});
+
+$('.permisos').click(function () {
+  var id = $(this).attr('data-id');
+  var url = "{% url 'RrHh:Historial_SP' 0 %}".replace('0', id);
+  location.href = url;
+});
+$('.vacaciones').click(function () {
+  var id = $(this).attr('data-id');
+  var url = "{% url 'RrHh:Historial_Vacaciones' 0 %}".replace('0', id);
+  location.href = url;
+});
+
+$('.hv').click(function () {
+  var id = $(this).attr('data-id');
+      var url = "{% url 'RrHh:Detalle_HV' 0 %}".replace('0', id); 
+      location = url;
+      // location.href = url;
+  // var id = $(this).attr('data-id');
+  // alert ('{{hv}}' + id);
+
+  // // var url = "{% url 'RrHh:Detalle_HV' 0 %}".replace('0', id);
+  // // location.href = url;
+  // alert(id)
+});
+</script>
+{% endblock javascripts %}

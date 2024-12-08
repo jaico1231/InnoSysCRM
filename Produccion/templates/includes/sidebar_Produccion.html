@@ -1,0 +1,43 @@
+{% if user.is_authenticated or user.group.all.0.name == 'Administrador'%}
+<li class="nav-small-cap">
+  <span class="material-symbols-outlined">
+    factory
+    </span>
+    <span class="hide-menu" onclick="toggleMenu('producionMenu')">PRODUCCION</span>
+  </li>
+<div id="producionMenu" style="display: none;">
+  <ul>
+    <li class="sidebar-item">
+      <a class="sidebar-link" href="{% url 'Produccion:Listar_Grupos_Formicas' %}" aria-expanded="false">
+        <span class="material-icons">
+          person_search
+          </span>
+        <span class="hide-menu">Grupo Formicas</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a class="sidebar-link" href="{% url 'Produccion:Listar_Formica' %}" aria-expanded="false">
+        <span class="material-icons">
+          recent_actors
+        </span>
+        <span class="hide-menu">Formicas</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+        <a class="sidebar-link" href="{% url 'Produccion:Listar_Medidas' %}" aria-expanded="false">
+          <span class="material-icons">
+            recent_actors
+          </span>
+          <span class="hide-menu">Medidas</span>
+        </a>
+      </li><li class="sidebar-item">
+        <a class="sidebar-link" href="{% url 'Produccion:Listar_Precios_Superficie' %}" aria-expanded="false">
+          <span class="material-icons">
+            recent_actors
+          </span>
+          <span class="hide-menu">Precios Superficie</span>
+        </a>
+      </li>
+  </ul>
+</div>
+{% endif %}

@@ -1,0 +1,87 @@
+{% extends 'layout/base.html'%}
+
+{%block title%}{{ title }}{%endblock%}
+<title>Exportar PDF - Hojas de Vida</title>
+{% block stylesheets %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .center {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .image {
+            max-width: 200px;
+            max-height: 200px;
+            margin: 0 auto;
+            display: block;
+        }
+    </style>
+{% endblock stylesheets %}
+{% block content %}
+
+    <div class="center">
+        {% for hoja_vida in hojas_vida %}
+        <img src="{{ hoja_vida.foto.url }}" alt="Profile Image" class="image">
+        {% endfor %}
+    </div>
+    
+    <h1>Datos Personales</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Número de Identificación</th>
+                <!-- Agrega más columnas según tus datos personales -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for hoja_vida in hojas_vida %}
+                <tr>
+                    <td>{{ hoja_vida.nombre }}</td>
+                    <td>{{ hoja_vida.apellido }}</td>
+                    <td>{{ hoja_vida.numero_identificacion }}</td>
+                    <!-- Agrega más campos según tus datos personales -->
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h1>Información Académica</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Educación</th>
+                <th>Experiencia</th>
+                <!-- Agrega más columnas según tu información académica -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for hoja_vida in hojas_vida %}
+                <tr>
+                    <td>{{ hoja_vida.educacion }}</td>
+                    <td>{{ hoja_vida.experiencia }}</td>
+                    <!-- Agrega más campos según tu información académica -->
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock content %}
+{% block javascripts %}
+
+{% endblock javascripts %}

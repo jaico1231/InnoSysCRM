@@ -1,0 +1,135 @@
+{% extends 'HV/HV.html'%}
+{% block card_body %}
+
+<div class="card-body">
+    
+    <div class="wrapper">
+        <div class="sidebar-wrapper">
+            <div class="profile-container">
+                {% if hojas_de_vida.imagen %}
+                <img class="profile" src="{{hojas_de_vida.imagen.url}}" alt="100%" width="100%" />
+                {% endif %}
+                <h1 class="name">{{hojas_de_vida.nombre}} {{hojas_de_vida.apellido}}</h1>
+                <hr>
+                <div class="text-center spanish hidden">
+                    <a class="btn btn-primary" href="./assets/pdf/OscarResume.pdf">Descargar PDF</a>
+                </div>
+            </div><!--//Perfil-->    
+        </div><!--//sidebar-->
+        <div class="main-wrapper">
+            <section class="section summary-section">
+                <h2 class="section-title english"><i class="fa fa-user"></i>DATOS PERSONALES</h2>
+                <div class="summary">
+                    <div class="self-desc english">
+                        <table class="table">
+                            <tr>
+                                <td><b>Nombres: </b></td>
+                                <td>{{hojas_de_vida.nombre}}</td>
+                                <td><b>Apellidos: </b></td>
+                                <td>{{hojas_de_vida.apellido}}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Nacionalidad: </b></td>
+                                <td colspan="3">{{hojas_de_vida.nacionalidad_FK.gentilicio}}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Grupo Sanguineo: </b></td>
+                                <td>{{hojas_de_vida.grupo_sanguineoFK}}</td>
+                                <td><b>Profesion: </b></td>
+                                <td>{{hojas_de_vida.profesion}}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Tipo de Documento: </b></td>
+                                <td>{{hojas_de_vida.tipo_documentoFK.Sigla}}</td>
+                                <td><b>Numero: </b></td>
+                                <td>{{hojas_de_vida.numero_identificacion}}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Ciudad: </b></td>
+                                <td>{{hojas_de_vida.Municipio}}</td>
+                                <td><b>Barrio: </b></td>
+                                <td>{{hojas_de_vida.Barrio}}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Dirección: </b></td>
+                                <td colspan="3">{{hojas_de_vida.direccion}}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Fecha de Nacimiento: </b></td>
+                                <td colspan="3">{{hojas_de_vida.fecha_nacimiento}}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Fondo de Cesantias: </b></td>
+                                <td>{{hojas_de_vida.fondo_cesantiasFK}}</td>
+                                <td><b>Fondo de Pension: </b></td>
+                                <td>{{hojas_de_vida.fondo_pensionFK}}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Caja de Compensacion: </b></td>
+                                <td>{{hojas_de_vida.CajaCompensacionFK}}</td>
+                                <td><b>EPS: </b></td>
+                                <td>{{hojas_de_vida.eps}}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Email: </b></td>
+                                <td>{{hojas_de_vida.email}}</td>
+                                <td><b>Telefono: </b></td>
+                                <td>{{hojas_de_vida.telefono}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </section><!--//Datos personales-->
+            <section class="section summary-section">
+                <h2 class="section-title english"><i class="fa fa-user"></i>GRUPO FAMILAR</h2>
+                <div class="summary">
+                    
+                    <table class="table">
+                        
+                        <tr>
+                            <td><b>Nombres:</b></td>
+                            <td><b>Apellidos:</b></td>
+                            <td><b>Genero:</b></td>
+                            <td><b>Parentesco:</b></td>
+                            <td><b>Fecha:</b></td>
+                        </tr>
+                        <tr>
+                            {% for GF in Lista_GF %}
+                            <td >{{ GF.nombre_GF }}</td>
+                            <td >{{ GF.apellido_GF }}</td>                        
+                            <td>{{ GF.sexo_FK_GF }}</td>                        
+                            <td>{{ GF.parentesco_GF }}</td>                        
+                            <td>{{ GF.fecha_nacimiento_GF }}</td>
+                        </tr>
+                        {% endfor %}
+                        <tr>
+                            <td><b>Tipo de Documento:</b></td>
+                            <td>{{ GF.tipo_documento.Sigla }}</td>
+                            <td><b>Numero de Identificacion:</b></td>
+                            <td>{{ GF.numero_identificacion }}</td>
+                        </tr>
+                        
+                    </table>
+                </div>
+            </section><!--//Grupo familiar-->
+            <section class="section summary-section">
+                <h2 class="section-title english"><i class="fa fa-briefcase"></i>EXPERIENCIA LABORAL</h2>
+                <div class="summary">
+                    <table class="table">
+                        {% for exp in Lista_EXP %}
+                        <tr>
+                            <td><b>Empresa:</b></td>
+                            <td>{{ exp.empresa }}</td>
+                            <td><b>Cargo:</b></td>
+                            <td>{{ exp.cargo }}</td>
+                            <td><b>Periodo:</b></td>
+                            <td>{{ exp.fecha_inicio }} - {{ exp.fecha_fin }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </section><!--//Experiencia laboral-->            
+        </div><!--//main-->
+    </div><!--//wrapper-->    
+</div><!--//card-body-->    
+{% endblock card_body %}

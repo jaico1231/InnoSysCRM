@@ -1,0 +1,51 @@
+{% extends 'layout/base.html'%}
+
+{%block title%}{{ title }}{%endblock%}
+{% block stylesheets %}
+
+{% endblock stylesheets %}
+{% block content %}
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-header-primary">
+                  <div class="col-md-12" style="text-align: right;">
+                    <button type="button" class="btn-close BtnCancel col-md-2"></button>
+                </div>
+                    <h4 class="card-title">{{ title }}</h4>
+                    <p class="card-category"></p>
+                </div>
+                <div class="card-body">
+                    {{tipo_documento.as_table}}
+
+                    <div id="preview">
+                        <table class="table">
+                            {{ form.as_table }}
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary btn-xs">
+                        <i class="material-icons">save</i>Agregar
+                    </button>
+                    <button type="button" class="btn btn-secundary BtnCancel">
+                        <i class="material-icons">cancel</i>Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock content %}
+{% block javascripts %}
+
+<script type="text/javascript">
+    $('.BtnCancel').click(function () {
+        url = '{{ cancel_url }}';
+        location.href = url;
+    });
+</script>
+{% endblock javascripts %}

@@ -1,0 +1,475 @@
+{% extends 'layout/base.html'%}
+
+{%block title%}{{ title }}{%endblock%}
+{% block stylesheets %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYL/HkXjOoSh8an/6JWnvmzkhS4HRzYRwZvnmhPxYBXAb1hcqXdvigEFbEfjf1n+ZUyVTRFVSNRQcf2tPzxQw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r9uboCVPPLMTiCT8Y8XdHHBHhVxX3Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+{% endblock stylesheets %}
+{% block content %}
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-primary">
+            <div class="col-md-12" style="text-align: right;">
+              <button type="button" class="btn-close BtnCancel col-md-2"></button>
+          </div>
+            <h4 class="card-title">{{ title }}</h4>
+            <p class="card-category"></p>
+          </div>
+          <div class="card-body">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-lg-12 d-flex align-items-strech">                  
+                  <div class="card w-100">
+                    <div class="card-body">
+                      <div class="d-sm-flex d-block align-items-center justify-content-between mb-9">                        
+                        <div class="card-body">
+                          <div class="profile-container">
+                            <table class="table table-striped" style="width:100%" >
+                              <tr>
+                                <td colspan="8">
+                                  <div class="form-file">
+                              
+                                    <div class="form-file__action">                                
+                                      <input type="file" name="imagen" id="id_imagen" /> 
+                                      {{ form.imagen }}                               
+                                    </div>
+                                    <div class="form-file__result" id="result-imagen">
+                                      {% for x in hojas_de_vida %}
+                                      <img src="{{ x.imagen.url }}" alt="100%" width="100%" />
+                                      {% endfor %}
+                                    </div>
+                                  </div> 
+                                </td>
+                              </tr>
+                              <tr><td colspan="8" class="text-center"> <h3>DATOS PERSONALES</h3></td></tr>
+                              <tr><td colspan="8" class="text-center"></td></tr>
+                              <tr>
+                                <td>{{ form.nombre.label }}</td>
+                                <td colspan="2">{{ form.nombre }}</td>
+                                <td>{{ form.apellido.label }}</td>
+                                <td colspan="3">{{ form.apellido }}</td>
+                              </tr>
+                              <tr>  
+                                <td>{{ form.tipo_documentoFK.label }}</td>  
+                                <td >{{ form.tipo_documentoFK }}</td>   
+                                <td>{{ form.numero_identificacion.label }}</td>
+                                <td colspan="1">{{ form.numero_identificacion }}</td>
+                                <td>{{ form.email.label }}</td>
+                                <td colspan="2">{{ form.email }}</td>
+                              </tr>
+                              <tr>
+                                <td>{{ form.fecha_expedicion.label }}</td>
+                                <td>{{ form.fecha_expedicion }}</td>
+                                <td>{{ form.lugar_expedicion.label }}</td>
+                                <td>{{ form.lugar_expedicion }}</td>
+                                <td>{{ form.hijos.label }}</td>
+                                <td colspan="2">{{ form.hijos }}</td>  
+                              </tr>
+                              <tr>
+                                <td>{{ form.nacionalidad_FK.label }}</td>
+                                <td colspan="1"><select class ="form-control select2" name="nacionalidad_FK">
+                                  {% for option in form.nacionalidad_FK.field.queryset %}
+                                      <option  value="{{ option.pk }}">{{ option.gentilicio }}</option>
+                                  {% endfor %}
+                              </select></td>
+                              <td>{{ form.departamento_FK.label }}</td>
+                                <td>{{ form.departamento_FK }}</td>
+                                <td>{{ form.Municipio_FK.label }}</td>
+                                <td>{{ form.Municipio_FK }}</td>  
+                                                                                              
+                              </tr>
+                              <tr>
+                                <td colspan="8" class="text-center"><h4>DATOS DE DOMICILIO</h4></td>
+                              </tr>
+                              <tr>
+                                <td>{{ form.pais_residencia.label }}</td>
+                                <td colspan="1"><select class ="form-control select2" name="nacionalidad_FK">
+                                  {% for option in form.pais_residencia.field.queryset %}
+                                      <option  value="{{ option.pk }}">{{ option.Nombre }}</option>
+                                  {% endfor %}
+                                  </select></td>
+                                <td>{{ form.dep_residencia.label }}</td>
+                                <td>{{ form.dep_residencia }}</td>
+                                <td>{{ form.mun_residencia.label }}</td>
+                                <td>{{ form.mun_residencia }}</td>                                                             
+                              </tr>
+                              <tr>
+                                <td>{{ form.Barrio_FK.label }}</td>
+                                <td>{{ form.Barrio_FK }}</td>
+                                <td>{{ form.direccion.label }}</td>
+                                <td colspan="3">{{ form.direccion }}</td>
+                              </tr>
+                              <tr>
+                                <td>{{ form.telefono.label }}</td>
+                                <td>{{ form.telefono }}</td>
+                                <td>{{ form.fecha_nacimiento.label }}</td>
+                                <td>{{ form.fecha_nacimiento }}</td>
+                                <td>{{ form.grupo_sanguineoFK.label }}</td>
+                                <td colspan="2">{{ form.grupo_sanguineoFK }}</td>
+                              </tr>
+                              
+                              
+                              
+                              <tr>
+                                <td>{{ form.Libreta_Militar.label }}</td>
+                                <td >{{ form.Libreta_Militar }}</td>
+                                <td>{{ form.Distrito_Libreta.label }}</td>
+                                <td>{{ form.Distrito_Libreta }}</td>
+                                <td>{{ form.Clase_libreta.label }} </td>
+                                <td colspan="2">{{ form.Clase_libreta }}</td>
+                              </tr>
+                              <tr>
+                                <td>{{ form.Tarjeta_Profesional.label }}</td>
+                                <td>{{ form.Tarjeta_Profesional }}</td>
+                                <td>{{ form.eps.label }}</td>
+                                <td>{{ form.eps }}</td>
+                                <td>{{ form.fondo_pensionFK.label }}</td>
+                                <td colspan="2">{{ form.fondo_pensionFK }}</td>
+                                
+                              </tr>
+                              <tr>
+                                <td>{{ form.fondo_cesantiasFK.label }}</td>
+                                <td colspan="2">{{ form.fondo_cesantiasFK }}</td>
+                                <td>{{ form.CajaCompensacionFK.label }}</td>
+                                <td colspan="3">{{ form.CajaCompensacionFK }}</td>
+  
+                              </tr>
+                              <tr>
+  
+                                <td>{{ form.talla_camisa.label }}</td>
+                                <td>{{ form.talla_camisa }}</td>
+                                <td>{{ form.talla_pantalon.label }}</td>
+                                <td>{{ form.talla_pantalon }}</td>
+                                <td>{{ form.talla_zapatos.label }}</td>
+                                <td colspan="2">{{ form.talla_zapatos }}</td>
+                              </tr>
+                              <tr>
+                                
+                                <td>{{ form.contacto_emergencia.label }}</td>
+                                <td>{{ form.contacto_emergencia }}</td>
+                                <td>{{ form.parentesco.label }}</td>
+                                <td>{{ form.parentesco }}</td>
+                                <td>{{ form.telefono_emergencia.label }}</td>
+                                <td>{{ form.telefono_emergencia }}</td>                             
+  
+                              </tr>
+                              <tr>
+                                
+                                <td>{{ form.vivienda_FK.label }}</td>
+                                <td>{{ form.vivienda_FK }}</td>
+                                <td>{{ form.linkedin.label }}</td>
+                                <td>{{ form.linkedin }}</td>
+                                <td>{{ form.whatsapp.label }}</td>
+                                <td>{{ form.whatsapp }}</td>
+                              </tr>
+                              <tr>
+                                <td>{{ form.upload_cv.label }}</td>
+                                <td colspan="5">{{ form.upload_cv }}</td>
+                              </tr>
+                            </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+      <!-- Grupo Familiar -->
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-primary">
+            <div class="col-md-12" style="text-align: right;">
+              <button type="button" class="btn-close BtnCancel col-md-2"></button>
+          </div>
+            <h4 class="card-title">Grupo Familiar</h4>
+            <p class="card-category"></p>
+          </div>
+          <div class="card-body">
+            <div class="container-fluid">
+              <button type="button" class="btn btn-primary BtnFlia btn-xs" >+ Añadir Familiar</button>
+              <div class="row">
+                
+                <div class="col-lg-12 d-flex align-items-strech">  
+                  
+                  <div class="card w-100">
+                    
+                    <div class="card-body">
+                      
+                      <div class="d-sm-flex d-block align-items-center justify-content-between mb-9">                        
+                        
+                        <div class="card-body">
+                          
+                          <div class="profile-container">
+                            <table class="table table-striped" id ="Familia" style="width:100%" >
+                              <thead>
+                                <tr>
+                                  <th>NOMBRES</th>
+                                  <th>APELLIDOS</th>
+                                  <th>PARENTESCO</th>
+                                  <th>GENERO</th>
+                                  <th>TIPO DE DOCUMENTO</th>
+                                  <th>IDENTIFICACION</th>
+                                  <th>FECHA DE NACIMIENTO</th>
+                                  <th>  </th>
+                                </tr>
+                              </thead>
+                              <tbody>                                
+                                <tr>                                  
+                                    <td>{{ GF_FORM.nombre_GF }}</td>
+                                    <td>{{ GF_FORM.apellido_GF }}</td>
+                                    <td>{{ GF_FORM.parentesco_GF }}</td>
+                                    <td>{{ GF_FORM.sexo_FK_GF }}</td>
+                                    <td>{{ GF_FORM.tipo_documento_GF }}</td>
+                                    <td>{{ GF_FORM.numero_identificacion_GF }}</td>
+                                    <td>{{ GF_FORM.fecha_nacimiento_GF }}</td>
+                                </tr>   
+                                
+                              </tbody>
+                            </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+      <!-- Educacion -->
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-primary">
+            <div class="col-md-12" style="text-align: right;">
+              <button type="button" class="btn-close BtnCancel col-md-2"></button>
+          </div>
+            <h4 class="card-title">Educacion</h4>
+            <p class="card-category"></p>
+          </div>
+          <div class="card-body">
+            <div class="container-fluid">
+              <button type="button" class="btn btn-primary BtnEdu btn-xs" >+ Añadir Educacion</button>
+              <div class="row">
+                <div class="col-lg-12 d-flex align-items-strech">                  
+                  <div class="card w-100">
+                    <div class="card-body">
+                      <div class="d-sm-flex d-block align-items-center justify-content-between mb-9">                        
+                        <div class="card-body">
+                          <div class="profile-container">
+                            <table class="table table-striped" id ="Educ" style="width:100%" >
+                              <thead>
+                                <tr>
+                                  <th>INSTITUCION</th>
+                                  <th>TITULO OBTENIDO</th>
+                                  <th>PAIS</th>
+                                  <th>DURACICON</th>
+                                  <th>UNIDAD DE TIEMPO</th>
+                                  <th>FECHA INICIO</th>
+                                  <th>FECHA FINAL</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr>                                  
+                                    <td>{{ EDUC_FORM.institucion_EDU }}</td>
+                                    <td>{{ EDUC_FORM.titulo_EDU }}</td>
+                                    <td>{{ EDUC_FORM.pais_EDU }}</td>
+                                    <td>{{ EDUC_FORM.duracion_EDU }}</td>
+                                    <td>{{ EDUC_FORM.TextoUnidad_EDU }}</td>
+                                    <td>{{ EDUC_FORM.fecha_inicio_EDU }}</td>
+                                    <td>{{ EDUC_FORM.fecha_fin_EDU }}</td>
+                                </tr>   
+                                
+                              </tbody>
+                            </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+      <!-- Experiencia -->
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-primary">
+            <div class="col-md-12" style="text-align: right;">
+              <button type="button" class="btn-close BtnCancel col-md-2"></button>
+          </div>
+            <h4 class="card-title">Experiencia Laboral</h4>
+            <p class="card-category"></p>
+          </div>
+          <div class="card-body">
+            <div class="container-fluid">
+              <button type="button" class="btn btn-primary BtnExp btn-xs" >+ Añadir Experiencia</button>
+              <div class="row">
+                <div class="col-lg-12 d-flex align-items-strech">                  
+                  <div class="card w-100">
+                    <div class="card-body">
+                      <div class="d-sm-flex d-block align-items-center justify-content-between mb-9">                        
+                        <div class="card-body">
+                          <div class="profile-container">
+                            <table class="table table-striped" id ="Exp" style="width:100%" >
+                              <thead>
+                                <tr>
+                                  <th>CARGO</th>
+                                  <th>EMPRESA</th>
+                                  <th>FECHA INICIO</th>
+                                  <th>FECHA FINAL</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr>                                  
+                                    <td>{{ EXP_FORM.cargo_EXP }}</td>
+                                    <td>{{ EXP_FORM.empresa_EXP }}</td>
+                                    <td>{{ EXP_FORM.fecha_inicio_EXP }}</td>
+                                    <td>{{ EXP_FORM.fecha_fin_EXP }}</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+          <div class="card-footer">
+            <button type="submit" class="btn btn-primary btn-xs">
+              <i class="material-icons ">save</i>Crear HV 
+            </button>
+            <button type="button" class="btn btn-secundary BtnCancel">
+              <i class="material-icons ">cancel</i>Cancelar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  </form>
+{% endblock content %}
+{% block javascripts %}
+<script type="text/javascript">
+  
+  $(document).ready(function() {
+        $('#id_departamento').change(function() {
+            var departamentoId = $(this).val();
+            if (departamentoId) {
+                $.ajax({
+                    url: '/api/municipios/' + departamentoId + '/',  // Cambia '/api/municipios/' según tu configuración de URL
+                    type: "GET",
+                    dataType: "json",
+                    success: function(data) {
+                        $('#id_municipio').empty();
+                        $.each(data, function(key, value) {
+                            $('#id_municipio').append('<option value="' + key + '">' + value + '</option>');
+                        });
+                    }
+                });
+            } else {
+                $('#id_municipio').empty();
+            }
+        });
+    });
+
+  $('.BtnCancel').click(function () {
+    url = '{{ cancel_url }}';
+    location.href = url;
+  });
+  function addRow() {
+    var rowCount = table.rows.length;
+    var row = table.insertRow(rowCount);
+    var cell1 = row.insertCell(-1);
+    var cell2 = row.insertCell(0);
+    var cell3 = row.insertCell(1);
+    
+    
+
+  }
+  $('.BtnFlia').click(function () {
+    var table = document.getElementById("Familia");
+    var rowCount = table.rows.length;
+    var row = table.insertRow(rowCount);
+    var cell1 = row.insertCell(0);
+    var cell2 = row.insertCell(1);
+    var cell3 = row.insertCell(2);
+    var cell4 = row.insertCell(3);
+    var cell5 = row.insertCell(4);
+    var cell6 = row.insertCell(5);
+    var cell7 = row.insertCell(6);
+
+    cell1.innerHTML = '{{ GF_FORM.nombre_GF }}';
+    cell2.innerHTML = '{{ GF_FORM.apellido_GF }}';
+    cell3.innerHTML = '{{ GF_FORM.parentesco_GF }}';
+    cell4.innerHTML = '{% filter escapejs %}{{ GF_FORM.sexo_FK_GF }}{% endfilter %}';
+    cell5.innerHTML = '{% filter escapejs %}{{ GF_FORM.tipo_documento_GF }}{% endfilter %}';
+    cell6.innerHTML = '{{ GF_FORM.numero_identificacion_GF }}';
+    cell7.innerHTML = '{{ GF_FORM.fecha_nacimiento_GF }}';
+    
+   
+  });
+  $('.BtnEdu').click(function () {
+    var table = document.getElementById("Educ");
+    var rowCount = table.rows.length;
+    var row = table.insertRow(rowCount);
+    var cell1 = row.insertCell(0);
+    var cell2 = row.insertCell(1);
+    var cell3 = row.insertCell(2);
+    var cell4 = row.insertCell(3);
+    var cell5 = row.insertCell(4);
+    var cell6 = row.insertCell(5);
+    var cell7 = row.insertCell(6);
+    
+    cell1.innerHTML = '{{ EDUC_FORM.institucion_EDU }}';
+    cell2.innerHTML = '{{ EDUC_FORM.titulo_EDU }}';
+    cell3.innerHTML = '{% filter escapejs %}{{ EDUC_FORM.pais_EDU }}{% endfilter %}';
+    cell4.innerHTML = '{{ EDUC_FORM.duracion_EDU }}';
+    cell5.innerHTML = '{{ EDUC_FORM.TextoUnidad_EDU }}';
+    cell6.innerHTML = '{{ EDUC_FORM.fecha_inicio_EDU }}';
+    cell7.innerHTML = '{{ EDUC_FORM.fecha_fin_EDU }}';  
+   
+  });
+  $('.BtnExp').click(function () {
+    var table = document.getElementById("Exp");
+    var rowCount = table.rows.length;
+    var row = table.insertRow(rowCount);
+    var cell1 = row.insertCell(0);
+    var cell2 = row.insertCell(1);
+    var cell3 = row.insertCell(2);
+    var cell4 = row.insertCell(3);
+    
+    cell1.innerHTML = '{{ EXP_FORM.cargo_EXP }} ';
+    cell2.innerHTML = '{{ EXP_FORM.empresa_EXP }}';
+    cell3.innerHTML = '{{ EXP_FORM.fecha_inicio_EXP }}';
+    cell4.innerHTML = '{{ EXP_FORM.fecha_fin_EXP }}';
+
+    
+    
+   
+  });
+ 
+  
+</script>
+
+
+
+{% endblock javascripts %}

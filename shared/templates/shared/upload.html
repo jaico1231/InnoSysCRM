@@ -1,0 +1,193 @@
+{% extends 'layout/base.html'%}
+
+{% block title %} {{ title }} {% endblock %}
+
+{% block stylesheets %}
+<style>
+    .table-container {
+        max-height: 300px;
+        overflow-y: auto;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        margin-top: 20px;
+    }
+    .table th {
+        background-color: #f8f9fa;
+        position: sticky;
+        top: 0;
+        z-index: 1;
+    }
+    .table tbody tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+    .file-upload-wrapper {
+        padding: 20px;
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        margin-bottom: 20px;
+    }
+    .form-control-file {
+        padding: 10px;
+    }
+    .btn {
+        margin-right: 10px;
+    }
+</style>
+{% endblock stylesheets %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header card-header-primary">
+                <h4 class="card-title">{{ title }}</h4>
+            </div>
+            <div class="card-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card w-100">
+                                <div class="card-body">
+                                    {% if msg %}
+                                        <span class="text-danger">{{ msg | safe }}</span>
+                                    {% endif %}
+
+                                    <div class="file-upload-wrapper">
+                                        <form id="csvForm" method="post" enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            <button type="button" class="btn btn-warning" id="downloadTemplateBtn">
+                                                <i class="material-icons">download</i> Descargar Plantilla
+                                            </button><br><br>
+
+                                            <label for="csv_file">Seleccionar archivo CSV</label>
+                                            <input type="file" id="csvFile" name="csv_file" class="form-control-file" accept=".csv" required>
+                                            <br>
+                                            <button type="submit" class="btn btn-primary">
+                                                <i class="material-icons">upload</i> Subir y Previsualizar
+                                            </button>
+                                            <button type="button" class="btn btn-danger BtnCancel">
+                                                <i class="material-icons">cancel</i> Cancelar
+                                            </button>
+                                        </form>
+                                    </div>
+
+                                    <div class="mt-4">
+                                        <h4>Vista Previa de los Datos:</h4>
+                                        <div class="table-container">
+                                            <table class="table table-bordered table-hover" id="csvPreviewTable">
+                                                <thead id="csvPreviewHeader"></thead>
+                                                <tbody id="csvPreviewBody"></tbody>
+                                            </table>
+                                        </div>
+                                        <button id="confirmUploadBtn" class="btn btn-success d-none mt-3">
+                                            Confirmar Carga
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block javascripts %}
+<script>
+    // Redirigir al cancelar
+    $('.BtnCancel').click(function () {
+        location.href = '{{ list_url }}';  
+    });
+
+    // Cargar plantilla de CSV dinámicamente
+    document.addEventListener('DOMContentLoaded', function() {
+        var appLabel = "{{ app_label }}";
+        var modelName = "{{ model_name }}";
+        var url = "{% url 'shared:generar_csv_modelo' 'placeholder_app' 'placeholder_model' %}";
+        url = url.replace('placeholder_app', appLabel).replace('placeholder_model', modelName);
+        document.getElementById('downloadTemplateBtn').onclick = function() {
+            location.href = url;
+        };
+    });
+
+    // Vista previa del CSV
+    document.getElementById('csvForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const fileInput = document.getElementById('csvFile');
+        if (fileInput.files.length > 0) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                displayCsvPreview(e.target.result);
+            };
+            reader.readAsText(fileInput.files[0]);
+        }
+    });
+
+    function displayCsvPreview(csvData) {
+        const csvPreviewHeader = document.getElementById('csvPreviewHeader');
+        const csvPreviewBody = document.getElementById('csvPreviewBody');
+        const confirmUploadBtn = document.getElementById('confirmUploadBtn');
+
+        csvPreviewHeader.innerHTML = '';
+        csvPreviewBody.innerHTML = '';
+
+        const rows = csvData.split('\n').filter(row => row.trim() !== "");
+        if (rows.length === 0) return;
+
+        const headers = rows[0].split(',');
+
+        // Crear encabezados de la tabla
+        const headerRow = document.createElement('tr');
+        headers.forEach(header => {
+            const th = document.createElement('th');
+            th.textContent = header.trim();
+            headerRow.appendChild(th);
+        });
+        csvPreviewHeader.appendChild(headerRow);
+
+        // Crear filas de la tabla con los datos
+        rows.slice(1).forEach(row => {
+            const columns = row.split(',');
+            const rowElement = document.createElement('tr');
+            columns.forEach(column => {
+                const td = document.createElement('td');
+                td.textContent = column.trim();
+                rowElement.appendChild(td);
+            });
+            csvPreviewBody.appendChild(rowElement);
+        });
+
+        confirmUploadBtn.classList.remove('d-none');
+        confirmUploadBtn.onclick = function() {
+            confirmUpload(csvData);
+        };
+    }
+
+    function confirmUpload(csvData) {
+        const formData = new FormData();
+        formData.append('csv_data', csvData);
+
+        fetch("{% url 'shared:confirm_csv_upload' %}", {
+            method: 'POST',
+            headers: { 'X-CSRFToken': '{{ csrf_token }}' },
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Datos cargados exitosamente');
+                location.reload();
+            } else {
+                alert('Error al cargar los datos');
+            }
+        })
+        .catch(error => {
+            alert('Hubo un error en el servidor');
+            console.error(error);
+        });
+    }
+</script>
+{% endblock javascripts %}

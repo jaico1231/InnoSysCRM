@@ -1,0 +1,51 @@
+{% load static %}
+<!-- menu_template.html -->
+<style>
+    .left-sidebar {
+        height: 100vh;
+        overflow-y: auto;
+        float: left;        
+    }
+</style>
+<aside class="left-sidebar">
+  <div>
+    <div class="brand-logo d-flex align-items-center justify-content-between">
+      <a href="{% url 'shared:index' %}" class="text-nowrap logo-img">
+          <img src="{% static 'assets/img/logos/logo.png' %}" width="180" alt="" />
+      </a>
+      <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
+          <i class="ti ti-x fs-8"></i>
+      </div>
+  </div>
+      <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
+          <ul id="sidebarnav">
+              {% for categoria in categorias %}
+                  <li class="nav-small-cap">
+                      <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                      <span class="hide-menu" onclick="toggleMenu('{{ categoria.id }}')">{{ categoria.nombre }}</span>
+                  </li>
+                  <div id="menu-{{ categoria.id }}" style="display: none;">
+                      <ul>
+                          {% for item in categoria.menu_items.all %}
+                              <li class="sidebar-item">
+                                  <a class="sidebar-link" href="{{ item.url }}" aria-expanded="false">
+                                      {% if item.icono %}
+                                          <span class="material-symbols-outlined">{{ item.icono }}</span>
+                                      {% endif %}
+                                      <span class="hide-menu">{{ item.nombre }}</span>
+                                  </a>
+                              </li>
+                          {% endfor %}
+                      </ul>
+                  </div>
+              {% endfor %}
+          </ul>
+      </nav>
+  </div>
+</aside>
+
+
+
+
+
+  

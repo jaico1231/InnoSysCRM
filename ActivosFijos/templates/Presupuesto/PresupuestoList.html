@@ -1,0 +1,147 @@
+{% extends 'layout/base.html'%}
+
+{% block title %} {{ title }} {% endblock %} 
+
+{%load static%}
+
+{% block stylesheets %}
+<link href="https://cdn.datatables.net/v/bs5/dt-1.13.8/datatables.min.css" rel="stylesheet">
+<!-- importamos JQuery para datatable -->
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+{% endblock stylesheets %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header card-header-primary">
+          <h4 class="card-title ">{{title}} </h4>
+          <h6 class="card-subtitle mb-2 text-muted"><i class="material-icons btn-xs" >add</i> añadir</a></h6>        
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+              </div>
+            </div>
+          </div>
+          <div class="table-responsive" >
+            <table class="table table-striped" style="width:100%" id="data" >
+              <thead class=" text-primary">
+                  <th>
+                    IDENTIFICADOR
+                  </th>
+                  <th>
+                    NOMBRE DEL PRESUPUESTO
+                  </th>
+                  <th>
+                    DETALLES DEL PRESUPUESTO
+                  </th>
+                  <th>
+                    CANTIDAD DEL PRESUPUESTO
+                  </th>
+                  <th>
+                    ESTADO
+                  </th>
+                  <th>
+                    OPCIONES
+                  </th>
+              </thead>
+              <tbody>
+                {% for x in object_list%}
+                  <tr>
+                    <td>
+                      {{x.idPresupuesto}}
+                    </td>
+                    <td>
+                      {{x.Descripcion}}
+                    </td>
+                    <td>
+                      {{x.Observacion}}
+                    </td>
+                    <td>
+                      {{x.cantidad}}
+                    </td>
+                    <td>
+                      {{x.Activo}}
+                    </td>
+                    <td>
+                      <button  type="button" data-id="{{x.idPresupuesto}}" id="BtnEdit"  class="btn btn-info btn-xs BtnEdit"><i class="material-icons">edit</i></button>
+                      <!-- el siguiente boton solo debe aparecer si es administrador -->
+                      <button  type="button" data-id="{{x.idPresupuesto}}" id="BtnDel" class="btn btn-danger btn-xs BtnDel" ><i class="material-icons">Borrar</i></button>
+                    </td>  
+                  </tr>
+                  
+                  <div class="modal fade" id="eliminarModal{{ x.idPresupuesto }}" tabindex="-1" aria-labelledby="eliminarModalLabel{{ x.id }}" aria-hidden="true">
+                    <!-- Contenido de la modal se cargará aquí -->
+                  </div>
+                {% endfor %}
+              </tbody>
+              <tfoot class=" text-primary">
+                <th>
+                    IDENTIFICADOR
+                  </th>
+                  <th>
+                    NOMBRE DEL PRESUPUESTO
+                  </th>
+                  <th>
+                    DETALLES DEL PRESUPUESTO
+                  </th>
+                  <th>
+                    CANTIDAD DEL PRESUPUESTO
+                  </th>
+                  <th>
+                    ESTADO
+                  </th>
+                  <th>
+                    OPCIONES
+                  </th>
+              </tfoot>
+            </table>            
+            <button type="button" id="BtnAdd" class="btn btn-info btn-xs BtnAdd"><i class="material-icons btn-xs" >add</i>Nuevo registro</button>
+          </div>  
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  {% endblock content %}
+  
+  {% block javascripts %}
+  
+  <!-- creamos script para datatable -->
+  <script type="text/javascript">
+  
+    // DataTable_Script();
+    var table = new DataTable('#data', {
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/es-CO.json',
+            },
+        });
+        
+    $('.BtnAdd').click(function () {
+      var url = "{% url 'ACTIVOS:Crear_PRESUPUESTO' %}"; 
+      location.href = url;
+      
+      });
+        
+    $('.BtnEdit').click(function () {   
+      var id = $(this).attr('data-id');
+      var url = "{% url 'ACTIVOS:Editar_PRESUPUESTO' 0 %}".replace('0', id); 
+      location.href = "{% url 'ACTIVOS:Editar_PRESUPUESTO' 0 %}".replace('0', id); 
+      // abrir_modal_edicion(url);
+      
+      });
+      $('.BtnDel').click(function(){
+        var id = $(this).attr('data-id');
+        var url = "{% url 'ACTIVOS:Borrar_PRESUPUESTO' 0 %}".replace('0', id); 
+        location.href = "{% url 'ACTIVOS:Borrar_PRESUPUESTO' 0 %}".replace('0', id);
+    });
+
+    </Script>
+  
+  
+  {% endblock javascripts %}

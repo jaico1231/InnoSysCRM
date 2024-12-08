@@ -1,0 +1,43 @@
+<div class="sidebar">
+    <li class="nav-small-cap">
+        <span class="material-symbols-outlined">bookmark_manager</span>
+        <span class="hide-menu" onclick="toggleMenu('RrHhMenu')">RrHh</span>
+    </li>
+
+    <div id="RrHhMenu" style="display:none;">
+        <ul>
+            <!-- Elementos visibles para todos -->
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="{% url 'RrHh:Listar_Solicitudes_Permisos' %}" aria-expanded="false">
+                    <span class="material-icons">transfer_within_a_station</span>
+                    <span class="hide-menu">Permiso Laboral</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="{% url 'RrHh:Lista_Solicitudes_Vacaciones' %}" aria-expanded="false">
+                    <span class="material-icons">flight_takeoff</span>
+                    <span class="hide-menu">Vacaciones</span>
+                </a>
+            </li>
+                <!-- Elementos visibles solo para ciertos grupos -->
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="{% url 'RrHh:Listar_HV' %}" aria-expanded="false">
+                        <span class="material-symbols-outlined">badge</span>
+                        <span class="hide-menu">Hojas de Vida</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="{% url 'contabilidad:N_N_List' %}" aria-expanded="false">
+                        <span class="material-symbols-outlined">badge</span>
+                        <span class="hide-menu">Novedades Nomina</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="{% url 'RrHh:Listar_Contratos' %}" aria-expanded="false">
+                        <span><i class="ti ti-server"></i></span>
+                        <span class="hide-menu">Contratos</span>
+                    </a>
+                </li>
+        </ul>
+    </div>
+</div>

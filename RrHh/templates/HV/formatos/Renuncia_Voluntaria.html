@@ -1,0 +1,78 @@
+{% extends 'layout/base.html'%}
+
+{%block title%}{{ title }}{%endblock%}
+{% block stylesheets %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYL/HkXjOoSh8an/6JWnvmzkhS4HRzYRwZvnmhPxYBXAb1hcqXdvigEFbEfjf1n+ZUyVTRFVSNRQcf2tPzxQw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r9uboCVPPLMTiCT8Y8XdHHBHhVxX3Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+{% endblock stylesheets %}
+{% block content %}
+<button class="btn btn-primary PDF"><i class="material-icons">save</i>Generar pdf</button>
+  <div class="container">
+    <div class="header">
+      <p>Acopi Yumbo, Valle del Cauca CO, <span class="date">(Dia en letra. Ej.: Lunes) (#Dia) de (Mes en letra. Ej.: Enero) de 2.02x</span></p>
+    </div>
+    <div class="content">
+      <br></br>
+      <p>Señor(a).</p>
+      <p class="recipient-name">{{ nombre }} {{ apellido }}.</p>
+      <p>CC. {{numero_identificacion}}</p>
+      <h2>ASUNTO: Aceptación Renuncia Voluntaria.</h2>
+      <p>Apreciado(a) Sr(a). {{ nombre }} {{ apellido }}.</p>
+      <p>Reciba un cordial saludo,</p>
+      <p>En respuesta a la notificación de su renuncia el día (Dia en letra. Ej.: Lunes) (Dia) de (Mes en letra. Ej.: Enero) de 2.02x, nos permitimos manifestarle que nuestra empresa acepta la renuncia por usted presentada del cargo que ha venido desempeñando, aceptando la terminación del vínculo laboral existente.</p>
+      <p>Esta aceptación es efectiva durante la jornada de trabajo cursada el día (Dia en letra. Ej.: Lunes) (Dia) de (Mes en letra. Ej.: Enero) de 2.02x, tal como usted nos lo ha comunicado en su carta de renuncia.</p>
+      <p>Le agradecemos por el tiempo que laboró con nosotros, y solo nos queda aplaudir su desempeño, con la satisfacción de que la experiencia y conocimiento compartido con nuestra empresa, se traducirá en resultados fructíferos, finalmente le deseamos éxito en sus nuevas actividades.</p>
+      <p>En nuestro departamento de tesorería le será pagada su liquidación correspondiente de acuerdo como lo estipula la ley.</p>
+      
+      <p>Cordialmente,</p>
+    </div>
+    <footer>
+      <p>Copyright © 2022. Todos los derechos reservados.</p>
+    </footer>
+  </div>
+
+  
+
+  
+{% endblock content %}
+{% block javascripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="html2pdf.bundle.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js" integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/" crossorigin="anonymous"></script> -->
+ <script type="text/javascript">
+    $('.PDF').click(function() {
+    // Lógica para convertir la vista HTML en PDF utilizando jsPDF
+    // Por ejemplo:
+      contenido = document.getElementsByClassName('container')[0];
+       html2pdf().from(contenido).save('vista.pdf');
+      // pdf.addHTML(document.getElementsByClassName('container')[0], {pagesplit: true}, function() {
+        
+        
+      
+      // pdf.save('vista.pdf');
+    });
+    
+
+    // $('.PDF').click(function() {
+    // // Lógica para convertir la vista HTML en PDF utilizando jsPDF
+    // // Por ejemplo:
+    //   var pdf = new jsPDF();
+    //   pdf.addHTML(document.getElementsByClassName('container')[0], {pagesplit: true}, function() {
+    //     pdf.save('vista.pdf');
+        
+    //   })
+    //   // pdf.save('vista.pdf');
+    // });
+
+  
+  // <script type="text/javascript">
+  //   $('.BtnAdd_GF12').click(function () {  
+  //     var url = "{% url 'RrHh:Crear_GF' %}"; 
+  //       $('#exampleModal').modal('show').find('.modal-content').load('Que va a salir');
+
+  //   });
+  // </script>
+{% endblock javascripts %}
+

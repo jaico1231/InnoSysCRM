@@ -1,0 +1,58 @@
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header card-header-primary">
+          <h4 class="card-title ">Listado de Contratos
+            <button type="button" data-url="{% url 'RrHh:Listar_Contratos' %}" style="text-align: right;" class="btn btn-secundary btn-xs col-md-2"><i class="material-icons">visibility</i></button>
+          </h4>    
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+              </div>
+            </div>
+          </div>
+          <div class="table-responsive" >
+            <table class="table table-striped" style="width:100%" id="data" >
+              <thead class=" text-primary">
+                <tr>
+                    <th>EMPLEADO</th>
+                    <th>CARGO</th>
+                    <th>FECHA DE FINALIZACION</th>
+                    <th>DIAS RESTANTES</th>
+                    
+                  </tr>
+              </thead>
+              <tbody>
+                {% for contrato in contratos_60_dias %}
+          <tr>
+            <td>{{ contrato.hoja_vida_FK.nombre }} {{ contrato.hoja_vida_FK.apellido }}</td>
+            <td>{{ contrato.cargo }}</td>
+            <td>{{ contrato.fecha_fin }}</td>
+            <td>{{ contrato.fecha_fin|timeuntil }}</td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="7">No hay contratos próximos a finalizar.</td>
+          </tr>
+        {% endfor %}
+              </tbody>              
+            </table>
+          </div>  
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  {% endblock content %}
+  
+  {% block auxiliar_javascripts  %}
+  
+<!-- los scripts para los botones se deben crear directamente en el dashboard principal-->
+  
+  
+  {% endblock auxiliar_javascripts %}

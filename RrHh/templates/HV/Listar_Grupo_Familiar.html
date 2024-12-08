@@ -1,0 +1,147 @@
+{% extends 'layout/base.html'%}
+
+{% block title %} {{ title }} {% endblock %} 
+
+{%load static%}
+
+{% block stylesheets %}
+<link href="https://cdn.datatables.net/v/bs5/dt-1.13.8/datatables.min.css" rel="stylesheet">
+<!-- importamos JQuery para datatable -->
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+{% endblock stylesheets %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header card-header-primary">
+          <h4 class="card-title ">{{title}} </h4>
+          <h6 class="card-subtitle mb-2 text-muted"><i class="material-icons btn-xs" >add</i> añadir</a></h6>        
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+              </div>
+            </div>
+          </div>
+          <div class="table-responsive" >
+            <table class="table table-striped" style="width:100%" id="data" >
+              <thead class=" text-primary">
+                  <th>
+                    PARENTESCO
+                  </th>
+                  <th>
+                    NOMBRE
+                  </th>
+                  <th>
+                    APELLIDO
+                  </th>
+                  <th>
+                    TIPO DOCUMENTO
+                  </th>
+                  <th>
+                    IDENTIFICACION
+                  </th>
+                  <th>
+                    FECHA DE NACIMIENTO
+                  </th>
+              </thead>
+              <tbody>
+                {% for GF_FORM in object_list%}
+                  <tr>
+                    <td>
+                        {{ GF_FORM.parentesco }}
+                    </td>
+                    <td>
+                        {{ GF_FORM.nombre }}                    
+                    </td>
+                    <td>
+                        {{ GF_FORM.apellido }}
+                    </td>
+                    <td>
+                        {{ GF_FORM.tipo_documento }}
+                    </td>
+                    <td>
+                        {{ GF_FORM.numero_identificacion }}
+                    </td>
+                    <td>
+                        {{ GF_FORM.fecha_nacimiento }}
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+              <tfoot class=" text-primary">
+                <th>
+                    PARENTESCO
+                  </th>
+                  <th>
+                    NOMBRE
+                  </th>
+                  <th>
+                    APELLIDO
+                  </th>
+                  <th>
+                    TIPO DOCUMENTO
+                  </th>
+                  <th>
+                    IDENTIFICACION
+                  </th>
+                  <th>
+                    FECHA DE NACIMIENTO
+                  </th>
+              </tfoot>
+            </table>
+          </div>  
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="modal fade" id="detalles" role="dialog" aria-haspopup="true"></div> 
+  {% endblock content %}
+  
+  {% block javascripts %}
+  
+  <!-- creamos script para datatable -->
+  <script type="text/javascript">
+  
+    // DataTable_Script();
+    var table = new DataTable('#data', {
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/es-CO.json',
+            },
+        });
+        
+    $('.BtnAdd').click(function () {
+      var url = "{% url 'RrHh:Crear_HV' %}"; 
+      location.href = url;
+      
+      });
+        
+    $('.BtnEdit').click(function () {   
+      var id = $(this).attr('data-id');
+      var url = "{% url 'RrHh:Detalle_HV' 0 %}".replace('0', id); 
+      location.href = "{% url 'RrHh:Editar_HV' 0 %}".replace('0', id); 
+      // abrir_modal_edicion(url);
+      
+      });
+    $('.BtnInv').click(function(){
+      var id = $(this).attr('data-id');
+      var url = "{% url 'RrHh:Detalle_HV' 0 %}".replace('0', id); 
+      location.href = "{% url 'RrHh:Detalle_HV' 0 %}".replace('0', id);
+        // var myModal = document.getElementById('detalles');
+        // var myInput = document.getElementById('myInput');
+
+        // myModal.addEventListener('shown.bs.modal', function () {
+        // myInput.focus();
+     });
+  
+
+        
+    </Script>
+  
+  
+  {% endblock javascripts %}

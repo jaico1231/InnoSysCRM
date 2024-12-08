@@ -1,0 +1,181 @@
+{% extends 'layout/base.html'%}
+
+{% block title %} {{ title }} {% endblock %} 
+
+{%load static%}
+
+{% block stylesheets %}
+<link href="https://cdn.datatables.net/v/bs5/dt-1.13.8/datatables.min.css" rel="stylesheet">
+<!-- importamos JQuery para datatable -->
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+{% endblock stylesheets %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header card-header-primary">
+          <h4 class="card-title ">{{title}} </h4>
+          <h6 class="card-subtitle mb-2 text-muted"><i class="material-icons btn-xs" >add</i> añadir</a></h6>        
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+              </div>
+            </div>
+          </div>
+          <div class="table-responsive" >
+            <table class="table table-striped" style="width:100%" id="data" >
+              <thead class=" text-primary">
+                  <th>
+                    PERMISO #
+                  </th>
+                  <th>
+                    EMPLEADO
+                  </th>
+                  <th>
+                    TIPO PERMISO
+                  </th>
+                  <th>
+                    FECHA SOLICITADA
+                  </th>
+                  <th>
+                    ESTADO
+                  </th>
+                  <th>
+                    AUTORIZADO POR
+                  </th>
+                  <th>
+                    FECHA AUTORIZACION
+                  </th>
+                  <th>
+                    ACCIONES
+                  </th>
+                  
+              </thead>
+              <tbody>
+                {% for x in lista%}
+                  <tr>
+                    <td>
+                      {{x.IdPermiso}}
+                    </td>
+                    <td>
+                      {{x.solicitante_FK}}
+                    </td>
+                    <td>
+                      {{x.tipo_permisoFK}}
+                    </td>
+                    <td>
+                      {{x.fecha_solicitada}}
+                    </td>
+                    <td>
+                      {{x.estado_FK}}
+                    </td>
+                    <td>
+                        {{x.autorizador}}
+                    </td>
+                    <td>
+                        {{x.fecha_autorizacion}}
+                    </td>
+                    <td>
+                      {% if x.estado_FK.id == 5  %}
+                      <button  type="button" data-id="{{x.IdPermiso}}" id="BtnEdit"  class="btn btn-warning btn-xs BtnEdit"><i class="material-icons">visibility</i></button>
+                        {% else %}
+                        <!-- <button type="button" data-id="{{x.IdPermiso}}" name="print" class="btn btn-primary BtnPrint"><i class="material-icons">print</i></button> -->
+                        <form method="post">
+                          {% csrf_token %}
+                          <!-- <button type="submit" name="print" class="btn btn-primary BtnPrint"><i class="material-icons">print</i></button> -->
+                          <!-- <button type="submit" name="mail" class="btn btn-secondary"><i class="material-icons">mail</i></button> -->
+                          <button  type="button" data-id="{{x.IdPermiso}}" id="BtnEdit"  class="btn btn-success btn-xs BtnEdit"><i class="material-icons">check</i></button>
+                        </form>
+                      {% endif %}
+                      <!-- el siguiente boton solo debe aparecer si es administrador -->
+                      <!-- <button  type="button" data-id="{{x.id}}" id="BtnDel" class="btn btn-danger btn-xs BtnDel" ><i class="material-icons">delete</i></button> -->
+                    </td>  
+                  </tr>
+
+                  
+                  <div class="modal fade" id="eliminarModal{{ x.id }}" tabindex="-1" aria-labelledby="eliminarModalLabel{{ x.id }}" aria-hidden="true">
+                    <!-- Contenido de la modal se cargará aquí -->
+                  </div>
+                {% endfor %}
+              </tbody>
+              <tfoot class=" text-primary">
+                <th>
+                    PERMISO #
+                </th>
+                <th>
+                    EMPLEADO
+                </th>
+                <th>
+                    TIPO PERMISO
+                </th>
+                <th>
+                    FECHA SOLICITADA
+                </th>
+                <th>
+                    ESTADO
+                </th>
+                <th>
+                    AUTORIZADO POR
+                </th>
+                <th>
+                    FECHA AUTORIZACION
+                </th>
+                <th>
+                    ACCIONES
+                </th>
+              </tfoot>
+            </table>
+            
+            <button type="button" id="BtnAdd" class="btn btn-info btn-xs BtnAdd"><i class="material-icons btn-xs" ></i>Solicitar</button>
+          </div>  
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="addModal" role="dialog" aria-haspopup="true"></div>
+  
+  
+  {% endblock content %}
+  
+  {% block javascripts %}
+  
+  <!-- creamos script para datatable -->
+  <script type="text/javascript">
+  
+    // DataTable_Script();
+    var table = new DataTable('#data', {
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/es-CO.json',
+            },
+        });
+        
+    $('.BtnAdd').click(function () {
+      var url = "{% url 'RrHh:Crear_Solicitud_permiso_laboral' %}"; 
+      location.href = url;
+    });
+
+      
+    
+
+    $('.BtnEdit').click(function () {   
+      var id = $(this).attr('data-id');
+      var url = "{% url 'RrHh:Editar_Solicitud_permiso_laboral' 0 %}".replace('0', id); 
+      location.href = url; 
+      });
+
+    $('.BtnPrint').click(function(){
+         var id = $(this).attr('data-id');
+         var url = "{% url 'RrHh:imprimir_SP' 0 %}".replace('0', id); 
+         window.open(url, '_blank');
+    });
+
+    </Script>
+  
+  
+  {% endblock javascripts %}

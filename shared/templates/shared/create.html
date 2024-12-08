@@ -1,0 +1,84 @@
+{% if messages %}
+<div class="alert alert-danger" role="alert">
+    {% if messages %}
+        <div class="alert-container position-fixed top-0 end-0 p-3" style="z-index: 1050;">
+            {% for message in messages %}
+                <div class="alert {% if message.tags %}alert-{{ message.tags }}{% else %}alert-info{% endif %} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endif %}
+<form method="post" enctype="multipart/form-data" class="create-form">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-header-primary">
+                    <h4 class="card-title">{{ title }}</h4>
+                    <p class="card-category"></p>
+                </div>
+                <div class="card-body">
+                    <div id="message-container"></div>
+                    <table class="table">
+                        {{ form.as_p }}
+                    </table>
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary btn-xs">
+                        <i class="material-icons">save</i><br>Agregar
+                    </button>
+                    
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="material-icons">cancel</i><br>Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+{% block javascripts %}
+<script type="text/javascript">
+    $( '.select2').select2( {
+      theme: "bootstrap-5",
+      language: "es",
+      width: $( this ).data( 'width' ) ? $( this ).data( 'width' ) : $( this ).hasClass( 'w-100' ) ? '100%' : 'style',
+      placeholder: $( this ).data( 'placeholder' ),
+    });
+    $(document).on('submit', '.create-form', function(e) {
+        e.preventDefault(); // Evita el comportamiento predeterminado del formulario
+        var form = $(this);
+
+        $.ajax({
+            url: form.attr('action'),
+            type: form.attr('method'),
+            data: form.serialize(),
+            success: function(response) {
+                if (response.success) {
+                    // Mostrar el mensaje en la modal
+                    $('#myModal .modal-body').html('<p>' + response.message + '</p>');
+
+                    // Opcional: cerrar la modal después de un tiempo
+                    setTimeout(function() {
+                        $('#myModal').modal('hide');
+                        location.href = '{{ list_url }}';
+                    }, 2000);
+                } else {
+                    // Manejar errores si es necesario
+                }
+            },
+            error: function(response) {
+                // Manejar errores si es necesario
+                $('#message-container').html('{{ error_message }}');
+            }
+        });
+    });
+
+    $('.BtnCancel').click(function () {
+        location.href = '{{ list_url }}';
+    });
+</script>
+{% endblock javascripts %}

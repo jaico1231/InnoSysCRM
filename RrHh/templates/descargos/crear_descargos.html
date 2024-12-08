@@ -1,0 +1,171 @@
+{% extends 'layout/base.html'%}
+
+{%block title%}{{ title }}{%endblock%}
+{% block stylesheets %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYL/HkXjOoSh8an/6JWnvmzkhS4HRzYRwZvnmhPxYBXAb1hcqXdvigEFbEfjf1n+ZUyVTRFVSNRQcf2tPzxQw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r9uboCVPPLMTiCT8Y8XdHHBHhVxX3Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+{% endblock stylesheets %}
+{% block content %}
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header card-header-primary">
+        <div class="col-md-12" style="text-align: right;">
+          <button type="button" class="btn-close BtnCancel col-md-2"></button>
+      </div>
+        <h4 class="card-title">LLamado de Atencion</h4>
+        <p class="card-category"></p>
+      </div>
+      <div class="card-body">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-lg-12 d-flex align-items-strech">                  
+              <div class="card w-100">
+                <div class="card-body">
+                  <div class="table-responsive" >
+                    <table class="table table-striped" style="width:100%" >
+                      <!-- <tr>
+                      <td colspan="7" style="text-align: center;"><b><h4>LLAMADO DE ATENCION</h4></b></td>
+                      </tr>
+                      <tr>
+                          <td><br></td>
+                      </tr> -->
+                      <tr>
+                        <td><b>Empleado: </b></td>
+                        <td>{{ Llamado_Atencion.colaborador }}</td>
+                        <td colspan="5"><b>Motivo de Llamado de Atencion:</b></td>
+                      </tr>
+                      <tr>
+                        <td><b>Fecha de Infraccion:</b></td>
+                        
+                        <td>{{ Llamado_Atencion.fecha_infraccion }}</td>
+                        <td colspan="5" rowspan="2">{{ Llamado_Atencion.acciones }}</td>
+                      </tr>
+                      <tr>
+                        <td><b>Generado por:</b></td>
+                        <td>{{ Llamado_Atencion.Autorizado_por }}</td>
+                      </tr>
+                    </table>
+                </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+</div>
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <div class="row">
+      <div class="col-md-12">
+          <div class="card">
+              <div class="card-header card-header-primary">
+                <div class="col-md-12" style="text-align: right;">
+                  <button type="button" class="btn-close BtnCancel col-md-2"></button>
+              </div>
+                  <h4 class="card-title">{{ title }}</h4>
+                  <p class="card-category"></p>
+              </div>
+              <div class="card-body">
+                  <table class="table">
+                  <tr>
+                      <td><b>{{ form.autorizado_por.label }}</b></td>
+                      <td><b>{{ form.autorizado_por }}</td>
+                      
+                  </tr>
+                  <tr>
+                      <td><b>{{ form.acciones.label }}</b></td>                                
+                      <td>{{ form.acciones }}</td>
+                  </tr> 
+                  </table>
+              </div>
+              <div class="card-footer">
+                  <button type="submit" class="btn btn-primary btn-xs">
+                      <i class="material-icons">save</i>iniciar Cuestionario
+                  </button>
+                  <button type="button" class="btn btn-secundary BtnCancel">
+                      <i class="material-icons">cancel</i>Cancelar
+                  </button>
+              </div>
+          </div>
+      </div>
+  </div>
+</form>
+{% endblock content %}
+{% block javascripts %}
+
+
+<script type="text/javascript">
+function addRow() {
+    var table = document.getElementById("familyTable");
+    var row = table.insertRow(table.rows.length);
+    var cell1 = row.insertCell(0);
+    var cell2 = row.insertCell(1);
+    var cell3 = row.insertCell(2);
+    var cell4 = row.insertCell(3);
+    var cell5 = row.insertCell(4);
+    var cell6 = row.insertCell(5);
+    var cell7 = row.insertCell(6);
+    cell1.innerHTML = '<input type="text" name="nombres[]">';
+    cell2.innerHTML = '<input type="text" name="apellidos[]">';
+    cell3.innerHTML = '<input type="text" name="parentesco[]">';
+    cell4.innerHTML = '<input type="text" name="genero[]">';
+    cell5.innerHTML = '<input type="text" name="tipo_documento[]">';
+    cell6.innerHTML = '<input type="text" name="identificacion[]">';
+    cell7.innerHTML = '<input type="text" name="fecha_nacimiento[]">';
+  }
+document.addEventListener('DOMContentLoaded', function() {
+  const paisSelect = document.getElementById('paises');
+  const departamentoSelect = document.getElementById('departamentos');
+  const municipioSelect = document.getElementById('municipios');
+
+  paisSelect.addEventListener('change', function() {
+    const selectedPais = paisSelect.value;
+    // Realizar una solicitud AJAX para obtener los departamentos del país seleccionado
+    fetch(`/obtener_departamentos?id_pais=${selectedPais}`)
+      .then(response => response.json())
+      .then(data => {
+        departamentoSelect.innerHTML = '<option value="">Seleccionar departamento</option>';
+        data.forEach(departamento => {
+          const option = document.createElement('option');
+          option.value = departamento.id;
+          option.textContent = departamento.departamento;
+          departamentoSelect.appendChild(option);
+        });
+        departamentoSelect.disabled = false;
+      });
+  });
+
+  departamentoSelect.addEventListener('change', function() {
+    const selectedDepartamento = departamentoSelect.value;
+    // Realizar una solicitud AJAX para obtener los municipios del departamento seleccionado
+    fetch(`/obtener_municipios?id_departamento=${selectedDepartamento}`)
+      .then(response => response.json())
+      .then(data => {
+        municipioSelect.innerHTML = '<option value="">Seleccionar municipio</option>';
+        data.forEach(municipio => {
+          const option = document.createElement('option');
+          option.value = municipio.id;
+          option.textContent = municipio.municipio;
+          municipioSelect.appendChild(option);
+        });
+        municipioSelect.disabled = false;
+      });
+  });
+});
+    
+
+$('.BtnCancel').click(function () {
+    location.href = "{{ list_url }}";  
+});
+    
+</script>
+{% endblock javascripts %}
+  
+  
+  

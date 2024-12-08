@@ -1,0 +1,185 @@
+{% extends 'layout/base.html'%}
+
+{% block title %} {{ title }} {% endblock %} 
+
+{%load static%}
+
+{% block stylesheets %}
+<link href="https://cdn.datatables.net/v/bs5/dt-1.13.8/datatables.min.css" rel="stylesheet">
+<!-- importamos JQuery para datatable -->
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+{% endblock stylesheets %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header card-header-primary">
+            <div class="col-md-12" style="text-align: right;">
+              <button type="button" class="btn-close BtnCancel col-md-2"></button>
+          </div>
+          <h4 class="card-title ">{{title}} </h4>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+              </div>
+            </div>
+          </div>
+          <div class="table-responsive" >
+            <form method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              <table class="table table-striped" style="width:100%" id="data" >
+                <tr>
+                  <td>{{ form.colaborador.label }}</td>
+                  <td>{{ form.colaborador }}</td>
+                  <td>{{ form.acciones.label }}</td>
+                </tr>
+                <tr>
+                  <td>{{ form.fecha_infraccion.label }}</td>
+                  <td>{{ form.fecha_infraccion }}</td>
+                  <td rowspan="2">{{ form.acciones }}</td>
+                </tr>
+                <tr>
+                  <td>{{ form.Autorizado_por.label }}</td>
+                  <td>{{ form.Autorizado_por }}</td>
+                </tr>
+              </table>
+              <button type="submit" class="btn btn-primary btn-xs">
+                <i class="material-icons ">save</i>Agregar 
+              </button>
+              <button type="button" class="btn btn-secondary BtnCancel">
+                <i class="material-icons ">cancel</i>Cancelar
+              </button>   
+            </form>
+          </div> 
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="crearGrupoFamiliarModal" tabindex="-1" aria-labelledby="crearGrupoFamiliarModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="crearGrupoFamiliarModalLabel">Crear Llamado de Atención</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!-- Form content will be loaded here via AJAX -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary" id="saveChanges">Save changes</button>
+        </div>
+      </div>
+    </div>
+</div>
+  
+  {% endblock content %}
+  
+  {% block javascripts %}
+  
+  <!-- creamos script para datatable -->
+  <script type="text/javascript">
+      // DataTable_Script();
+    var table = new DataTable('#data', {
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/es-CO.json',
+            },
+        });
+    
+        $('.BtnAdd').click(function () {
+        var url = "{% url 'RrHh:Crear_Llamado_Atencion' %}";
+        location.href = url;
+        // $.ajax({
+        //     url: url,
+        //     type: 'get',
+        //     dataType: 'json',
+        //     success: function (data) {
+        //         $('#crearGrupoFamiliarModal .modal-body').html(data.html_form);
+        //         $('#crearGrupoFamiliarModal').modal('show');
+        //     }
+        // });
+    });
+
+    // $('#crearGrupoFamiliarModal').on('submit', 'form', function (e) {
+    //     e.preventDefault();
+    //     var form = $(this);
+    //     $.ajax({
+    //         url: form.attr('action'),
+    //         data: form.serialize(),
+    //         type: form.attr('method'),
+    //         dataType: 'json',
+    //         success: function (data) {
+    //             if (data.form_is_valid) {
+    //                 $('#data tbody').html(data.html_book_list);  // Assuming this is what you want to update
+    //                 $('#crearGrupoFamiliarModal').modal('hide');
+    //             }
+    //             else {
+    //                 $('#crearGrupoFamiliarModal .modal-body').html(data.html_form);
+    //             }
+    //         }
+    //     });
+    // });
+    // $('.BtnAdd').click(function () {
+    //     alert("hola");
+    //   var url = "{% url 'RrHh:Crear_Llamado_Atencion' %}"; 
+    //   location.href = url;
+    //   // var myModal = new bootstrap.Modal(document.getElementById('addModal'), {
+    //   //   keyboard: false      
+    //   // });
+    //   // myModal.show();
+    //   // // $('#addModal').attr('href', url);
+    //   // $('#addModal').Modal('show',url);
+    //   // });
+    //   addModal.addEventListener('shown.bs.modal', () => {
+    //   addModal.focus()
+    // })
+
+      
+    // });       
+
+    $('.BtnEdit').click(function () {   
+      var id = $(this).attr('data-id');
+      var url = "{% url 'RrHh:Editar_Solicitud_Vacaciones' 0 %}".replace('0', id); 
+      location.href = url; 
+      });
+
+    $('.BtnCancel').click(function () {
+        url = '{{ cancel_url }}';
+        location.href = url;
+    });
+
+    </Script>
+  
+  
+  {% endblock javascripts %}
+
+
+<!-- <div class="modal-body">
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      <button type="submit" class="btn btn-primary">Save changes</button>
+    </div>
+  </form>
+</div> -->
+
+
+<!-- <table class="table">
+  <tr>
+      <td>{{ form.autorizado_por.label }}</td>
+      <td>{{ form.autorizado_por }}</td>
+      <td colspan="2">{{ form.acciones.label }}</td>
+  </tr>
+  <tr>                                
+      <td>{{ form.fecha_descargo.label }}</td>
+      <td>{{ form.fecha_descargo }}</td>
+      <td colspan="2">{{ form.acciones }}</td>
+  </tr>  
+</table> -->

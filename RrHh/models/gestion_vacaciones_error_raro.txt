@@ -1,0 +1,29 @@
+from django.db import models
+from shared.models.baseModel import BaseModel
+from RrHh.models.estado_solicitud import estado_solicitud
+from RrHh.models.hoja_vida import Hoja_Vida
+
+class Gestion_Vacaciones(BaseModel):
+    IdSolicitud = models.AutoField(primary_key=True)
+    colaborador_FK = models.ForeignKey(Hoja_Vida, on_delete=models.CASCADE, null=True, blank=True, related_name='solicitud_vacaciones')
+    fecha_inicial = models.DateField(null=True, blank=True)
+    fecha_final = models.DateField(null=True, blank=True)
+    dias = models.IntegerField(null=True, blank=True)
+    fecha_inicio_alternativa = models.DateField(null=True, blank=True)
+    fecha_fin_alternativa = models.DateField(null=True, blank=True)
+    dias_alternativo = models.IntegerField(null=True, blank=True)
+    observaciones = models.TextField(blank=True, null=True)
+    estado = models.ForeignKey(estado_solicitud, default=5, on_delete=models.CASCADE, null=True, blank=True, related_name='estado_solicitud_vacaciones')
+
+    class Meta:
+        verbose_name = "Solicitud de vacaciones"
+        verbose_name_plural = "Solicitudes de vacaciones"
+        ordering = ['-IdSolicitud']
+
+    def __str__(self):
+        return str(self.IdSolicitud)  # Ensure the return value is a string
+
+    objects = models.Manager()  # Define the default manager explicitly
+
+    def get_objects(self):
+        return Gestion_Vacaciones.objects.all()

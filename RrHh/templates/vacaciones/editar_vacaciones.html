@@ -1,0 +1,91 @@
+{% extends 'layout/base.html'%}
+
+{%block title%}{{ title }}{%endblock%}
+{% block stylesheets %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYL/HkXjOoSh8an/6JWnvmzkhS4HRzYRwZvnmhPxYBXAb1hcqXdvigEFbEfjf1n+ZUyVTRFVSNRQcf2tPzxQw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r9uboCVPPLMTiCT8Y8XdHHBHhVxX3Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+{% endblock stylesheets %}
+{% block content %}
+
+<form method="post" >
+    {% csrf_token %}
+    
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-primary">
+            <div class="col-md-12" style="text-align: right;">
+                <button type="button" class="btn-close BtnCancel col-md-2"></button>
+            </div>
+            <h4 class="card-title">{{ title }}</h4>
+            
+          </div>
+          
+          <div class="card-body">
+            <table class="table">
+                <tr>
+                    <td colspan="8" class="text-center"><h3>DATOS DE LA SOLICITUD</h3></td>
+                </tr>
+                <tr>
+                    <td colspan="8" class="text-center"></td>
+                </tr>
+                <tr >
+                    <td>Fecha Inicio Vacaciones:</td>
+                    <td>{{ form.fecha_inicial }}</td>
+                    <td>Fecha Fin Vacaciones:</td>
+                    <td>{{ form.fecha_final }}</td>                   
+                </tr>
+                <tr>
+                <tr> <td>Dias Vacaciones :</td>
+                    <td>{{ form.dias }}</td>
+                    <td>Retorno Laboral:</td>
+                    <td >{{ form.fecha_inicio_laboral }}</td>
+                </tr>
+                <tr>
+                    <td colspan="8" class="text-center"><h3>GESTION DE LA SOLICITUD</h3></td>
+                </tr>
+                <tr>
+                    <td >Estado Solciitud:</td>
+                    <td>{{ form.estado }}</td>
+                    <td >Observaciones:</td>
+                    <td colspan="3">{{ form.observaciones }}</td>
+                </tr>
+                <tr>
+                    <td colspan="8" >en caso de ser negada la solcitud genere las fechas alternativas del permiso de vacaciones</td>
+                </tr>
+                <tr>
+                    <td colspan="8"><h4>Fecha De Vacaciones alternativa</h4></td> 
+                </tr>
+                <tr>
+                    <td>Inicio:</td>
+                    <td>{{ form.fecha_inicio_alternativa }}</td>
+                    <td>Fin:</td>
+                    <td>{{ form.fecha_fin_alternativa }}</td>
+                </tr>
+
+                
+            </table>
+          </div>
+          <div class="card-footer">
+            <button type="submit" class="btn btn-primary btn-xs">
+              <i class="material-icons ">save</i>Agregar 
+            </button>
+              <button type="button" id=BtnCancel class="btn btn-secundary btn-xs BtnCancel"><i class="material-icons btn-xs" >add</i>Cancelar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  </form>
+{% endblock content %}
+{% block javascripts %}
+<script>
+$('.BtnCancel').click(function () {
+    url = '{{ cancel_url }}';
+    location.href = url;  
+});
+</script>
+
+{% endblock javascripts %}

@@ -1,0 +1,193 @@
+{% extends 'layout/base.html'%}
+
+{%block title%}{{ title }}{%endblock%}
+{% block stylesheets %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYL/HkXjOoSh8an/6JWnvmzkhS4HRzYRwZvnmhPxYBXAb1hcqXdvigEFbEfjf1n+ZUyVTRFVSNRQcf2tPzxQw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r9uboCVPPLMTiCT8Y8XdHHBHhVxX3Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+{% endblock stylesheets %}
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header card-header-primary">
+                <h4 class="card-title ">{{title}} </h4>
+            </div>
+            <div class="card-body">
+                <div style="padding-left: 20px; padding-top: 10px; padding-right: 20px; padding-bottom: 20px; height: 100%;">
+                    <h3 style="text-align: center;"><b>CONTRATO DE APRENDIZAJE</b></h3><br><br>
+                    <table style="margin: 10px;">
+                        <tr >
+                            <td style="padding: 5px;">NOMBRE DEL EMPLEADOR:</td>
+                            <td style="padding: 5px;"><b>INDUSTRIAS ROMIL S.A.S.</b></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px;">NUMERO DE IDENTIFICACION:</td>
+                            <td style="padding: 5px;"><b>805.001.883-1</b></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px;">DIRECCION DEL EMPLEADOR:</td>
+                            <td style="padding: 5px;"><b>CALLE 38 No. 13 - 143</b></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px;">NOMBRE DEL APRENDIZ</td>
+                            <td style="padding: 5px;"><b>{{nombre}}</b></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px;">NUMERO DE IDENTIFICACION:</td>
+                            <td style="padding: 5px;"><b>{{identificacion}}</b></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px;">DIRECCION DEL APRENDIZ:</td>
+                            <td style="padding: 5px;"><b>{{direccion}}</b></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px;">LUGAR, FECHA DE NACIMIENTO:</td>
+                            <td style="padding: 5px;"><b>{{fecha_nacimiento}}</b></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px;">CARGO U OFICIO A DESEMPEÑAR:</td>
+                            <td style="padding: 5px;"><b>{{cargo}}</b></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px;">FECHA DE INICIO DEL CONTRATO:</td>
+                            <td style="padding: 5px;"><b>{{fecha_inicio}}</b></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px;">FECHA DE INICIO DE LABORES:</td>
+                            <td style="padding: 5px;"><b>{{fecha_inicio_laboral}}</b></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px;">FECHA DE CULMINACION DEL CONTRATO:</td>
+                            <td style="padding: 5px;"><b>{{fecha_fin}}</b></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px;">ESPECIALIDAD O CURSO:</td>
+                            <td style="padding: 5px;"><b>{{fecha_fin_laboral}}</b></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px;">CODIGO DE FICHA:</td>
+                            <td style="padding: 5px;"><b>{{fecha_fin_laboral}}</b></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px;">PERIODOS APOYO SOSTENIMIENTO:</td>
+                            <td style="padding: 5px;"><b>QUINCENALES</b></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px;">CIUDAD DONDE SE CONTRATA:</td>
+                            <td style="padding: 5px;"><b>YUMBO, VALLE DEL CAUCA CO</b></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px;">INSTITUCION DE FORMACION:</td>
+                            <td style="padding: 5px;"><b>SERVICIO NACIONAL DE APRENDIZAJE - SENA</b></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px;">NUMERO DE IDENTIFICACION:</td>
+                            <td style="padding: 5px;"><b>N.I.T 899.999.034 - 1</b></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px;">CENTRO DE FORMACION (SENA):</td>
+                            <td style="padding: 5px;"><b>{{centro_formacion}}</b></td>
+                        </tr>
+                        <tr><td style="padding: 5px;"><br></td></tr>
+                        <tr><td style="padding: 5px;"><br></td></tr>
+                        <tr>
+                            <td colspan="2" style="text-align: justify;">Entre <b>El EMPLEADOR</b> y <b>El APRENDIZ</b> de las condiciones antes indicadas, 
+                                se ha celebrado el presente contrato de <b>APRENDIZ</b>aje, conforme a lo preceptuado por la Ley 789 de 2.002 
+                                y regido por las siguientes cláusulas: <b>PRIMERA. Objeto del Contrato.</b> - 
+                                El presente contrato tiene como objeto garantizar al <b>APRENDIZ</b> la formación profesional
+                                integral en la especialidad de (Programa de Formación), grupo XXXXXXX, 
+                                la cual se impartirá en su etapa lectiva por el Servicio Nacional de <b>APRENDIZ</b>aje - SENA, 
+                                mientras su etapa práctica se desarrollará en la <b>EMPRESA. SEGUNDA. Duración del Contrato.</b> -
+                                El presente contrato tendrá una duración definida de <b>(CANTIDAD DE MESES EN LETRAS) (# MESES),</b> 
+                                comprendidos entre el día XX de (Mes en letra. Ej.: Enero) del año 2.02x fecha de iniciación del Contrato;
+                                y el día XX de (Mes en letra. Ej.: Enero) del año 2.02x fecha de terminación del mismo. 
+                                (No podrá excederse el término máximo de dos años contenido en el Artículo 30 de la Ley 789/02) y 
+                                previa revisión de la normatividad para cada una de las modalidades de patrocinio. <b>TERCERA. - Obligaciones. <b>1)</b>
+                                POR PARTE DE LA EMPRESA.</b> - En virtud del presente contrato el <b>EMPLEADOR</b> deberá: <b>a)</b> 
+                                Facilitar al <b>APRENDIZ</b> los medios para que tanto en las fases Lectiva y Productiva, reciba Formación 
+                                Profesional Integral, metódica y completa en la ocupación u oficio materia del presente contrato. <b>b) </b>
+                                Diligenciar y reportar al respectivo Centro de Formación Profesional Integral del SENA, las evaluaciones y 
+                                certificaciones del <b>APRENDIZ</b> en su fase productiva del <b>APRENDIZ</b>aje.<b> c)</b> Reconocer mensualmente al <b>APRENDIZ</b>, 
+                                por concepto de apoyo económico para el <b>APRENDIZ</b>aje, durante la etapa lectiva, en el SENA el equivalente al
+                                50% de 1 SMLMV y durante la etapa práctica de su formación el equivalente al 75% de 1 SMLMV y/o al 100% cuando 
+                                la tasa de desempleo promedio del año inmediatamente anterior sea de un solo digito, para la vigencia 2021 
+                                este apoyo será del 75%. (Artículo 30 de la Ley 789 de 2002 y Decreto 451 de 2008) <b>PARAGRAFO</b>. -
+                                Este apoyo de sostenimiento no constituye salario en forma alguna, ni podrá ser regulado a través de 
+                                convenios o contratos colectivos o fallos arbítrales que recaigan sobre estos últimos. <b>d)</b> Afiliar al <b>APRENDIZ</b>,
+                                durante la etapa práctica de su formación, a la Aseguradora de Riesgos Laborales, de conformidad con lo
+                                dispuesto por el artículo 30 de la Ley 789 de 2002. <b>e)</b> Afiliar al <b>APRENDIZ</b> y efectuar, durante las fases 
+                                lectiva y productiva de la formación, el pago mensual del aporte al régimen de Seguridad Social 
+                                correspondiente al <b>APRENDIZ</b> en Salud, conforme al régimen de trabajadores independientes, tal y como lo
+                                establece el Artículo 30 de la Ley 789 de 2002. Los pagos a la seguridad social (A.R.L. y E.P.S.) están a
+                                cargo en su totalidad por el <b>EMPLEADOR</b>. <b>f)</b> Dar al <b>APRENDIZ</b> la dotación de seguridad industrial, 
+                                cuando el desarrollo de la etapa productiva así lo requiera, para la protección contra accidentes y
+                                enfermedades profesionales. <b>2) POR PARTE DEL APRENDIZ</b>. - En virtud del presente contrato el <b>APRENDIZ</b>
+                                deberá: <b>a)</b> Concurrir puntualmente a las clases durante los periodos de enseñanza para así recibir 
+                                la Formación Profesional Integral a que se refiere el presente Contrato, someterse a los reglamentos 
+                                y normas establecidas por el respectivo Centro de Formación del SENA, y poner toda diligencia y 
+                                aplicación para lograr el mayor rendimiento en su formación. <b>b)</b> Concurrir puntualmente al lugar asignado por el <b>EMPLADOR</b> para 
+                                desarrollar su formación en la fase productiva, durante el periodo establecido para el mismo,
+                                en las actividades que se le encomiende y que guarde relación con la Formación, cumpliendo con las
+                                indicaciones que le señale el <b>EMPLEADOR</b>. En todo caso la intensidad horaria que debe cumplir el 
+                                <b>APRENDIZ</b> durante la etapa práctica no podrá exceder lo estipulado por la Ley. <b>c)</b> Proporcionar la 
+                                información necesaria para que el <b>EMPLEADOR</b> lo afilie como trabajador <b>APRENDIZ</b> al sistema de seguridad 
+                                social en salud en la E.P.S., que elija. <b>CUARTA. - Supervisión.</b> El <b>EMPLEADOR</b> podrá supervisar al <b>APRENDIZ</b> 
+                                en el respectivo Centro de Formación del SENA, la asistencia, como el rendimiento académico, a efectos de 
+                                verificar y asegurar la real y efectiva utilización del tiempo en la etapa lectiva por parte de este. 
+                                El SENA supervisará al <b>APRENDIZ</b> en la <b>EMPRESA</b> para que sus actividades en cada periodo práctico correspondan 
+                                al programa de la especialidad para la cual se está formando. <b>QUINTA. - Suspensión.</b>  El presente contrato 
+                                se podrá suspender temporalmente en los siguientes casos: <b>a)</b> Licencia de maternidad. <b>b)</b> Incapacidades 
+                                debidamente certificadas. <b>c)</b> Caso fortuito o fuerza mayor debidamente certificado o constatado. <b>d)</b> Vacaciones
+                                por parte del <b>EMPLEADOR</b>, siempre y cuando el <b>APRENDIZ</b> se encuentre ejecutando la etapa práctica. <b>PARÁGRAFO I</b>.
+                                Esta suspensión debe constar por escrito. <b>PARÁGRAFO II.</b> Durante la suspensión el contrato se encuentra
+                                vigente, por lo tanto, los efectos del contrato continúan para las partes en los aspectos indicados por 
+                                la Ley. <b>SEXTA. - Terminación Contractual</b>. El presente contrato podrá darse por terminado en los siguientes 
+                                casos: <b>a)</b> Por mutuo acuerdo entre las partes. <b>b)</b> Por el vencimiento del término de duración del presente 
+                                Contrato. </b>c)</b> La cancelación de la matrícula por parte del SENA de acuerdo con el reglamento previsto para 
+                                los aprendices, ocasionada por el bajo rendimiento o la configuración de faltas disciplinarias cometidas 
+                                en los periodos de Formación Profesional Integral en el SENA o en la <b>EMPRESA.</b> (Las demás que consideren
+                                las partes)<b> SEPTIMA. - Relación Laboral.</b>  El presente Contrato no implica relación laboral alguna entre
+                                las partes, y se regirá por lo dispuesto en el artículo 30 y s.s. de la Ley 789 de 2002. <b>Declaración 
+                                Juramentada.</b> El <b>APRENDIZ</b> declara bajo la gravedad de juramento que no se encuentra ni ha estado vinculado
+                                con la <b>EMPRESA</b> o con otras <b>EMPRESAS</b> en una relación de <b>APRENDIZ</b>aje.  Así mismo, las partes declaran,
+                                que el <b>APRENDIZ</b> no se encuentra ni ha estado vinculado mediante una relación laboral con la <b>EMPRESA.
+                                OCTAVA.</b> - El presente contrato de <b>APRENDIZ</b>aje rige a partir del día XX de (Mes en letra. Ej.: Enero)
+                                del año 2.02x fecha de iniciación del Contrato; y el día XX de (Mes en letra. Ej.: Enero) del año 2.02x, 
+                                fecha prevista como terminación de la etapa productiva que se describe en la cláusula segunda del presente contrato.   </td>
+                        </tr>
+                        <tr><td style="padding: 5px;"><br></td></tr>
+                        <tr><td style="padding: 5px;"><br></td></tr>
+                        <tr><td style="padding: 5px;"><br></td></tr>
+                        <tr><td style="padding: 5px;"><br></td></tr>
+                        <tr>
+                            <td style="padding: 5px;">FIRMA DEL EMPLEADOR</td>
+                            <td style="padding: 5px;">FIRMA DEL APRENDIZ</td>
+                        </tr>
+                        <tr><td style="padding: 5px;"><br></td></tr>
+                        <tr><td style="padding: 5px;"><br></td></tr>
+                        <tr><td style="padding: 5px;"><br></td></tr>
+                        <tr><td style="padding: 5px;"><br></td></tr>
+                        <tr><td style="padding: 5px;"><br></td></tr>
+                        <tr>
+                            <td >TESTIGO</td>
+                            <td >TESTIGO</td>
+                        </tr>
+
+                    </table>
+                    <br><br>
+                    <table>
+                        
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    {% endblock content %}
+    {% block javascripts %}
+    
+    
+    {% endblock javascripts %}

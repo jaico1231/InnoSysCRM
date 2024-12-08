@@ -1,0 +1,144 @@
+2024-11-08 10:55:55 - User: usuario2, Event Type: LOGOUT, Message: El usuario ha cerrado sesión.
+2024-11-08 11:03:01 - User: usuario2, Event Type: LOGOUT, Message: El usuario ha cerrado sesión.
+2024-11-08 14:23:31 - User: usuario2, Event Type: LOGOUT, Message: El usuario ha cerrado sesión.
+2024-11-08 15:45:23 - User: None  , Event Type: info, Message: Se actualizo el menu. Administracion
+2024-11-08 15:45:08 - User: None  , Event Type: info, Message: Se actualizo el menu. ActivosFijos
+2024-11-08 15:45:08 - User: None  , Event Type: info, Message: Se actualizo el menu. Comercial
+2024-11-08 15:45:23 - User: None  , Event Type: info, Message: Se actualizo el menu. Contabilidad
+2024-11-08 15:45:08 - User: None  , Event Type: info, Message: Se actualizo el menu. MacroProcesos
+2024-11-08 15:45:11 - User: None  , Event Type: info, Message: Se actualizo el menu. Produccion
+2024-11-08 15:45:08 - User: None  , Event Type: info, Message: Se actualizo el menu. RrHh
+2024-11-09 05:49:30 - User: None  , Event Type: info, Message: Se creo el menu. USUARIO
+2024-11-09 05:49:30 - User: None  , Event Type: info, Message: Se creo el menu. GRUPOS
+2024-11-09 05:56:55 - User: None  , Event Type: info, Message: Se creo el menu. NOTIFICACIONES
+2024-11-09 05:49:30 - User: None  , Event Type: info, Message: Se creo el menu. TERCEROS
+2024-11-10 09:31:30 - User: usuario2, Event Type: LOGOUT, Message: El usuario ha cerrado sesión.
+2024-11-10 16:01:35 - User: None  , Event Type: info, Message: Se actualizó el usuario: Administrador
+2024-11-10 16:01:35 - User: None  , Event Type: info, Message: Se actualizo el menu. Menus
+2024-11-10 16:01:21 - User: None  , Event Type: info, Message: Se actualizo el menu. Menu Items
+2024-11-11 09:48:45 - User: None  , Event Type: info, Message: Se actualizó el usuario: Administrador
+2024-11-11 09:53:28 - User: None  , Event Type: info, Message: Se actualizo el menu. Menus
+2024-11-11 09:52:51 - User: None  , Event Type: info, Message: Se actualizo el menu. Menu Items
+2024-11-11 09:59:03 - User: None  , Event Type: info, Message: Se actualizo el menu. Menu Items
+2024-11-11 09:59:11 - User: None  , Event Type: info, Message: Se actualizo el menu. Menus
+2024-11-11 10:08:15 - User: None  , Event Type: info, Message: Se actualizo el menu. ADMINISTRACION
+2024-11-11 10:08:19 - User: None  , Event Type: info, Message: Se actualizo el menu. ADMINISTRACION
+2024-11-11 10:08:19 - User: None  , Event Type: info, Message: Se actualizo el menu. CONTABILIDAD
+2024-11-11 10:08:15 - User: None  , Event Type: info, Message: Se actualizo el menu. MACROPROCESOS
+2024-11-11 10:08:19 - User: None  , Event Type: info, Message: Se actualizo el menu. PRODUCCION
+2024-11-11 10:08:15 - User: None  , Event Type: info, Message: Se actualizo el menu. RRHH
+2024-11-11 10:08:19 - User: None  , Event Type: info, Message: Se actualizo el menu. COMERCIAL
+2024-11-11 10:08:15 - User: None  , Event Type: info, Message: Se actualizo el menu. ACTIVOSFIJOS
+2024-11-11 10:08:15 - User: None  , Event Type: info, Message: Se actualizo el menu. USUARIOS
+2024-11-11 10:08:19 - User: None  , Event Type: info, Message: Se actualizo el menu. GRUPOS
+2024-11-11 10:08:27 - User: None  , Event Type: info, Message: Se actualizo el menu. TERCEROS
+2024-11-11 10:08:15 - User: None  , Event Type: info, Message: Se actualizo el menu. INDICADORES
+2024-11-11 10:08:19 - User: None  , Event Type: info, Message: Se actualizo el menu. CRONOGRAMA
+2024-11-11 10:08:27 - User: None  , Event Type: info, Message: Se actualizo el menu. BITACORAS
+2024-11-11 10:08:19 - User: None  , Event Type: info, Message: Se actualizo el menu. PRESUPUESTO
+2024-11-11 10:08:15 - User: None  , Event Type: info, Message: Se elimino el grupo: shared
+2024-11-11 10:08:19 - User: None  , Event Type: info, Message: Se Creó el usuario. steven.milques
+2024-11-11 10:08:15 - User: None  , Event Type: info, Message: Se actualizó el usuario: steven.milques
+2024-11-11 10:08:19 - User: usuario2, Event Type: LOGOUT, Message: El usuario ha cerrado sesión.
+2024-11-11 10:08:15 - User: None  , Event Type: info, Message: Se actualizó el usuario: Administrador
+2024-11-11 10:08:15 - User: None  , Event Type: info, Message: Se Creó el usuario. daniela.revelo
+2024-11-11 10:08:27 - User: None  , Event Type: info, Message: Se actualizó el usuario: steven.milques
+2024-11-11 10:08:15 - User: usuario2, Event Type: LOGOUT, Message: El usuario ha cerrado sesión.
+2024-11-18 12:09:48 - User: None  , Event Type: info, Message: Se creo el menu. INICIALES
+2024-11-18 12:09:48 - User: None  , Event Type: info, Message: Se actualizo el menu. INICIALES
+2024-11-18 12:09:48 - User: None  , Event Type: info, Message: Se actualizo el menu. INICIALES
+2024-11-18 12:09:48 - User: None  , Event Type: info, Message: Se actualizo el menu. INICIALES
+2024-11-18 12:22:00 - User: None  , Event Type: info, Message: Se actualizo la password del usuario daniela.revelo.
+2024-11-18 12:22:01 - User: usuario2, Event Type: LOGOUT, Message: El usuario ha cerrado sesión.
+2024-11-18 12:22:08 - User: 1006073511 Daniela Revelo, Event Type: info, Message: Se actualizó el usuario: daniela.revelo
+2024-11-18 12:22:00 - User: usuario2, Event Type: LOGOUT, Message: El usuario ha cerrado sesión.
+2024-11-18 12:22:08 - User: None  , Event Type: info, Message: Se Creo el MacroProcesos. GERENCIAL
+2024-11-18 12:22:08 - User: None  , Event Type: info, Message: Se Creo el MacroProcesos. COMERCIAL
+2024-11-18 12:22:08 - User: None  , Event Type: info, Message: Se Creo el MacroProcesos. FINANZAS Y TESORERIA
+2024-11-18 12:22:08 - User: None  , Event Type: info, Message: Se Creo el MacroProcesos. OPERACIONES
+2024-11-18 12:22:08 - User: None  , Event Type: info, Message: Se Creo el MacroProcesos. LOGISTICA INTEGRAL
+2024-11-18 12:22:08 - User: None  , Event Type: info, Message: Se Creo el MacroProcesos. GESTION INTEGRAL
+2024-11-18 12:22:08 - User: None  , Event Type: info, Message: Se Creo el Procesos. GERENCIAL
+2024-11-18 12:22:08 - User: None  , Event Type: info, Message: Se Creo el Procesos. ADMINISTRATIVO
+2024-11-22 12:50:03 - User: None  , Event Type: info, Message: Se Creo el Procesos. EMPRESARIAL - PERSONA NATURAL
+2024-11-22 12:50:03 - User: None  , Event Type: info, Message: Se Creo el Procesos. LICITACIONES
+2024-11-22 12:50:03 - User: None  , Event Type: info, Message: Se Creo el Procesos. CONTABILIDAD
+2024-11-22 12:50:03 - User: None  , Event Type: info, Message: Se Creo el Procesos. TESORERIA
+2024-11-22 12:50:03 - User: None  , Event Type: info, Message: Se Creo el Procesos. REVISORIA FISCAL
+2024-11-22 12:50:03 - User: None  , Event Type: info, Message: Se Creo el Procesos. DISEÑO
+2024-11-22 12:50:03 - User: None  , Event Type: info, Message: Se Creo el Procesos. PRODUCCION
+2024-11-22 12:50:03 - User: None  , Event Type: info, Message: Se Creo el Procesos. LOGISTICA DE ABASTECIMIENTO
+2024-11-22 12:50:03 - User: None  , Event Type: info, Message: Se Creo el Procesos. LOGISTICA DE DISTRIBUCION
+2024-11-22 12:50:03 - User: None  , Event Type: info, Message: Se Creo el Procesos. SISTEMAS DE GESTION DE CALIDAD
+2024-11-22 12:50:03 - User: None  , Event Type: info, Message: Se Creo el Procesos. SISTEMA DE GESTION DE SEGURIDAD Y SALUD EN EL TRABAJO
+2024-11-22 12:50:03 - User: None  , Event Type: info, Message: Se Creo el Procesos. RECURSOS HUMANOS
+2024-11-22 12:56:22 - User: None  , Event Type: info, Message: Se actualizo la password del usuario steven.milques.
+2024-11-22 12:56:26 - User: 1151960992 Steven Milques, Event Type: info, Message: Se creó la Sección: ESTRATEGIA EMPRESARIAL
+2024-11-22 12:56:22 - User: 1151960992 Steven Milques, Event Type: info, Message: Se creó la Sección: APROBACION COTIZACIONES DE PROVEEDORES
+2024-11-22 12:56:22 - User: 1151960992 Steven Milques, Event Type: info, Message: Se creó la Sección: APROBACION COTIZACIONES DE CLIENTES
+2024-11-22 12:56:22 - User: 1151960992 Steven Milques, Event Type: info, Message: Se creó la Sección: PAGOS
+2024-11-22 12:56:26 - User: 1151960992 Steven Milques, Event Type: info, Message: Se creó la Sección: APOYO COMERCIAL
+2024-11-22 12:56:26 - User: 1151960992 Steven Milques, Event Type: info, Message: Se creó la Sección: APOYO LICITACIONES
+2024-11-22 12:56:22 - User: 1151960992 Steven Milques, Event Type: info, Message: Se creó la Sección: APROBACION COTIZACIONES DE CLIENTES
+2024-11-22 12:56:29 - User: 1151960992 Steven Milques, Event Type: info, Message: Se creó la Sección: COSTOS
+2024-11-22 12:56:29 - User: 1151960992 Steven Milques, Event Type: info, Message: Se creó la Sección: PRESUPUESTOS
+2024-11-22 12:56:29 - User: 1151960992 Steven Milques, Event Type: info, Message: Se creó la Sección: ESTABLECIMIENTO DE CONTROL Y REPORTES A GERENCIA
+2024-11-22 12:56:29 - User: 1151960992 Steven Milques, Event Type: info, Message: Se creó la Sección: PROSPECTAR CLIENTES
+2024-11-22 12:56:29 - User: 1151960992 Steven Milques, Event Type: info, Message: Se creó la Sección: VISITA TECNICA A CLIENTES
+2024-11-22 12:56:26 - User: 1151960992 Steven Milques, Event Type: info, Message: Se creó la Sección: ASESORAMIENTO DE CLIENTES
+2024-11-22 12:56:26 - User: 1151960992 Steven Milques, Event Type: info, Message: Se creó la Sección: REQUERIMIENTOS DEL CLIENTES
+2024-11-22 12:56:22 - User: 1151960992 Steven Milques, Event Type: info, Message: Se creó la Sección: ENVIO PROPUESTA ECONOMICA
+2024-11-22 12:56:22 - User: 1151960992 Steven Milques, Event Type: info, Message: Se creó la Sección: SEGUIMIENTO DE PROPUESTA ECONOMICA Y PEDIDO REALIZADO
+2024-11-22 12:56:22 - User: 1151960992 Steven Milques, Event Type: info, Message: Se creó la Sección: APROBACION DE COTIZACIONES
+2024-11-22 12:56:22 - User: 1151960992 Steven Milques, Event Type: info, Message: Se creó la Sección: ENVIO DE PEDIDOS
+2024-11-22 12:56:22 - User: 1151960992 Steven Milques, Event Type: info, Message: Se creó la Sección: COBRO DE CARTERA
+2024-11-22 12:56:22 - User: 1151960992 Steven Milques, Event Type: info, Message: Se creó la Sección: COORDINACION DE PEDIDOS, ENTREGA A LICITACIONES
+2024-11-22 12:56:22 - User: 1151960992 Steven Milques, Event Type: info, Message: Se creó la Sección: FABRICACION Y COMPRAS
+2024-11-22 12:56:22 - User: 1151960992 Steven Milques, Event Type: info, Message: Se creó la Sección: SEGUIMIENTO DE LICITACIONES
+2024-11-22 12:56:22 - User: 1151960992 Steven Milques, Event Type: info, Message: Se creó la Sección: DOCUMENTACIO
+2024-11-22 12:56:22 - User: 1151960992 Steven Milques, Event Type: info, Message: Se Edito la Seccion. DOCUMENTACION
+2024-11-22 12:56:22 - User: 1151960992 Steven Milques, Event Type: info, Message: Se creó la Sección: BANCOS
+2024-11-22 12:56:26 - User: 1151960992 Steven Milques, Event Type: info, Message: Se creó la Sección: ANALISIS FINANCIERO
+2024-11-22 12:56:26 - User: 1151960992 Steven Milques, Event Type: info, Message: Se creó la Sección: CUENTAS POR PAGAR
+2024-11-22 12:56:26 - User: 1151960992 Steven Milques, Event Type: info, Message: Se creó la Sección: CUENTAS POR COBRAR
+2024-11-22 12:56:26 - User: 1151960992 Steven Milques, Event Type: info, Message: Se creó la Sección: BANCOS
+2024-11-22 12:56:22 - User: None  , Event Type: info, Message: Se Edito la Seccion. BANCOS - T
+2024-11-22 12:56:22 - User: None  , Event Type: info, Message: Se Edito la Seccion. BANCOS - C
+2024-11-22 12:56:22 - User: 1006073511 Daniela Revelo, Event Type: info, Message: Se Creo correctamente la Hoja de Vida. None
+2024-11-22 12:56:22 - User: 1006073511 Daniela Revelo, Event Type: info, Message: Se elimino correctamente la hoja de vida. Daniela Revelo Restrepo
+2024-11-22 14:22:10 - User: 1006073511 Daniela Revelo, Event Type: info, Message: Se Creo correctamente la Hoja de Vida. None
+2024-11-22 14:22:10 - User: 1006073511 Daniela Revelo, Event Type: info, Message: Se actualizo correctamente la hoja de vida. Daniela Revelo Restrepo
+2024-11-22 14:22:10 - User: 1006073511 Daniela Revelo, Event Type: info, Message: Se actualizo correctamente la hoja de vida. Daniela Revelo Restrepo
+2024-11-22 14:22:10 - User: 1006073511 Daniela Revelo, Event Type: info, Message: Se actualizo el grupo: Administrador
+2024-11-22 14:22:10 - User: 1006073511 Daniela Revelo, Event Type: info, Message: Se actualizó el usuario: daniela.revelo
+2024-11-22 14:22:07 - User: usuario2, Event Type: LOGOUT, Message: El usuario ha cerrado sesión.
+2024-11-22 14:22:07 - User: usuario2, Event Type: LOGOUT, Message: El usuario ha cerrado sesión.
+2024-11-23 16:02:27 - User: None  , Event Type: info, Message: Se actualizó el usuario: Administrador
+2024-11-23 16:02:34 - User: None  , Event Type: info, Message: Se actualizó el usuario: Administrador
+2024-11-23 16:06:28 - User: None  , Event Type: info, Message: Se actualizó el usuario: Administrador
+2024-11-24 09:19:59 - User: usuario2, Event Type: LOGOUT, Message: El usuario ha cerrado sesión.
+2024-11-24 09:37:52 - User: usuario2, Event Type: LOGOUT, Message: El usuario ha cerrado sesión.
+2024-11-24 09:53:19 - User: None  , Event Type: menu, Message: se cambio el estado del menu RRHH a False
+2024-11-24 09:53:19 - User: None  , Event Type: menu, Message: se cambio el estado del menu RRHH a True
+2024-11-24 09:53:35 - User: None  , Event Type: menu, Message: se cambio el estado del menu Iniciales a False
+2024-11-24 09:53:35 - User: None  , Event Type: menu, Message: se cambio el estado del menu Iniciales a True
+2024-11-24 09:53:19 - User: None  , Event Type: info, Message: Se actualizo el menu. ADMINISTRACION
+2024-11-24 09:53:35 - User: None  , Event Type: info, Message: Se actualizo el menu. ACTIVOSFIJOS
+2024-11-24 09:53:15 - User: None  , Event Type: info, Message: Se actualizo el menu. COMERCIAL
+2024-11-24 09:53:35 - User: None  , Event Type: info, Message: Se actualizo el menu. CONTABILIDAD
+2024-11-24 09:53:15 - User: None  , Event Type: info, Message: Se actualizo el menu. MACROPROCESOS
+2024-11-24 09:53:35 - User: None  , Event Type: info, Message: Se actualizo el menu. PRODUCCION
+2024-11-24 09:53:15 - User: None  , Event Type: info, Message: Se actualizo el menu. RRHH
+2024-11-24 09:53:35 - User: None  , Event Type: info, Message: Se actualizo el menu. USUARIOS
+2024-11-24 09:53:15 - User: None  , Event Type: info, Message: Se actualizo el menu. GRUPOS
+2024-11-24 09:53:35 - User: None  , Event Type: info, Message: Se actualizo el menu. TERCEROS
+2024-11-24 09:53:19 - User: None  , Event Type: info, Message: Se actualizo el menu. INDICADORES
+2024-11-24 09:53:35 - User: None  , Event Type: info, Message: Se actualizo el menu. CRONOGRAMA
+2024-11-24 09:53:19 - User: None  , Event Type: info, Message: Se actualizo el menu. BITACORAS
+2024-11-25 06:42:16 - User: None  , Event Type: info, Message: Se actualizó el usuario: Administrador
+2024-11-25 06:58:37 - User: None  , Event Type: info, Message: Se actualizó el usuario: Administrador
+2024-11-25 07:02:29 - User: None  , Event Type: info, Message: Se actualizó el usuario: Administrador
+2024-12-05 14:17:18 - User: usuario2, Event Type: LOGOUT, Message: El usuario ha cerrado sesión.
+2024-12-05 15:35:43 - User: None  , Event Type: info, Message: Se Creó el usuario. daniela.revelo
+2024-12-05 15:35:36 - User: None  , Event Type: menu, Message: se cambio el estado del menu GRUPO FAMILIAR a False
+2024-12-05 15:35:43 - User: None  , Event Type: info, Message: Grupo Formica 'grupo 1 Creada con Exito

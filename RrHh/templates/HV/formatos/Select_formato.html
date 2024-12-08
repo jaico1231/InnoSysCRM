@@ -1,0 +1,60 @@
+{% extends 'layout/base.html'%}
+
+{%block title%}{{ title }}{%endblock%}
+{% block stylesheets %}
+{% load static %}
+
+{% endblock stylesheets %}
+{% block content %}
+{{title}}
+<form id="form" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    {{ form.as_p }}
+   
+    <boton class="btn btn-primary BtnCrear" form_id="form" type="submit">Crear</boton>
+</form>
+<div id="preview">
+</div>
+
+{% endblock content %}
+{% block javascripts %}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="html2pdf.bundle.min.js"></script>
+<script type="text/javascript">
+
+
+let tipo_formato_id = null 
+document.addEventListener('DOMContentLoaded', function() {
+    tipo_formato = document.getElementById('id_Tipo_Formato_CartaFK');
+    
+    function setPreview () {
+        tipo_formato_id = tipo_formato.value
+        preview.innerHTML = getHtml('{{HV_json | escapejs }}',tipo_formato_id) || ''
+    };
+
+    tipo_formato.onchange = setPreview
+});
+
+
+$('.BtnCrear').click(function () {
+
+    const content = document.createElement('div')
+    content.innerHTML = getHtml('{{HV_json | escapejs }}', tipo_formato_id)
+    console.log(content)
+    html2pdf().from(content).save('vista.pdf');
+
+    // Crea registro en BD
+
+
+});
+
+$('.BtnCancel').click(function () {
+//crear alerta con la variable title y el url de redireccionamiento))
+    // url = '{{ cancel_url }}';
+    location.href = '{{ list_url }}';  
+});
+    
+</script>
+{% endblock javascripts %}

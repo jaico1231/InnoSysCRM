@@ -1,0 +1,25 @@
+{% extends 'layout/base.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+    <h1 class="mt-4">Eliminar {{entity}}</h1> 
+    <!-- recibe la variale obj -->
+    <p>¿Estás seguro de que deseas eliminar el {{ entity }} {{ object.Descripcion }}?</p>    
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Eliminar</button>
+        <button type="button" id=BtnCancel class="btn btn-secundary btn-xs BtnCancel"><i class="material-icons btn-xs" >del</i>Cancelar</button>
+    </form>
+</div>
+
+{% endblock content %}
+
+{% block javascripts %}
+
+<script>
+  $("#BtnCancel").click(function(){
+  location.href = "{{list_url}}";  
+    });
+</script>
+
+{% endblock javascripts %}
